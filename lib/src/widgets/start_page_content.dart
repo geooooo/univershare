@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../services/intl.dart' as intl;
 import '../services/asset.dart' as asset;
+import '../services/action.dart' as action;
 import '../services/app_state.dart';
 import 'vertical_space.dart';
 import 'event_id.dart';
@@ -13,7 +15,6 @@ class StartPageContent extends StatelessWidget {
   static const double _logoSize = 150;
 
   final Store<AppState> store;
-  bool _isJoinButtonDisabled = true;
 
   StartPageContent({this.store});
 
@@ -28,13 +29,19 @@ class StartPageContent extends StatelessWidget {
         width: _logoSize,
       ),
       VerticalSpace(30),
-      EventId(
-        onChanged: _onChangedEventId,
+      StoreConnector<AppState, EventIdOnChangedFunction>(
+        converter: (store) => (id, isValid) => store.dispatch(action.SetEventId(id, isValid)),
+        builder: (context, callback) => EventId(
+          onChanged: callback,
+        ),
       ),
       VerticalSpace(20),
-      RaisedButton(
-        child: Text(intl.join),
-        onPressed: (_isJoinButtonDisabled)? null : _onPressedJoinButton,
+      StoreConnector<AppState, bool>(
+        converter: (store) => store.state.startPageState.isJoinButtonDisabled,
+        builder: (context, isJoinButtonDisabled) => RaisedButton(
+          child: Text(intl.join),
+          onPressed: (isJoinButtonDisabled)? null : () => _onPressedJoinButton(context),
+        ),
       ),
       VerticalSpace(30),
       Text(intl.or),
@@ -46,25 +53,20 @@ class StartPageContent extends StatelessWidget {
     ],
   );
 
-  void _onPressedJoinButton() {
-//    _showDialogJoin();
+  void _onPressedJoinButton(BuildContext context) {
+    _showDialogJoin(context);
   }
 
   void _onPressedCreateButton() {}
 
-  void _onChangedEventId(String id) {
-//    setState(() {
-//      _eventId = id;
-//      _isJoinButtonDisabled = id.isEmpty;
-//    });
-  }
-
-//  void _showDialogJoin() => showDialog(
-//    context: context,
-//    builder: (BuildContext context) => DialogJoin(
-//      eventId: _eventId,
-//    ),
-//  );
-
+  void _showDialogJoin(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
+      converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
+      builder: (context, callback) => DialogJoin(
+        onPressedJoin: callback,
+      ),
+    ),
+  );
 
 }

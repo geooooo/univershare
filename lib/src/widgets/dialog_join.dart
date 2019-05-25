@@ -1,34 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../services/route.dart' as routes;
 import '../services/intl.dart' as intl;
 
+typedef void DialogJoinOnPressedJoinFunction(String name);
+
 class DialogJoin extends StatefulWidget {
 
-  final String eventId;
+  final DialogJoinOnPressedJoinFunction onPressedJoin;
 
-  DialogJoin({this.eventId});
+  DialogJoin({this.onPressedJoin});
 
   @override
   State<DialogJoin> createState() => DialogJoinState(
-    eventId: eventId,
+      onPressedJoin: onPressedJoin,
   );
 
 }
 
 class DialogJoinState extends State<DialogJoin> {
 
-  final String eventId;
+  static const int _maxLength = 12;
+  static final RegExp _nameChars = RegExp(
+    r'[a-z_]',
+    caseSensitive: false,
+  );
+
+  final DialogJoinOnPressedJoinFunction onPressedJoin;
+  bool _errorVisible = false;
+  bool _isJoinButtonDisabled = true;
   String _name = '';
 
-  DialogJoinState({this.eventId});
+  DialogJoinState({this.onPressedJoin});
 
   @override
   Widget build(BuildContext context) => AlertDialog(
     title: Text(intl.yourName),
     content: TextField(
+      inputFormatters: <TextInputFormatter>[
+        LengthLimitingTextInputFormatter(_maxLength),
+        WhitelistingTextInputFormatter(_nameChars),
+      ],
+      decoration: InputDecoration(
+        errorText: _errorVisible? intl.errorNameEmpty : null,
+      ),
       autofocus: true,
       onChanged: _onChangedName,
+      onSubmitted: _onSubmittedName,
     ),
     actions: <Widget>[
       FlatButton(
@@ -37,7 +56,7 @@ class DialogJoinState extends State<DialogJoin> {
       ),
       FlatButton(
         child: Text(intl.join),
-        onPressed: () => _onPressedJoin(context),
+        onPressed: () => _isJoinButtonDisabled? null : _onPressedJoin(context),
       ),
     ],
   );
@@ -45,14 +64,10 @@ class DialogJoinState extends State<DialogJoin> {
   void _onPressedJoin(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.pushNamed(
-        context,
-        routes.listenerRoute,
-//        arguments: routes.ListenerRouteData(
-//          userName: _name,
-//          eventId: eventId,
-//        )
+      context,
+      routes.listenerRoute,
     );
-    print([_name, eventId]);
+    onPressedJoin(_name);
   }
 
   void _onPressedCancel(BuildContext context) {
@@ -62,6 +77,13 @@ class DialogJoinState extends State<DialogJoin> {
   void _onChangedName(String value) {
     setState(() {
       _name = value;
+      _isJoinButtonDisabled = _name.isEmpty;
+    });
+  }
+
+  void _onSubmittedName(String value) {
+    setState(() {
+      _errorVisible = _name.isEmpty;
     });
   }
 

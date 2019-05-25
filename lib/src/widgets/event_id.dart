@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 
 import '../services/intl.dart' as intl;
 
+typedef void EventIdOnChangedFunction(String id, bool isValid);
+
 class EventId extends StatefulWidget {
 
-  final ValueChanged<String> onChanged;
+  final EventIdOnChangedFunction onChanged;
 
   EventId({this.onChanged});
 
@@ -28,7 +30,7 @@ class EventIdState extends State<EventId> {
     caseSensitive: false
   );
 
-  final ValueChanged<String> onChanged;
+  final EventIdOnChangedFunction onChanged;
   bool _errorVisible = false;
 
   EventIdState({this.onChanged});
@@ -55,16 +57,19 @@ class EventIdState extends State<EventId> {
   );
 
   void _onChanged(String value) {
-    if (_isValid(value)) {
+    final isValid = _isValid(value);
+    if (isValid) {
       _errorVisible = false;
     }
-    onChanged(value);
+    onChanged(value, isValid);
   }
 
   void _onSubmitted(String value) {
-    if (!_isValid(value)) {
+    final isValid = _isValid(value);
+    if (!isValid) {
       _errorVisible = true;
     }
+    onChanged(value, isValid);
   }
 
   bool _isValid(String value) =>

@@ -11,11 +11,11 @@ class StartPage extends StatelessWidget {
   StartPage({this.store});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    resizeToAvoidBottomInset: false,
-    resizeToAvoidBottomPadding: false,
-    body: SafeArea(
-      child: LayoutBuilder(
+  Widget build(BuildContext context) => SafeArea(
+    child: Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
+      body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../services/route.dart';
@@ -11,10 +12,13 @@ class App extends StatelessWidget {
   App({this.store});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'Univershare',
-//    theme: ThemeData.dark(),
-    routes: routesFactory(store),
+  Widget build(BuildContext context) => StoreProvider<AppState>(
+    store: store,
+    child: MaterialApp(
+      title: 'Univershare',
+      theme: ThemeData.dark(),
+      routes: routesFactory(store),
+    ),
   );
 
 }

@@ -6,3 +6,4 @@ const String or = 'или';
 const String yourName = 'Ваше имя ?';
 const String cancel = 'Отмена';
 const String errorEventIdFormat = 'Неправильный ID (формат: $idPlaceholder)';
+const String errorNameEmpty = 'Не забудте ввести имя';
