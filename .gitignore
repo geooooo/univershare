@@ -1,0 +1,98 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Exceptions to above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+Будет удалено .gitignore
+Будет удалено .metadata
+Будет удалено LICENSE
+Будет удалено README.md
+Будет удалено android/app/build.gradle
+Будет удалено android/app/src/debug/
+Будет удалено android/app/src/main/AndroidManifest.xml
+Будет удалено android/app/src/main/java/self/
+Будет удалено android/app/src/main/res/
+Будет удалено android/app/src/profile/
+Будет удалено android/build.gradle
+Будет удалено android/gradle.properties
+Будет удалено android/gradle/wrapper/gradle-wrapper.properties
+Будет удалено android/settings.gradle
+Будет удалено ios/Flutter/AppFrameworkInfo.plist
+Будет удалено ios/Flutter/Debug.xcconfig
+Будет удалено ios/Flutter/Release.xcconfig
+Будет удалено ios/Runner.xcodeproj/
+Будет удалено ios/Runner.xcworkspace/
+Будет удалено ios/Runner/AppDelegate.h
+Будет удалено ios/Runner/AppDelegate.m
+Будет удалено ios/Runner/Assets.xcassets/
+Будет удалено ios/Runner/Base.lproj/
+Будет удалено ios/Runner/Info.plist
+Будет удалено ios/Runner/main.m
+Будет удалено lib/
+Будет удалено pubspec.lock
+Будет удалено pubspec.yaml
