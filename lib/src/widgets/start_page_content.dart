@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../services/intl.dart' as intl;
 import '../services/asset.dart' as asset;
 import '../services/action.dart' as action;
+import '../services/route.dart' as routes;
 import '../services/app_state.dart';
 import 'vertical_space.dart';
 import 'event_id.dart';
@@ -64,7 +65,13 @@ class StartPageContent extends StatelessWidget {
     builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
       converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
       builder: (context, callback) => DialogJoin(
-        onPressedJoin: callback,
+        onPressedJoin: (name) {
+          callback(name);
+          Navigator.pushReplacementNamed(
+            context,
+            routes.listenerRoute,
+          );
+        },
       ),
     ),
   );

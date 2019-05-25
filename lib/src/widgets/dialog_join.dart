@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../services/route.dart' as routes;
 import '../services/intl.dart' as intl;
 
 typedef void DialogJoinOnPressedJoinFunction(String name);
@@ -14,7 +13,7 @@ class DialogJoin extends StatefulWidget {
 
   @override
   State<DialogJoin> createState() => DialogJoinState(
-      onPressedJoin: onPressedJoin,
+    onPressedJoin: onPressedJoin,
   );
 
 }
@@ -63,10 +62,6 @@ class DialogJoinState extends State<DialogJoin> {
 
   void _onPressedJoin(BuildContext context) {
     Navigator.of(context).pop();
-    Navigator.pushNamed(
-      context,
-      routes.listenerRoute,
-    );
     onPressedJoin(_name);
   }
 
