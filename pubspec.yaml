@@ -10,5 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+dev_dependencies:
+  flutter_launcher_icons: "^0.7.1"
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/images/icons/icon.png"
+
 flutter:
   uses-material-design: true
