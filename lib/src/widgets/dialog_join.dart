@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../services/routes.dart' as routes;
+import '../services/route.dart' as routes;
 import '../services/intl.dart' as intl;
 
 class DialogJoin extends StatefulWidget {
@@ -47,10 +47,10 @@ class DialogJoinState extends State<DialogJoin> {
     Navigator.pushNamed(
         context,
         routes.listenerRoute,
-        arguments: routes.ListenerRouteData(
-          userName: _name,
-          eventId: eventId,
-        )
+//        arguments: routes.ListenerRouteData(
+//          userName: _name,
+//          eventId: eventId,
+//        )
     );
     print([_name, eventId]);
   }

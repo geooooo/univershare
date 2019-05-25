@@ -7,16 +7,20 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_redux: ^0.5.3
+  redux: ^3.0.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.7.1"
+  flutter_launcher_icons: ^0.7.1
 
 flutter_icons:
   ios: true
   android: true
-  image_path: "assets/images/icons/icon.png"
+  image_path: asset/image/icon/icon.png
 
 flutter:
   uses-material-design: true
+  assets:
+    - asset/image/icon/icon.png

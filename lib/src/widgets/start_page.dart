@@ -1,66 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
-import '../services/intl.dart' as intl;
-import 'vertical_space.dart';
-import 'event_id.dart';
-import 'dialog_join.dart';
+import '../services/app_state.dart';
+import 'start_page_content.dart';
 
-class StartPage extends StatefulWidget {
+class StartPage extends StatelessWidget {
 
-  @override
-  State<StartPage> createState() => StartPageState();
+  final Store<AppState> store;
 
-}
-
-class StartPageState extends State<StartPage> {
-
-  String _eventId = '';
-  bool _isJoinButtonDisabled = true;
+  StartPage({this.store});
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    resizeToAvoidBottomInset: false,
+    resizeToAvoidBottomPadding: false,
     body: SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          EventId(
-            onChanged: _onChangedEventId,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
+              minWidth: viewportConstraints.maxWidth,
+            ),
+            child: StartPageContent(
+              store: store,
+            ),
           ),
-          VerticalSpace(10),
-          RaisedButton(
-            child: Text(intl.join),
-            onPressed: (_isJoinButtonDisabled)? null : _onPressedJoinButton,
-          ),
-          VerticalSpace(20),
-          Text(intl.or),
-          VerticalSpace(20),
-          RaisedButton(
-            child: Text(intl.createEvent),
-            onPressed: _onPressedCreateButton,
-          ),
-        ],
+        ),
       ),
-    ),
-  );
-
-  void _onPressedJoinButton() {
-    _showDialogJoin();
-  }
-
-  void _onPressedCreateButton() {}
-
-  void _onChangedEventId(String id) {
-    setState(() {
-      _eventId = id;
-      _isJoinButtonDisabled = id.isEmpty;
-    });
-  }
-
-  void _showDialogJoin() => showDialog(
-    context: context,
-    builder: (BuildContext context) => DialogJoin(
-      eventId: _eventId,
     ),
   );
 
