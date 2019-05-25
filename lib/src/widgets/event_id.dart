@@ -9,9 +9,9 @@ class EventId extends StatelessWidget {
 //  static const String _separator = '-';
   static final RegExp _hexDecimalChars = RegExp(r'[\da-f]', caseSensitive: false);
 
-  final ValueChanged<String> onSubmitted;
+  final ValueChanged<String> onChanged;
 
-  EventId({this.onSubmitted});
+  EventId({this.onChanged});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -28,7 +28,6 @@ class EventId extends StatelessWidget {
         WhitelistingTextInputFormatter(_hexDecimalChars),
       ],
       onChanged: _onChanged,
-      onSubmitted: _onSubmitted,
     ),
   );
 
@@ -37,8 +36,7 @@ class EventId extends StatelessWidget {
 //    if ((value.length % 3 == 0) && (value.length < _maxLength)) {
 //      value = '$value$_separator';
 //    }
+    onChanged(value);
   }
-
-  void _onSubmitted(String value) => onSubmitted(value);
 
 }
