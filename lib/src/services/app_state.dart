@@ -2,6 +2,7 @@ class AppState {
 
   String userName = 'vasia'; //TODO: temp
   String eventId = '111-111-111'; //TODO: temp
+  String eventName = 'eventName'; //TODO: temp
 
   StartPageState startPageState = StartPageState.initial();
 

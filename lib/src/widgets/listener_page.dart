@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 import '../services/app_state.dart';
+import 'listener_page_chat.dart';
+import 'listener_page_control.dart';
+import 'listener_page_presentation.dart';
 
 class ListenerPage extends StatelessWidget {
 
@@ -16,24 +19,23 @@ class ListenerPage extends StatelessWidget {
       child: Scaffold(
         appBar: TabBar(
           tabs: <Widget>[
-            Tab(
-              child: Icon(Icons.settings),
-            ),
-            Tab(
-              child: Icon(Icons.chat),
-            ),
-            Tab(
-              child: Icon(Icons.visibility),
-            )
+            Tab(child: Icon(Icons.settings)),
+            Tab(child: Icon(Icons.chat)),
+            Tab(child: Icon(Icons.visibility)),
           ],
         ),
-        resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
         body: TabBarView(
           children: [
-            Text('1'),
-            Text('1'),
-            Text('1'),
+            //TODO: temp
+            ListenerPageChat(
+              store: store,
+            ),
+            ListenerPageControl(
+              store: store,
+            ),
+            ListenerPagePresentation(
+              store: store,
+            ),
           ],
         ),
       ),

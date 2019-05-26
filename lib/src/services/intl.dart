@@ -7,3 +7,9 @@ const String yourName = 'Ваше имя ?';
 const String cancel = 'Отмена';
 const String errorEventIdFormat = 'Неправильный ID (формат: $idPlaceholder)';
 const String errorNameEmpty = 'Не забудте ввести имя';
+const String nameEvent = 'Название мероприятия';
+const String idEvent = 'ID мероприятия';
+const String leaveEvent = 'Покинуть мероприятие';
+const String yourMessage = 'Ваше сообщение';
+
+
