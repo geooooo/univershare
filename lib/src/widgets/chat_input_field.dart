@@ -36,30 +36,34 @@ class ChatInputFieldState extends State<ChatInputField> {
   });
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: <Widget>[
-      Expanded(
-        child: TextField(
-          controller: _controller,
-          maxLines: _maxLines,
-          keyboardType: TextInputType.multiline,
-          decoration: InputDecoration(
-            hintText: intl.yourMessage,
+  Widget build(BuildContext context) => Container(
+    foregroundDecoration: BoxDecoration(
+      color: Colors.blueAccent.withAlpha(10),
+    ),
+    child: Row(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            maxLines: _maxLines,
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+              hintText: intl.yourMessage,
+            ),
+            onTap: _onTap,
+            onChanged: _onChanged,
           ),
-          onTap: _onTap,
-          onChanged: _onChanged,
-//          onEditingComplete: _onSaved,
         ),
-      ),
-      IconButton(
-        icon: Icon(Icons.pan_tool),
-        onPressed: () => _onSendMessage(true),
-      ),
-      IconButton(
-        icon: Icon(Icons.send),
-        onPressed: () => _onSendMessage(false),
-      ),
-    ],
+        IconButton(
+          icon: Icon(Icons.pan_tool),
+          onPressed: () => _onSendMessage(true),
+        ),
+        IconButton(
+          icon: Icon(Icons.send),
+          onPressed: () => _onSendMessage(false),
+        ),
+      ],
+    ),
   );
 
   void _onSendMessage(bool isQuestion) {
@@ -68,7 +72,9 @@ class ChatInputFieldState extends State<ChatInputField> {
     setState(() {
       _maxLines = 1;
     });
-    onSendMessage(_value, isQuestion);
+    if (_value.isNotEmpty) {
+      onSendMessage(_value, isQuestion);
+    }
   }
 
   void _onTap() {
@@ -78,7 +84,7 @@ class ChatInputFieldState extends State<ChatInputField> {
   }
 
   void _onChanged(String value) {
-    _value = value;
+    _value = value.trim();
   }
 
 }

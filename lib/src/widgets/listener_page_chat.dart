@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 import '../services/app_state.dart';
+import '../services/action.dart' as action;
 import 'chat_input_field.dart';
 import 'chat_messages.dart';
 
@@ -27,7 +28,7 @@ class ListenerPageChat extends StatelessWidget {
   );
 
   void _onSendMessage(String value, bool isQuestion) {
-    print([value, isQuestion]);
+    store.dispatch(action.SendMessage(value, store.state.userName, isQuestion));
   }
 
 }

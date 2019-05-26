@@ -6,6 +6,7 @@ import 'action.dart';
 final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SetEventId>(_onSetEventId),
   TypedReducer<AppState, SetUserName>(_onSetUserName),
+  TypedReducer<AppState, SendMessage>(_onSendMessage),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -28,4 +29,19 @@ AppState _onSetUserName(AppState state, SetUserName action) {
   );
   return state
     ..userName = action.userName;
+}
+
+AppState _onSendMessage(AppState state, SendMessage action) {
+  print(
+    'Action: SendMessage {\n'
+      '\tuserName: ${action.userName}\n'
+      '\tmessage: ${action.message}\n'
+      '\tisQuestion: ${action.isQuestion}\n'
+    '}\n'
+  );
+  return state..messages.add(Message(
+    userName: action.userName,
+    text: action.message,
+    isQuestion: action.isQuestion,
+  ));
 }

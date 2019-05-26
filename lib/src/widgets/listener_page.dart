@@ -27,13 +27,13 @@ class ListenerPage extends StatelessWidget {
         body: TabBarView(
           children: [
             //TODO: temp
-            ListenerPageChat(
+            ListenerPagePresentation(
               store: store,
             ),
             ListenerPageControl(
               store: store,
             ),
-            ListenerPagePresentation(
+            ListenerPageChat(
               store: store,
             ),
           ],

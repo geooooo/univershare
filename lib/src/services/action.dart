@@ -15,11 +15,12 @@ class SetUserName {
 
 }
 
-//class ListenerRouteData {
-//
-//  String userName;
-//  String eventId;
-//
-//  ListenerRouteData({this.eventId, this.userName});
-//
-//}
+class SendMessage {
+
+  final String message;
+  final String userName;
+  final bool isQuestion;
+
+  SendMessage(this.message, this.userName, this.isQuestion);
+
+}
