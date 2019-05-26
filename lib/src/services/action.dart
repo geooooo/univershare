@@ -24,3 +24,12 @@ class SendMessage {
   SendMessage(this.message, this.userName, this.isQuestion);
 
 }
+
+class CreateEvent {
+
+  final String eventName;
+  final String userName;
+
+  CreateEvent(this.eventName, this.userName);
+
+}

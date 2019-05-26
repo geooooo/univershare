@@ -7,6 +7,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SetEventId>(_onSetEventId),
   TypedReducer<AppState, SetUserName>(_onSetUserName),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
+  TypedReducer<AppState, CreateEvent>(_onCreateEvent),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -44,4 +45,16 @@ AppState _onSendMessage(AppState state, SendMessage action) {
     text: action.message,
     isQuestion: action.isQuestion,
   ));
+}
+
+AppState _onCreateEvent(AppState state, CreateEvent action) {
+  print(
+    'Action: SendMessage {\n'
+      '\tuserName: ${action.userName}\n'
+      '\teventName: ${action.eventName}\n'
+    '}\n'
+  );
+  return state
+    ..userName = action.userName
+    ..eventName = action.eventName;
 }

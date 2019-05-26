@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../services/app_state.dart';
 import '../services/intl.dart' as intl;
+import 'dialog_error.dart';
 
 class ListenerPagePresentation extends StatelessWidget {
 
@@ -26,22 +27,8 @@ class ListenerPagePresentation extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      _showDialogError(context);
+      await showDialogError(context, intl.openPresentationError);
     }
   }
-
-  void _showDialogError(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) => AlertDialog(
-      title: Text(intl.error),
-      content: Text(intl.openPresentationError),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(intl.ok),
-        ),
-      ],
-    ),
-  );
 
 }

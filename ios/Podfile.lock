@@ -1,22 +1,28 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_document_picker (0.0.1):
+    - Flutter
   - url_launcher (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_document_picker (from `.symlinks/plugins/flutter_document_picker/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_document_picker:
+    :path: ".symlinks/plugins/flutter_document_picker/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_document_picker: 109ba1c4622e6e62bfced17c22ff544a9a3541f4
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
 
-PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+PODFILE CHECKSUM: 1b3cf4ee054cdd15952ce4a3f5e2b3119563bd63
 
 COCOAPODS: 1.6.1

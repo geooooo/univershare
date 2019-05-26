@@ -68,8 +68,8 @@ class ChatInputFieldState extends State<ChatInputField> {
 
   void _onSendMessage(bool isQuestion) {
     FocusScope.of(context).detach();
-    _controller.clear();
     setState(() {
+      _controller.clear();
       _maxLines = 1;
     });
     if (_value.isNotEmpty) {
@@ -84,7 +84,9 @@ class ChatInputFieldState extends State<ChatInputField> {
   }
 
   void _onChanged(String value) {
-    _value = value.trim();
+    setState(() {
+      _value = value.trim();
+    });
   }
 
 }

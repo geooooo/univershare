@@ -10,12 +10,13 @@ import 'chat_message.dart';
 class ChatMessages extends StatefulWidget {
 
   final Store<AppState> store;
-  final ScrollController scrollController;
 
-  ChatMessages({this.store, this.scrollController});
+  ChatMessages({this.store});
 
   @override
-  State<ChatMessages> createState() => ChatMessagesState();
+  State<ChatMessages> createState() => ChatMessagesState(
+    store: store,
+  );
 
 }
 
@@ -32,7 +33,9 @@ class ChatMessagesState extends State<ChatMessages> {
     Timer.periodic(Duration(milliseconds: 100), (timer) {
       if (mounted) {
         timer.cancel();
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        setState(() {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        });
       }
     });
   }

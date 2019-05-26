@@ -59,7 +59,9 @@ class EventIdState extends State<EventId> {
   void _onChanged(String value) {
     final isValid = _isValid(value);
     if (isValid) {
-      _errorVisible = false;
+      setState(() {
+        _errorVisible = false;
+      });
     }
     onChanged(value, isValid);
   }
@@ -67,7 +69,9 @@ class EventIdState extends State<EventId> {
   void _onSubmitted(String value) {
     final isValid = _isValid(value);
     if (!isValid) {
-      _errorVisible = true;
+      setState(() {
+        _errorVisible = true;
+      });
     }
     onChanged(value, isValid);
   }
