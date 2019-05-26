@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../services/intl.dart' as intl;
@@ -8,11 +7,11 @@ import '../services/app_state.dart';
 import 'vertical_space.dart';
 import 'event_info.dart';
 
-class ListenerPageControl extends StatelessWidget {
+class PresenterPageControl extends StatelessWidget {
 
   final Store<AppState> store;
 
-  ListenerPageControl({this.store});
+  PresenterPageControl({this.store});
 
   @override
   Widget build(BuildContext context) => Column(
@@ -24,13 +23,13 @@ class ListenerPageControl extends StatelessWidget {
       ),
       VerticalSpace(30),
       RaisedButton(
-        child: Text(intl.leaveEvent),
-        onPressed: () => _onPressedExitButton(context),
+        child: Text(intl.completeEvent),
+        onPressed: () => _onPressedCompleteButton(context),
       ),
     ],
   );
 
-  void _onPressedExitButton(BuildContext context) {
+  void _onPressedCompleteButton(BuildContext context) {
     Navigator.pushReplacementNamed(
       context,
       route.startPageRoute,

@@ -8,6 +8,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SetUserName>(_onSetUserName),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
+  TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -49,7 +50,7 @@ AppState _onSendMessage(AppState state, SendMessage action) {
 
 AppState _onCreateEvent(AppState state, CreateEvent action) {
   print(
-    'Action: SendMessage {\n'
+    'Action: CreateEvent {\n'
       '\tuserName: ${action.userName}\n'
       '\teventName: ${action.eventName}\n'
     '}\n'
@@ -58,3 +59,14 @@ AppState _onCreateEvent(AppState state, CreateEvent action) {
     ..userName = action.userName
     ..eventName = action.eventName;
 }
+
+AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestions action) {
+  print(
+    'Action: DeleteMessageFromQuestions {\n'
+      '\tmessage.hashCode: ${action.message.hashCode}\n'
+    '}\n'
+  );
+  return state
+    ..messages.firstWhere((message) => message == action.message).isQuestion = false;
+}
+

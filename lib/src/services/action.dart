@@ -1,3 +1,5 @@
+import 'app_state.dart';
+
 class SetEventId {
 
   final String eventId;
@@ -31,5 +33,13 @@ class CreateEvent {
   final String userName;
 
   CreateEvent(this.eventName, this.userName);
+
+}
+
+class DeleteMessageFromQuestions {
+
+  final Message message;
+
+  DeleteMessageFromQuestions(this.message);
 
 }

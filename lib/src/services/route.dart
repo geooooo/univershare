@@ -17,16 +17,16 @@ Map<String, WidgetBuilder> routesFactory(Store<AppState> store) => {
 //  startPageRoute: (BuildContext context) => StartPage(
 //    store: store,
 //  ),
-  startPageRoute: (BuildContext context) => CreateEventPage(
-    store: store,
-  ),
   createEventRoute: (BuildContext context) => CreateEventPage(
     store: store,
   ),
   presenterRoute: (BuildContext context) => PresenterPage(
     store: store,
   ),
-  listenerRoute: (BuildContext context) => ListenerPage(
+  startPageRoute: (BuildContext context) => PresenterPage(
     store: store,
   ),
+//  listenerRoute: (BuildContext context) => ListenerPage(
+//    store: store,
+//  ),
 };

@@ -49,7 +49,7 @@ class StartPageContent extends StatelessWidget {
       VerticalSpace(30),
       RaisedButton(
         child: Text(intl.createEvent),
-        onPressed: _onPressedCreateButton,
+        onPressed: () => _onPressedCreateButton(context),
       ),
     ],
   );
@@ -58,7 +58,12 @@ class StartPageContent extends StatelessWidget {
     _showDialogJoin(context);
   }
 
-  void _onPressedCreateButton() {}
+  void _onPressedCreateButton(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      route.createEventRoute,
+    );
+  }
 
   void _showDialogJoin(BuildContext context) => showDialog(
     context: context,

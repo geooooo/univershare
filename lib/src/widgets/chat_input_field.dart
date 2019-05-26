@@ -11,7 +11,7 @@ class ChatInputField extends StatefulWidget {
 
   ChatInputField({
     this.onSendMessage,
-    this.isQuestionEnabled = false,
+    this.isQuestionEnabled,
   });
 
   @override
@@ -54,10 +54,10 @@ class ChatInputFieldState extends State<ChatInputField> {
             onChanged: _onChanged,
           ),
         ),
-        IconButton(
+        isQuestionEnabled? IconButton(
           icon: Icon(Icons.pan_tool),
           onPressed: () => _onSendMessage(true),
-        ),
+        ) : Container(),
         IconButton(
           icon: Icon(Icons.send),
           onPressed: () => _onSendMessage(false),

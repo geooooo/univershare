@@ -6,11 +6,12 @@ import '../services/action.dart' as action;
 import 'chat_input_field.dart';
 import 'chat_messages.dart';
 
-class ListenerPageChat extends StatelessWidget {
+class PageChat extends StatelessWidget {
 
   final Store<AppState> store;
+  final bool isQuestionEnabled;
 
-  ListenerPageChat({this.store});
+  PageChat({this.store, this.isQuestionEnabled});
 
   @override
   Widget build(BuildContext context) => Column(
@@ -21,7 +22,7 @@ class ListenerPageChat extends StatelessWidget {
         store: store,
       ),
       ChatInputField(
-        isQuestionEnabled: true,
+        isQuestionEnabled: isQuestionEnabled,
         onSendMessage: _onSendMessage,
       )
     ],

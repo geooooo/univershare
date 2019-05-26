@@ -8,67 +8,67 @@ class AppState {
     Message(
       userName: 'vasia',
       text: 'hello !',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'john',
       text: 'hello, vasia !\nHello All !!!',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'jora',
       text: ':)',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'ivan',
       text: '1234567\n1234\n345345\n',
-      isQuestion: false,
+      isQuestion: true,
     ),
     Message(
       userName: 'petia',
       text: 'qwerty',
-      isQuestion: false,
+      isQuestion: true,
     ),
   ]; //TODO: temp
 
@@ -92,9 +92,9 @@ class StartPageState {
 
 class Message {
 
-  final String userName;
-  final String text;
-  final bool isQuestion;
+  String userName;
+  String text;
+  bool isQuestion;
 
   Message({
     this.userName,

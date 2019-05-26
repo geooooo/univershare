@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
 import '../services/app_state.dart';
-import 'listener_page_chat.dart';
+import 'page_chat.dart';
 import 'listener_page_control.dart';
 import 'listener_page_presentation.dart';
 
@@ -26,14 +26,14 @@ class ListenerPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            //TODO: temp
-            ListenerPagePresentation(
-              store: store,
-            ),
             ListenerPageControl(
               store: store,
             ),
-            ListenerPageChat(
+            PageChat(
+              store: store,
+              isQuestionEnabled: true,
+            ),
+            ListenerPagePresentation(
               store: store,
             ),
           ],
