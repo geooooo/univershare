@@ -35,7 +35,7 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
   final Store<AppState> store;
   String _eventName = '';
   String _userName = '';
-  bool _isPresentationLoaded = false;
+  bool _isPresentationLoaded = true;
 
   CreateEventPageContentState({this.store});
 

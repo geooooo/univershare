@@ -12,21 +12,17 @@ const String createEventRoute = '/create_event';
 const String presenterRoute = '/presenter';
 const String listenerRoute = '/listener';
 
-//TODO: temp
 Map<String, WidgetBuilder> routesFactory(Store<AppState> store) => {
-//  startPageRoute: (BuildContext context) => StartPage(
-//    store: store,
-//  ),
+  startPageRoute: (BuildContext context) => StartPage(
+    store: store,
+  ),
   createEventRoute: (BuildContext context) => CreateEventPage(
     store: store,
   ),
   presenterRoute: (BuildContext context) => PresenterPage(
     store: store,
   ),
-  startPageRoute: (BuildContext context) => PresenterPage(
+  listenerRoute: (BuildContext context) => ListenerPage(
     store: store,
   ),
-//  listenerRoute: (BuildContext context) => ListenerPage(
-//    store: store,
-//  ),
 };

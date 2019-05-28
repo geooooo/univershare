@@ -26,9 +26,6 @@ class PresenterPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            PresenterPageQuestions(
-              store: store,
-            ),
             PresenterPageControl(
               store: store,
             ),
@@ -36,7 +33,9 @@ class PresenterPage extends StatelessWidget {
               store: store,
               isQuestionEnabled: false,
             ),
-
+            PresenterPageQuestions(
+              store: store,
+            ),
           ],
         ),
       ),
