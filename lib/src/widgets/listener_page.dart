@@ -26,13 +26,14 @@ class ListenerPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            ListenerPageControl(
-              store: store,
-            ),
             PageChat(
               store: store,
               isQuestionEnabled: true,
             ),
+            ListenerPageControl(
+              store: store,
+            ),
+
             ListenerPagePresentation(
               store: store,
             ),

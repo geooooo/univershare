@@ -20,28 +20,36 @@ class ChatMessage extends StatelessWidget {
         margin: EdgeInsets.symmetric(
           vertical: 10,
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 5,
+        padding: EdgeInsets.only(
+          left: isCurrentUser? 10 : 20,
+          right: isCurrentUser? 20 : 10,
+          top: 10,
+          bottom: 10,
         ),
         foregroundDecoration: BoxDecoration(
           borderRadius: isCurrentUser? BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
+            topLeft: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
           ) : BorderRadius.only(
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
           ),
           color: Colors.white.withAlpha(50),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              userName,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: isCurrentUser? Colors.blueAccent : Colors.deepOrangeAccent,
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: 5,
+              ),
+              child: Text(
+                userName,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isCurrentUser? Colors.blueAccent : Colors.orangeAccent,
+                ),
               ),
             ),
             Text(

@@ -33,10 +33,17 @@ class ChatMessagesState extends State<ChatMessages> {
     Timer.periodic(Duration(milliseconds: 100), (timer) {
       if (mounted) {
         timer.cancel();
-        setState(() {
-          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-        });
+        _scrollToBottom(true);
       }
+    });
+  }
+
+  @override
+  void didUpdateWidget(ChatMessages oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    Timer.periodic(Duration(milliseconds: 100), (timer) {
+      timer.cancel();
+      _scrollToBottom(false);
     });
   }
 
@@ -58,6 +65,8 @@ class ChatMessagesState extends State<ChatMessages> {
     ),
   );
 
-
+  void _scrollToBottom(bool isAddOffset) => setState(() =>
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent + (isAddOffset? 0xff : 0))
+  );
 
 }

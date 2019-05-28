@@ -16,7 +16,10 @@ class App extends StatelessWidget {
     store: store,
     child: MaterialApp(
       title: 'Univershare',
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.blueAccent,
+      ),
       routes: routesFactory(store),
     ),
   );
