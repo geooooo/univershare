@@ -9,7 +9,9 @@ class DialogJoin extends StatefulWidget {
 
   final DialogJoinOnPressedJoinFunction onPressedJoin;
 
-  DialogJoin({this.onPressedJoin});
+  DialogJoin({
+    this.onPressedJoin,
+  });
 
   @override
   State<DialogJoin> createState() => DialogJoinState(
@@ -31,7 +33,9 @@ class DialogJoinState extends State<DialogJoin> {
   bool _isJoinButtonDisabled = true;
   String _name = '';
 
-  DialogJoinState({this.onPressedJoin});
+  DialogJoinState({
+    this.onPressedJoin,
+  });
 
   @override
   Widget build(BuildContext context) => AlertDialog(
@@ -65,21 +69,16 @@ class DialogJoinState extends State<DialogJoin> {
     onPressedJoin(_name);
   }
 
-  void _onPressedCancel(BuildContext context) {
+  void _onPressedCancel(BuildContext context) =>
     Navigator.of(context).pop();
-  }
 
-  void _onChangedName(String value) {
-    setState(() {
-      _name = value;
-      _isJoinButtonDisabled = _name.isEmpty;
-    });
-  }
+  void _onChangedName(String value) => setState(() {
+    _name = value;
+    _isJoinButtonDisabled = _name.isEmpty;
+  });
 
-  void _onSubmittedName(String value) {
-    setState(() {
-      _errorVisible = _name.isEmpty;
-    });
-  }
+  void _onSubmittedName(String value) => setState(() {
+    _errorVisible = _name.isEmpty;
+  });
 
 }

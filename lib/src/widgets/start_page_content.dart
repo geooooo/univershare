@@ -17,7 +17,9 @@ class StartPageContent extends StatelessWidget {
 
   final Store<AppState> store;
 
-  StartPageContent({this.store});
+  StartPageContent({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -54,16 +56,13 @@ class StartPageContent extends StatelessWidget {
     ],
   );
 
-  void _onPressedJoinButton(BuildContext context) {
+  void _onPressedJoinButton(BuildContext context) =>
     _showDialogJoin(context);
-  }
 
-  void _onPressedCreateButton(BuildContext context) {
-    Navigator.pushNamed(
-      context,
-      route.createEventRoute,
-    );
-  }
+  void _onPressedCreateButton(BuildContext context) => Navigator.pushNamed(
+    context,
+    route.createEventRoute,
+  );
 
   void _showDialogJoin(BuildContext context) => showDialog(
     context: context,

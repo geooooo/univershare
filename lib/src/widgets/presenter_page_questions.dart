@@ -9,7 +9,9 @@ class PresenterPageQuestions extends StatefulWidget {
 
   final Store<AppState> store;
 
-  PresenterPageQuestions({this.store});
+  PresenterPageQuestions({
+    this.store,
+  });
 
   @override
   State<PresenterPageQuestions> createState() => PresenterPageQuestionsState();
@@ -20,7 +22,9 @@ class PresenterPageQuestionsState extends State<PresenterPageQuestions> {
 
   final Store<AppState> store;
 
-  PresenterPageQuestionsState({this.store});
+  PresenterPageQuestionsState({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, Map<String, Object>>(

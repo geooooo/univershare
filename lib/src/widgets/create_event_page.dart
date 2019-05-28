@@ -8,7 +8,9 @@ class CreateEventPage extends StatelessWidget {
 
   final Store<AppState> store;
 
-  CreateEventPage({this.store});
+  CreateEventPage({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => SafeArea(

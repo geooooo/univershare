@@ -77,16 +77,12 @@ class ChatInputFieldState extends State<ChatInputField> {
     }
   }
 
-  void _onTap() {
-    setState(() {
-      _maxLines = 3;
-    });
-  }
+  void _onTap() => setState(() {
+    _maxLines = 3;
+  });
 
-  void _onChanged(String value) {
-    setState(() {
-      _value = value.trim();
-    });
-  }
+  void _onChanged(String value) => setState(() {
+    _value = value.trim();
+  });
 
 }

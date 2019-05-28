@@ -9,7 +9,9 @@ class EventId extends StatefulWidget {
 
   final EventIdOnChangedFunction onChanged;
 
-  EventId({this.onChanged});
+  EventId({
+    this.onChanged,
+  });
 
   @override
   State<EventId> createState() => EventIdState(
@@ -33,7 +35,9 @@ class EventIdState extends State<EventId> {
   final EventIdOnChangedFunction onChanged;
   bool _errorVisible = false;
 
-  EventIdState({this.onChanged});
+  EventIdState({
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) => Container(

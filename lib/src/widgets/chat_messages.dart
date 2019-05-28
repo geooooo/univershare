@@ -25,7 +25,9 @@ class ChatMessagesState extends State<ChatMessages> {
   final Store<AppState> store;
   final ScrollController _scrollController = ScrollController();
 
-  ChatMessagesState({this.store});
+  ChatMessagesState({
+    this.store,
+  });
 
   @override
   void initState() {

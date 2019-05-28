@@ -10,7 +10,9 @@ class ListenerPagePresentation extends StatelessWidget {
 
   final Store<AppState> store;
 
-  ListenerPagePresentation({this.store});
+  ListenerPagePresentation({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Container(

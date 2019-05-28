@@ -9,7 +9,9 @@ class App extends StatelessWidget {
 
   final Store<AppState> store;
 
-  App({this.store});
+  App({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => StoreProvider<AppState>(

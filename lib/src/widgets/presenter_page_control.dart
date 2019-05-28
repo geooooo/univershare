@@ -11,7 +11,9 @@ class PresenterPageControl extends StatelessWidget {
 
   final Store<AppState> store;
 
-  PresenterPageControl({this.store});
+  PresenterPageControl({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -29,11 +31,9 @@ class PresenterPageControl extends StatelessWidget {
     ],
   );
 
-  void _onPressedCompleteButton(BuildContext context) {
-    Navigator.pushReplacementNamed(
-      context,
-      route.startPageRoute,
-    );
-  }
+  void _onPressedCompleteButton(BuildContext context) => Navigator.pushReplacementNamed(
+    context,
+    route.startPageRoute,
+  );
 
 }

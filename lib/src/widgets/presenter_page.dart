@@ -10,7 +10,9 @@ class PresenterPage extends StatelessWidget {
 
   final Store<AppState> store;
 
-  PresenterPage({this.store});
+  PresenterPage({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => SafeArea(

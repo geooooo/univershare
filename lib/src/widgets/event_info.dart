@@ -10,7 +10,9 @@ class EventInfo extends StatelessWidget {
 
   final Store<AppState> store;
 
-  EventInfo({this.store});
+  EventInfo({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Container(

@@ -66,7 +66,7 @@ AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestion
       '\tmessage.hashCode: ${action.message.hashCode}\n'
     '}\n'
   );
-  return state
-    ..messages.firstWhere((message) => message == action.message).isQuestion = false;
+  return state..messages.firstWhere((message) => message == action.message)
+                        .isQuestion = false;
 }
 

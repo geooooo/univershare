@@ -15,7 +15,9 @@ class CreateEventPageContent extends StatefulWidget {
 
   final Store<AppState> store;
 
-  CreateEventPageContent({this.store});
+  CreateEventPageContent({
+    this.store,
+  });
 
   @override
   State<CreateEventPageContent> createState() => CreateEventPageContentState(
@@ -37,7 +39,9 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
   String _userName = '';
   bool _isPresentationLoaded = true;
 
-  CreateEventPageContentState({this.store});
+  CreateEventPageContentState({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -98,17 +102,13 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
     ),
   );
 
-  void _onChangedEventName(String value) {
-    setState((){
-      _eventName = value;
-    });
-  }
+  void _onChangedEventName(String value) => setState((){
+    _eventName = value;
+  });
 
-  void _onChangedUserName(String value) {
-    setState((){
-      _userName = value;
-    });
-  }
+  void _onChangedUserName(String value) => setState((){
+    _userName = value;
+  });
 
   Future<void> _onPressedCreateButton(VoidCallback callback) async {
     final allFieldsOk = _eventName.isNotEmpty && _userName.isNotEmpty && _isPresentationLoaded;
@@ -123,10 +123,8 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
     );
   }
 
-  void _onSelectFile(String path) {
-    setState(() {
-      _isPresentationLoaded = true;
-    });
-  }
+  void _onSelectFile(String path) => setState(() {
+    _isPresentationLoaded = true;
+  });
 
 }

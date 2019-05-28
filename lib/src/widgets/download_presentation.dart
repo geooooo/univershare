@@ -9,7 +9,9 @@ class DownloadPresentation extends StatefulWidget {
 
   final DownloadPresentationOnSelectFileFunction onSelectFile;
 
-  DownloadPresentation({this.onSelectFile});
+  DownloadPresentation({
+    this.onSelectFile,
+  });
 
   @override
   State<DownloadPresentation> createState() => DownloadPresentationState(
@@ -23,7 +25,9 @@ class DownloadPresentationState extends State<DownloadPresentation> {
   final DownloadPresentationOnSelectFileFunction onSelectFile;
   final TextEditingController _controller = TextEditingController();
 
-  DownloadPresentationState({this.onSelectFile});
+  DownloadPresentationState({
+    this.onSelectFile,
+  });
 
   @override
   Widget build(BuildContext context) => Row(

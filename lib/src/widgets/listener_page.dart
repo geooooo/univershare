@@ -10,7 +10,9 @@ class ListenerPage extends StatelessWidget {
 
   final Store<AppState> store;
 
-  ListenerPage({this.store});
+  ListenerPage({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -26,14 +28,13 @@ class ListenerPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
+            ListenerPageControl(
+              store: store,
+            ),
             PageChat(
               store: store,
               isQuestionEnabled: true,
             ),
-            ListenerPageControl(
-              store: store,
-            ),
-
             ListenerPagePresentation(
               store: store,
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../services/intl.dart' as intl;
@@ -12,7 +11,9 @@ class ListenerPageControl extends StatelessWidget {
 
   final Store<AppState> store;
 
-  ListenerPageControl({this.store});
+  ListenerPageControl({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -30,11 +31,9 @@ class ListenerPageControl extends StatelessWidget {
     ],
   );
 
-  void _onPressedExitButton(BuildContext context) {
-    Navigator.pushReplacementNamed(
-      context,
-      route.startPageRoute,
-    );
-  }
+  void _onPressedExitButton(BuildContext context) => Navigator.pushReplacementNamed(
+    context,
+    route.startPageRoute,
+  );
 
 }

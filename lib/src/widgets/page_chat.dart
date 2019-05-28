@@ -11,7 +11,10 @@ class PageChat extends StatelessWidget {
   final Store<AppState> store;
   final bool isQuestionEnabled;
 
-  PageChat({this.store, this.isQuestionEnabled});
+  PageChat({
+    this.store,
+    this.isQuestionEnabled,
+  });
 
   @override
   Widget build(BuildContext context) => Column(
@@ -28,8 +31,7 @@ class PageChat extends StatelessWidget {
     ],
   );
 
-  void _onSendMessage(String value, bool isQuestion) {
+  void _onSendMessage(String value, bool isQuestion) =>
     store.dispatch(action.SendMessage(value, store.state.userName, isQuestion));
-  }
 
 }

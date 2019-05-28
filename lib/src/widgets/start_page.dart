@@ -8,7 +8,9 @@ class StartPage extends StatelessWidget {
 
   final Store<AppState> store;
 
-  StartPage({this.store});
+  StartPage({
+    this.store,
+  });
 
   @override
   Widget build(BuildContext context) => SafeArea(
