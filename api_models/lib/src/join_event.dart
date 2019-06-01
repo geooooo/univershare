@@ -26,7 +26,7 @@ class JoinEventRequest extends Serializable {
 //    0 - ok
 class JoinEventResponse extends Response {
 
-  String userId;
+  int userId;
 
   @override
   Map<String, dynamic> asMap() => super.asMap()..addAll({

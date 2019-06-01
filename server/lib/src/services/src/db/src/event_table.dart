@@ -28,7 +28,9 @@ class _EventTable {
   @Relate(#event)
   PresentationTable presentation;
 
-  @Relate(#event)
+  @Relate(#eventPresenter)
   UserTable presenter;
+
+  ManagedSet<UserTable> userListener;
 
 }

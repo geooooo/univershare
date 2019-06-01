@@ -42,7 +42,6 @@ class Db {
     return event != null;
   }
 
-
   Future<Map<String, Object>> getEventInfo(String eventId) async {
     final querySelectEvent = Query<EventTable>(managedContext)
       ..where((EventTable event) => event.id_code).equalTo(eventId);
@@ -56,6 +55,21 @@ class Db {
     return <String, Object>{
       'event_name': event.name,
       'presentation_url': presentation.url,
+    };
+  }
+
+  Future<Map<String, Object>> joinEvent(String eventId, String userName) async {
+    final querySelectEvent = Query<EventTable>(managedContext)
+      ..where((EventTable event) => event.id_code).equalTo(eventId);
+    final event = await querySelectEvent.fetchOne();
+
+    final queryCreateUser = Query<UserTable>(managedContext)
+      ..values.name = userName
+      ..values.event = event;
+    final newUser = await queryCreateUser.insert();
+
+    return <String, Object>{
+      'user_id': newUser.id,
     };
   }
 

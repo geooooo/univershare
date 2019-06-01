@@ -12,9 +12,9 @@ class JoinEventController extends ResourceController {
   @Operation.post()
   Future<Response> joinEvent(@Bind.body() JoinEventRequest request) async {
     _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-//    final data = await _diInjector.db.selectSettings(request.login);
+    final data = await _diInjector.db.joinEvent(request.eventId, request.userName);
     final response = JoinEventResponse()
-//      ..readFromMap(data)TODO:
+      ..readFromMap(data)
       ..status = 0;
     return Response.ok(response);
   }

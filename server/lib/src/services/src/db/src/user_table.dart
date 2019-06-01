@@ -19,7 +19,10 @@ class _UserTable {
   )
   String name;
 
+  @Relate(#userListener)
   EventTable event;
+
+  EventTable eventPresenter;
   ManagedSet<MessageTable> message;
 
 }

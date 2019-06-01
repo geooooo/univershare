@@ -103,6 +103,9 @@ presentation
 user 
     id int primary key
     name string not null
+    event_id int
+    
+    foreign key(event_id) references event(id)
     
 message
     id int primary key
