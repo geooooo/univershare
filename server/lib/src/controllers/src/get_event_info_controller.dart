@@ -12,9 +12,9 @@ class GetEventInfoController extends ResourceController {
   @Operation.post()
   Future<Response> getEventInfo(@Bind.body() GetEventInfoRequest request) async {
     _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-//    final data = await _diInjector.db.selectSettings(request.login);
+    final data = await _diInjector.db.getEventInfo(request.eventId);
     final response = GetEventInfoResponse()
-//      ..readFromMap(data)TODO:
+      ..readFromMap(data)
       ..status = 0;
     return Response.ok(response);
   }

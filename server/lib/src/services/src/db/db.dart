@@ -41,6 +41,23 @@ class Db {
     final event = await querySelectEvent.fetchOne();
     return event != null;
   }
+
+
+  Future<Map<String, Object>> getEventInfo(String eventId) async {
+    final querySelectEvent = Query<EventTable>(managedContext)
+      ..where((EventTable event) => event.id_code).equalTo(eventId);
+    final event = await querySelectEvent.fetchOne();
+    final presentationId = event.presentation.id;
+
+    final querySelectPresentation = Query<PresentationTable>(managedContext)
+      ..where((PresentationTable presentation) => presentation.id).equalTo(presentationId);
+    final presentation = await querySelectPresentation.fetchOne();
+
+    return <String, Object>{
+      'event_name': event.name,
+      'presentation_url': presentation.url,
+    };
+  }
 //
 //  Future<void> createGroup(api_models.Group group, String teamTitle) async {
 //    final querySelectTeam = Query<TeamTable>(managedContext)
