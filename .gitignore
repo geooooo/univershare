@@ -1,31 +1,31 @@
 # Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
+**/*.class
+**/*.log
+**/*.pyc
+**/*.swp
+**/.DS_Store
+**/.atom/
+**/.buildlog/
+**/.history
+**/.svn/
 
 # IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
+mobile/android/univershare_android.iml
+**/*.ipr
+**/*.iws
+**/.idea/
 
 # Visual Studio Code related
-.vscode/
+**/.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
-.dart_tool/
-.flutter-plugins
-.packages
-.pub-cache/
-.pub/
-/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -69,30 +69,82 @@
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 Будет удалено .gitignore
-Будет удалено .metadata
-Будет удалено LICENSE
-Будет удалено README.md
-Будет удалено android/app/build.gradle
-Будет удалено android/app/src/debug/
-Будет удалено android/app/src/main/AndroidManifest.xml
-Будет удалено android/app/src/main/java/self/
-Будет удалено android/app/src/main/res/
-Будет удалено android/app/src/profile/
-Будет удалено android/build.gradle
-Будет удалено android/gradle.properties
-Будет удалено android/gradle/wrapper/gradle-wrapper.properties
-Будет удалено android/settings.gradle
-Будет удалено ios/Flutter/AppFrameworkInfo.plist
-Будет удалено ios/Flutter/Debug.xcconfig
-Будет удалено ios/Flutter/Release.xcconfig
-Будет удалено ios/Runner.xcodeproj/
-Будет удалено ios/Runner.xcworkspace/
-Будет удалено ios/Runner/AppDelegate.h
-Будет удалено ios/Runner/AppDelegate.m
-Будет удалено ios/Runner/Assets.xcassets/
-Будет удалено ios/Runner/Base.lproj/
-Будет удалено ios/Runner/Info.plist
-Будет удалено ios/Runner/main.m
-Будет удалено lib/
-Будет удалено pubspec.lock
-Будет удалено pubspec.yaml
+Будет удалено mobile/android/univershare_android.iml
+Будет удалено mobile/build/app.dill
+Будет удалено mobile/build/app/generated/
+Будет удалено mobile/build/app/intermediates/annotation_processor_list/
+Будет удалено mobile/build/app/intermediates/apk_list/
+Будет удалено mobile/build/app/intermediates/blame/
+Будет удалено mobile/build/app/intermediates/check-libraries/
+Будет удалено mobile/build/app/intermediates/check-manifest/
+Будет удалено mobile/build/app/intermediates/checkDebugClasspath/
+Будет удалено mobile/build/app/intermediates/compatible_screen_manifest/
+Будет удалено mobile/build/app/intermediates/flutter/
+Будет удалено mobile/build/app/intermediates/incremental/
+Будет удалено mobile/build/app/intermediates/instant_run_merged_manifests/
+Будет удалено mobile/build/app/intermediates/jniLibs/
+Будет удалено mobile/build/app/intermediates/merged_assets/
+Будет удалено mobile/build/app/intermediates/merged_manifests/
+Будет удалено mobile/build/app/intermediates/prebuild/
+Будет удалено mobile/build/app/intermediates/processed_res/
+Будет удалено mobile/build/app/intermediates/res/
+Будет удалено mobile/build/app/intermediates/rs/
+Будет удалено mobile/build/app/intermediates/shader_assets/
+Будет удалено mobile/build/app/intermediates/shaders/
+Будет удалено mobile/build/app/intermediates/split_list/
+Будет удалено mobile/build/app/intermediates/symbols/
+Будет удалено mobile/build/app/intermediates/transforms/
+Будет удалено mobile/build/app/outputs/
+Будет удалено mobile/build/app/tmp/
+Будет удалено mobile/build/flutter_document_picker/generated/
+Будет удалено mobile/build/flutter_document_picker/intermediates/aapt_friendly_merged_manifests/
+Будет удалено mobile/build/flutter_document_picker/intermediates/annotation_processor_list/
+Будет удалено mobile/build/flutter_document_picker/intermediates/annotations_typedef_file/
+Будет удалено mobile/build/flutter_document_picker/intermediates/annotations_zip/
+Будет удалено mobile/build/flutter_document_picker/intermediates/check-manifest/
+Будет удалено mobile/build/flutter_document_picker/intermediates/incremental/
+Будет удалено mobile/build/flutter_document_picker/intermediates/intermediate-jars/
+Будет удалено mobile/build/flutter_document_picker/intermediates/jniLibs/
+Будет удалено mobile/build/flutter_document_picker/intermediates/library_and_local_jars_jni/
+Будет удалено mobile/build/flutter_document_picker/intermediates/library_assets/
+Будет удалено mobile/build/flutter_document_picker/intermediates/merged_manifests/
+Будет удалено mobile/build/flutter_document_picker/intermediates/packaged-classes/
+Будет удалено mobile/build/flutter_document_picker/intermediates/packaged_res/
+Будет удалено mobile/build/flutter_document_picker/intermediates/public_res/
+Будет удалено mobile/build/flutter_document_picker/intermediates/res/
+Будет удалено mobile/build/flutter_document_picker/intermediates/rs/
+Будет удалено mobile/build/flutter_document_picker/intermediates/shader_assets/
+Будет удалено mobile/build/flutter_document_picker/intermediates/shaders/
+Будет удалено mobile/build/flutter_document_picker/intermediates/symbols/
+Будет удалено mobile/build/flutter_document_picker/intermediates/transforms/
+Будет удалено mobile/build/flutter_document_picker/kotlin/
+Будет удалено mobile/build/flutter_document_picker/outputs/
+Будет удалено mobile/build/flutter_document_picker/tmp/compileDebugJavaWithJavac/
+Будет удалено mobile/build/flutter_document_picker/tmp/kotlin-classes/debug/META-INF/
+Будет удалено mobile/build/frontend_server.d
+Будет удалено mobile/build/kotlin/
+Будет удалено mobile/build/url_launcher/generated/
+Будет удалено mobile/build/url_launcher/intermediates/aapt_friendly_merged_manifests/
+Будет удалено mobile/build/url_launcher/intermediates/annotation_processor_list/
+Будет удалено mobile/build/url_launcher/intermediates/annotations_typedef_file/
+Будет удалено mobile/build/url_launcher/intermediates/annotations_zip/
+Будет удалено mobile/build/url_launcher/intermediates/check-manifest/
+Будет удалено mobile/build/url_launcher/intermediates/incremental/
+Будет удалено mobile/build/url_launcher/intermediates/intermediate-jars/
+Будет удалено mobile/build/url_launcher/intermediates/jniLibs/
+Будет удалено mobile/build/url_launcher/intermediates/library_and_local_jars_jni/
+Будет удалено mobile/build/url_launcher/intermediates/library_assets/
+Будет удалено mobile/build/url_launcher/intermediates/merged_manifests/
+Будет удалено mobile/build/url_launcher/intermediates/packaged-classes/
+Будет удалено mobile/build/url_launcher/intermediates/packaged_res/
+Будет удалено mobile/build/url_launcher/intermediates/public_res/
+Будет удалено mobile/build/url_launcher/intermediates/res/
+Будет удалено mobile/build/url_launcher/intermediates/rs/
+Будет удалено mobile/build/url_launcher/intermediates/shader_assets/
+Будет удалено mobile/build/url_launcher/intermediates/shaders/
+Будет удалено mobile/build/url_launcher/intermediates/symbols/
+Будет удалено mobile/build/url_launcher/intermediates/transforms/
+Будет удалено mobile/build/url_launcher/outputs/
+Будет удалено mobile/build/url_launcher/tmp/
+Будет удалено mobile/ios/Frameworks/
+Будет удалено mobile/univershare.iml

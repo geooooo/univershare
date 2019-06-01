@@ -1,7 +1,7 @@
 class AppState {
 
   String userName = 'vasia'; //TODO: temp
-  String eventId = '111-111-111'; //TODO: temp
+  String eventId = '12f-ac3-d39'; //TODO: temp
   String eventName = 'eventName'; //TODO: temp
   String presentationUrl = 'http://www.africau.edu/images/default/sample.pdf'; //TODO: temp
   List<Message> messages = [
@@ -56,18 +56,18 @@ class AppState {
       isQuestion: true,
     ),
     Message(
-      userName: 'ivan',
-      text: '1234567\n1234\n345345\n',
+      userName: 'iVan',
+      text: 'Hello ! ))))',
       isQuestion: true,
     ),
     Message(
-      userName: 'ivan',
-      text: '1234567\n1234\n345345\n',
+      userName: 'John',
+      text: 'Привет',
       isQuestion: true,
     ),
     Message(
-      userName: 'petia',
-      text: 'qwerty',
+      userName: 'John',
+      text: 'Мне\nсегодня\nкупили\nвелосипед',
       isQuestion: true,
     ),
   ]; //TODO: temp
