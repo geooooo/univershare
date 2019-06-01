@@ -3,23 +3,31 @@ import 'package:aqueduct/aqueduct.dart' hide Response;
 
 import 'package:api_models/src/response.dart';
 
-class ExistsTeamRequest extends Serializable {
-
-  String title;
+class GetNewEventIdRequest extends Serializable {
 
   @override
-  Map<String, dynamic> asMap() => {
-      'title': title,
-  };
+  Map<String, dynamic> asMap() => {};
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
-    title = inputMap['title'];
-  }
+  void readFromMap(Map<String, dynamic> inputMap) {}
 
 }
 
 // status:
-//    0 - команда существует
-//    1 - не существует
-class ExistsTeamResponse extends Response {}
+//    0 - ok
+class GetNewEventIdResponse extends Response {
+
+  String eventId;
+
+  @override
+  Map<String, dynamic> asMap() => super.asMap()..addAll({
+    'event_id': eventId,
+  });
+
+  @override
+  void readFromMap(Map<String, dynamic> inputMap) {
+    super.readFromMap(inputMap);
+    eventId = inputMap['event_id'];
+  }
+
+}

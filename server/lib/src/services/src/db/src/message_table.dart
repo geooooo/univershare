@@ -1,5 +1,7 @@
 import 'package:aqueduct/aqueduct.dart';
 
+import 'user_table.dart';
+
 class MessageTable extends ManagedObject<_MessageTable> implements _MessageTable {}
 
 class _MessageTable {
@@ -16,6 +18,13 @@ class _MessageTable {
   )
   String text;
 
-//  foreign key(user_id) references user(id)
+  @Column(
+    nullable: false,
+    unique: false,
+  )
+  bool is_question;
+
+  @Relate(#message)
+  UserTable user;
 
 }

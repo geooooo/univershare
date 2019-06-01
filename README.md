@@ -11,7 +11,7 @@ post exists_event
         1 - not exists
 }
 
-post join
+post join_event
     event_id
     user_name
 {
@@ -25,7 +25,7 @@ post get_event_info
 {
     status:
         0 - ok
-    eventName
+    event_name
     presentation_url
 }
 

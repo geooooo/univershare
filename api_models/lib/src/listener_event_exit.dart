@@ -3,23 +3,25 @@ import 'package:aqueduct/aqueduct.dart' hide Response;
 
 import 'package:api_models/src/response.dart';
 
-class ExistsTeamRequest extends Serializable {
+class ListenerEventExitRequest extends Serializable {
 
-  String title;
+  String eventId;
+  String userId;
 
   @override
   Map<String, dynamic> asMap() => {
-      'title': title,
+    'event_id': eventId,
+    'user_id': userId,
   };
 
   @override
   void readFromMap(Map<String, dynamic> inputMap) {
-    title = inputMap['title'];
+    eventId = inputMap['event_id'];
+    userId = inputMap['user_id'];
   }
 
 }
 
 // status:
-//    0 - команда существует
-//    1 - не существует
-class ExistsTeamResponse extends Response {}
+//    0 - ok
+class ListenerEventExitResponse extends Response {}

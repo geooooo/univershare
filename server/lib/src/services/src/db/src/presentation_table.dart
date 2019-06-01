@@ -1,5 +1,7 @@
 import 'package:aqueduct/aqueduct.dart';
 
+import 'event_table.dart';
+
 class PresentationTable extends ManagedObject<_PresentationTable> implements _PresentationTable {}
 
 class _PresentationTable {
@@ -15,5 +17,7 @@ class _PresentationTable {
     unique: false,
   )
   String url;
+
+  EventTable event;
 
 }

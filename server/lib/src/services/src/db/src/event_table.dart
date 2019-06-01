@@ -1,5 +1,8 @@
 import 'package:aqueduct/aqueduct.dart';
 
+import 'presentation_table.dart';
+import 'user_table.dart';
+
 class EventTable extends ManagedObject<_EventTable> implements _EventTable {}
 
 class _EventTable {
@@ -14,7 +17,7 @@ class _EventTable {
     nullable: false,
     unique: true,
   )
-  String idCode;
+  String id_code;
 
   @Column(
     nullable: false,
@@ -22,7 +25,10 @@ class _EventTable {
   )
   String name;
 
-//  foreign key(presentation_id) references presentation(id)
-//  foreign key(presenter_id) references user(id)
+  @Relate(#event)
+  PresentationTable presentation;
+
+  @Relate(#event)
+  UserTable presenter;
 
 }

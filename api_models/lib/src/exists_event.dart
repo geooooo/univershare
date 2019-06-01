@@ -3,7 +3,7 @@ import 'package:aqueduct/aqueduct.dart' hide Response;
 
 import 'package:api_models/src/response.dart';
 
-class PresenterEventExitRequest extends Serializable {
+class ExistsEventRequest extends Serializable {
 
   String eventId;
 
@@ -20,5 +20,6 @@ class PresenterEventExitRequest extends Serializable {
 }
 
 // status:
-//    0 - ok
-class PresenterEventExitResponse extends Response {}
+//    0 - существует
+//    1 - не существует
+class ExistsEventResponse extends Response {}
