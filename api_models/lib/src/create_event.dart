@@ -5,7 +5,7 @@ import 'package:api_models/src/response.dart';
 
 class CreateEventRequest extends Serializable {
 
-  int eventId;
+  String eventId;
   String eventName;
   String userName;
   String presentationFile;

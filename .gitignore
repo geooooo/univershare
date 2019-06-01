@@ -1,3 +1,6 @@
+# Other
+server/asset/presentation/
+
 # Miscellaneous
 **/*.class
 **/*.log

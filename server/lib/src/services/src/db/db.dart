@@ -1,5 +1,4 @@
 import 'package:aqueduct/aqueduct.dart';
-import 'package:api_models/api_models.dart' as api_models;
 import 'package:server/src/internal/app_config.dart';
 
 import 'src/managed_context.dart';
@@ -13,6 +12,28 @@ class Db {
   final ManagedContext managedContext;
 
   Db(AppConfig appConfig): managedContext = createManagedContext(appConfig);
+
+  Future<void> createEvent(
+      String eventId,
+      String eventName,
+      String creatorName,
+      String presentationUrl,
+  ) async {
+    final queryCreateUser = Query<UserTable>(managedContext)
+      ..values.name = creatorName;
+    final newUser = await queryCreateUser.insert();
+
+    final queryCreatePresentation = Query<PresentationTable>(managedContext)
+      ..values.url = presentationUrl;
+    final newPresentation = await queryCreatePresentation.insert();
+
+    final queryCreateEvent = Query<EventTable>(managedContext)
+      ..values.name = eventName
+      ..values.id_code = eventId
+      ..values.presentation = newPresentation
+      ..values.presenter = newUser;
+    await queryCreateEvent.insert();
+  }
 
 //  Future<void> appendAccountToTeam(String login, String teamTitle) async {
 //    final querySelectTeam = Query<TeamTable>(managedContext)
