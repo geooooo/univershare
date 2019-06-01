@@ -1,1 +1,0 @@
-const String icon = 'asset/image/icon/icon.png';
