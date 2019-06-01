@@ -12,9 +12,9 @@ class ExistsEventController extends ResourceController {
   @Operation.post()
   Future<Response> existsEvent(@Bind.body() ExistsEventRequest request) async {
     _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-//    final data = await _diInjector.db.selectSettings(request.login);
+    final data = await _diInjector.db.existsEvent(request.eventId);
     final response = ExistsEventResponse()
-      ..status = 0; //TODO:
+      ..status = data? 0 : 1;
     return Response.ok(response);
   }
 

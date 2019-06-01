@@ -35,16 +35,12 @@ class Db {
     await queryCreateEvent.insert();
   }
 
-//  Future<void> appendAccountToTeam(String login, String teamTitle) async {
-//    final querySelectTeam = Query<TeamTable>(managedContext)
-//      ..where((TeamTable team) => team.title).equalTo(teamTitle);
-//    final team = await querySelectTeam.fetchOne();
-//
-//    final queryAppendAccountToTeam = Query<AccountTable>(managedContext)
-//      ..where((AccountTable account) => account.login).equalTo(login)
-//      ..values.team = team;
-//    await queryAppendAccountToTeam.updateOne();
-//  }
+  Future<bool> existsEvent(String eventId) async {
+    final querySelectEvent = Query<EventTable>(managedContext)
+        ..where((EventTable event) => event.id_code).equalTo(eventId);
+    final event = await querySelectEvent.fetchOne();
+    return event != null;
+  }
 //
 //  Future<void> createGroup(api_models.Group group, String teamTitle) async {
 //    final querySelectTeam = Query<TeamTable>(managedContext)
