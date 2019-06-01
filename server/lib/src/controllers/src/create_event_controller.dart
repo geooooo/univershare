@@ -8,9 +8,9 @@ import 'package:server/src/internal/di_injector.dart';
 
 class CreateEventController extends ResourceController {
 
-  static const printFileByteCount = 16;
-  static const presentationExtension = '.pdf';
-  static final presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
+  static const int printFileByteCount = 16;
+  static const String presentationExtension = '.pdf';
+  static final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
 
   final DiInjector _diInjector;
 
