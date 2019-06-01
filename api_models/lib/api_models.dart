@@ -9,4 +9,8 @@ export 'src/websocket_data.dart';
 export 'src/websocket_event.dart';
 export 'src/websocket_new_message_data.dart';
 export 'src/websocket_get_message_data.dart';
+export 'src/websocket_connect_data.dart';
+export 'src/websocket_disconnect_presenter_data.dart';
+export 'src/websocket_disconnect_listener_data.dart';
+export 'src/websocket_event_end_data.dart';
 

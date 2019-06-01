@@ -41,12 +41,16 @@ class WebSocketController extends Controller {
 
     _diInjector.logger.logWebSocketApi(eventName, eventData);
 
-    if (connections[eventData['event_id']].isEmpty) {
-      connections[eventData['event_id']] = <int, io.WebSocket>{};
-    }
-    connections[eventData['event_id']][eventData['user_id']] = connection;
-
     switch (eventName) {
+      case 'connect':
+        onConnect(connection, eventData);
+        break;
+      case 'disconnect_presenter':
+        onDisconnectPresenter(connection, eventData);
+        break;
+      case 'disconnect_listener':
+        onDisconnectListener(connection, eventData);
+        break;
       case 'new_message':
         await onNewMessage(connection, eventData);
         break;
@@ -55,6 +59,25 @@ class WebSocketController extends Controller {
 
   void onDoneListener() =>
     _diInjector.logger.logWebSocketApiDisconnect();
+
+  void onConnect(io.WebSocket connectionSender, Map<String, Object> eventData) {
+    final data = api_models.WebSocketConnectData()..readFromMap(eventData);
+    if (connections[data.eventId].isEmpty) {
+      connections[data.eventId] = <int, io.WebSocket>{};
+    }
+    connections[data.eventId][data.userId] = connectionSender;
+  }
+
+  void onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) {
+    final data = api_models.WebSocketDisconnectPresenterData()..readFromMap(eventData);
+    connections.remove(data.eventId);
+    _diInjector.db.removeEventData(data.eventId);
+  }
+
+  void onDisconnectListener(io.WebSocket connectionSender, Map<String, Object> eventData) {
+    final data = api_models.WebSocketDisconnectListenerData()..readFromMap(eventData);
+    connections[data.eventId].remove(data.userId);
+  }
 
   Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
     final data = api_models.WebSocketNewMessageData()..readFromMap(eventData);
@@ -65,6 +88,7 @@ class WebSocketController extends Controller {
       if (connection == connectionSender) {
         return;
       }
+      print('get_message');
       connection.add(api_models.WebSocketGetMessageData()
           ..text = data.text
           ..userName = data.userName

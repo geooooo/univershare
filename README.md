@@ -73,6 +73,24 @@ get_messages
     messages: [
         { user_name, text }
     ]
+
+server connect
+    event_id
+    user_id
+    
+server disconnect_listener
+    event_id
+    user_id
+    
+===================
+  
+server disconnect_presenter
+    event_id
+    user_id
+    
+client event_end
+    
+===================
     
 server new_message
     event_id
@@ -85,8 +103,6 @@ client get_message
     user_name
     text
     is_question
-    
-event_end
 ```
 
 ## Схема БД

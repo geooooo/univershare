@@ -81,4 +81,26 @@ class Db {
     await queryCreateMessage.insert();
   }
 
+  Future<void> removeEventData(String eventIdCode) async {
+    final querySelectEvent = Query<EventTable>(managedContext)
+      ..where((EventTable event) => event.id_code).equalTo(eventIdCode);
+    final event = await querySelectEvent.fetchOne();
+    final eventId = event.id;
+    final presentation = event.presentation;
+    final presenter = event.presenter;
+    await querySelectEvent.delete();
+
+    final querySelectPresenter = Query<UserTable>(managedContext)
+      ..where((UserTable user) => user.id).equalTo(presenter.id);
+    await querySelectPresenter.delete();
+
+    final querySelectPresentation = Query<PresentationTable>(managedContext)
+      ..where((PresentationTable presentation) => presentation.id).equalTo(presentation.id);
+    await querySelectPresentation.delete();
+
+    final querySelectListeners = Query<UserTable>(managedContext)
+      ..where((UserTable user) => user.event.id).equalTo(eventId);
+    await querySelectListeners.delete();
+  }
+
 }
