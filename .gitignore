@@ -148,3 +148,7 @@ mobile/android/univershare_android.iml
 Будет удалено mobile/build/url_launcher/tmp/
 Будет удалено mobile/ios/Frameworks/
 Будет удалено mobile/univershare.iml
+Будет удалено api_models/lib/
+Будет удалено server/bin/
+Будет удалено server/lib/
+Будет удалено server/pubspec.lock

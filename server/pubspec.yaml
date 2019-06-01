@@ -5,3 +5,12 @@ version: 1.0.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  ansicolor: ^1.0.2
+  aqueduct: ^3.2.0
+  api_models:
+    path: ../api_models
+
+dev_dependencies:
+  pedantic: ^1.5.0

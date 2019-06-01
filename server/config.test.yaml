@@ -1,0 +1,6 @@
+database:
+  username: geo
+  password: "123"
+  port: 5432
+  host: localhost
+  databaseName: dartello_test
