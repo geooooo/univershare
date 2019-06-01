@@ -29,14 +29,6 @@ post get_event_info
     presentation_url
 }
 
-post listener_event_exit
-    event_id
-    user_id
-{
-    status:
-        0 - ok
-}
-
 post get_new_event_id
 {
     status:
@@ -53,18 +45,25 @@ post create_event
     status:
         0 - ok
 }
+```
 
+## Схема WebSocket:
+
+```
+post listener_event_exit
+    event_id
+    user_id
+{
+    status:
+        0 - ok
+}
 post presenter_event_exit
     event_id
 {
     status:
         0 - ok
 }
-```
 
-## Схема WebSocket:
-
-```
 get_questions
     questions: [
         { text }
@@ -75,10 +74,17 @@ get_messages
         { user_name, text }
     ]
     
-send_message
+server new_message
+    event_id
+    user_id
     user_name
     text
-    isQuestion
+    is_question
+    
+client get_message
+    user_name
+    text
+    is_question
     
 event_end
 ```

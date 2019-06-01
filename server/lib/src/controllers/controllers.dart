@@ -5,3 +5,4 @@ export 'src/get_new_event_id_controller.dart';
 export 'src/join_event_controller.dart';
 export 'src/listener_event_exit_controller.dart';
 export 'src/presenter_event_exit_controller.dart';
+export 'src/websocket_controller.dart';

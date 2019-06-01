@@ -1,9 +1,6 @@
+import 'package:aqueduct/aqueduct.dart' show Serializable;
 
-import 'package:aqueduct/aqueduct.dart' hide Response;
-
-import 'package:api_models/src/response.dart';
-
-class ListenerEventExitRequest extends Serializable {
+abstract class WebSocketData extends Serializable {
 
   String eventId;
   int userId;
@@ -21,7 +18,3 @@ class ListenerEventExitRequest extends Serializable {
   }
 
 }
-
-// status:
-//    0 - ok
-class ListenerEventExitResponse extends Response {}

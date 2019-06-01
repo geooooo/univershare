@@ -12,7 +12,7 @@ class ListenterEventExitController extends ResourceController {
   @Operation.post()
   Future<Response> listenerEventExit(@Bind.body() ListenerEventExitRequest request) async {
     _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-//    final data = await _diInjector.db.selectSettings(request.login);
+//    await _diInjector.db.listenerEventExit(request.eventId, request.userId);
     final response = ListenerEventExitResponse();
     return Response.ok(response);
   }
