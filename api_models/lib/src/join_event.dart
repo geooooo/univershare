@@ -1,7 +1,6 @@
-
 import 'package:aqueduct/aqueduct.dart' hide Response;
 
-import 'package:api_models/src/response.dart';
+import 'response.dart';
 
 class JoinEventRequest extends Serializable {
 
@@ -9,13 +8,13 @@ class JoinEventRequest extends Serializable {
   String userName;
 
   @override
-  Map<String, dynamic> asMap() => {
+  Map<String, Object> asMap() => {
     'event_id': eventId,
     'user_name': userName,
   };
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     eventId = inputMap['event_id'];
     userName = inputMap['user_name'];
   }
@@ -29,12 +28,12 @@ class JoinEventResponse extends Response {
   int userId;
 
   @override
-  Map<String, dynamic> asMap() => super.asMap()..addAll({
+  Map<String, Object> asMap() => super.asMap()..addAll({
     'user_id': userId,
   });
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     super.readFromMap(inputMap);
     userId = inputMap['user_id'];
   }

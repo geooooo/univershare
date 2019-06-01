@@ -1,7 +1,6 @@
-
 import 'package:aqueduct/aqueduct.dart' hide Response;
 
-import 'package:api_models/src/response.dart';
+import 'response.dart';
 
 class CreateEventRequest extends Serializable {
 
@@ -11,7 +10,7 @@ class CreateEventRequest extends Serializable {
   String presentationFile;
 
   @override
-  Map<String, dynamic> asMap() => {
+  Map<String, Object> asMap() => {
     'event_id': eventId,
     'event_name': eventName,
     'user_name': userName,
@@ -19,7 +18,7 @@ class CreateEventRequest extends Serializable {
   };
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     eventId = inputMap['event_id'];
     eventName = inputMap['event_name'];
     userName = inputMap['user_name'];

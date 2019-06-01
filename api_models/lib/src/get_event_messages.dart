@@ -1,14 +1,15 @@
 import 'package:aqueduct/aqueduct.dart' hide Response;
 
 import 'response.dart';
+import 'message.dart';
 
-class GetEventInfoRequest extends Serializable {
+class GetEventMessagesRequest extends Serializable {
 
   String eventId;
 
   @override
   Map<String, Object> asMap() => {
-      'event_id': eventId,
+    'event_id': eventId,
   };
 
   @override
@@ -20,21 +21,19 @@ class GetEventInfoRequest extends Serializable {
 
 // status:
 //    0 - ok
-class GetEventInfoResponse extends Response {
-  String eventName = '';
-  String presentationUrl = '';
+class GetEventMessagesResponse extends Response {
+
+  List<Message> messages;
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({
-    'event_name': eventName,
-    'presentation_url': presentationUrl,
+    'messages': messages.map((message) => message.asMap()).toList(),
   });
 
   @override
   void readFromMap(Map<String, Object> inputMap) {
-    super.readFromMap(inputMap);
-    eventName = inputMap['event_name'];
-    presentationUrl = inputMap['presentation_url'];
+    final Iterable<Map<String, Object>> messagesMap = inputMap['messages'];
+    messages = messagesMap.map((message) => Message().readFromMap(message));
   }
 
 }

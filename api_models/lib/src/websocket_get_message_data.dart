@@ -7,14 +7,14 @@ class WebSocketGetMessageData extends WebSocketData {
   bool isQuestion;
 
   @override
-  Map<String, dynamic> asMap() => {
+  Map<String, Object> asMap() => {
     'text': text,
     'user_name': userName,
     'is_question': isQuestion,
   };
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     text = inputMap['text'];
     userName = inputMap['user_name'];
     isQuestion = inputMap['is_question'];

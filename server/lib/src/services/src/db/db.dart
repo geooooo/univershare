@@ -77,7 +77,8 @@ class Db {
     final queryCreateMessage = Query<MessageTable>(managedContext)
       ..values.text = text
       ..values.is_question = isQuestion
-      ..values.user.id = userId;
+      ..values.user.id = userId
+      ..values.time = DateTime.now().millisecondsSinceEpoch.toString();
     await queryCreateMessage.insert();
   }
 
@@ -101,6 +102,32 @@ class Db {
     final querySelectListeners = Query<UserTable>(managedContext)
       ..where((UserTable user) => user.event.id).equalTo(eventId);
     await querySelectListeners.delete();
+  }
+
+  Future<Map<String, Object>> getEventMessages(String eventIdCode) async {
+    final querySelectEvent = Query<EventTable>(managedContext)
+      ..where((EventTable event) => event.id_code).equalTo(eventIdCode);
+    final event = await querySelectEvent.fetchOne();
+    final eventId = event.id;
+
+    final querySelectListeners = Query<UserTable>(managedContext)
+      ..where((UserTable user) => user.event.id).equalTo(eventId);
+    final listeners = await querySelectListeners.fetch();
+
+    var messages = <Map<String, Object>>[];
+    for (var listener in listeners) {
+      final querySelectMessages = Query<MessageTable>(managedContext)
+        ..where((MessageTable message) => message.user.id).equalTo(listener.id);
+      messages.addAll((await querySelectMessages.fetch()).map((message) => <String, Object>{
+        'user_name': listener.name,
+        'text': message.text,
+        'is_question': message.is_question,
+      }));
+    }
+
+    return <String, Object>{
+      'messages': messages,
+    };
   }
 
 }

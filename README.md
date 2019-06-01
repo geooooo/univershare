@@ -45,35 +45,21 @@ post create_event
     status:
         0 - ok
 }
+
+post get_event_messages
+    event_id
+{
+   status:
+       0 - ok
+   messages: [
+        { user_name, text, is_question }
+   ]
+}
 ```
 
 ## Схема WebSocket:
 
 ```
-post listener_event_exit
-    event_id
-    user_id
-{
-    status:
-        0 - ok
-}
-post presenter_event_exit
-    event_id
-{
-    status:
-        0 - ok
-}
-
-get_questions
-    questions: [
-        { text }
-    ]
-    
-get_messages
-    messages: [
-        { user_name, text }
-    ]
-
 server connect
     event_id
     user_id

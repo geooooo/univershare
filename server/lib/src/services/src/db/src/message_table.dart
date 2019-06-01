@@ -24,6 +24,12 @@ class _MessageTable {
   )
   bool is_question;
 
+  @Column(
+    nullable: false,
+    unique: false,
+  )
+  String time;
+
   @Relate(#message)
   UserTable user;
 

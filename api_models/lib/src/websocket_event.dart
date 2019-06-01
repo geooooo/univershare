@@ -8,13 +8,13 @@ class WebSocketEvent extends Serializable {
   WebSocketData data;
 
   @override
-  Map<String, dynamic> asMap() => {
+  Map<String, Object> asMap() => {
     'name': name,
     'data': data.asMap(),
   };
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     name = inputMap['name'];
     data.readFromMap(inputMap['data']);
   }

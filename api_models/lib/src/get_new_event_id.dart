@@ -1,15 +1,14 @@
-
 import 'package:aqueduct/aqueduct.dart' hide Response;
 
-import 'package:api_models/src/response.dart';
+import 'response.dart';
 
 class GetNewEventIdRequest extends Serializable {
 
   @override
-  Map<String, dynamic> asMap() => {};
+  Map<String, Object> asMap() => {};
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {}
+  void readFromMap(Map<String, Object> inputMap) {}
 
 }
 
@@ -20,12 +19,12 @@ class GetNewEventIdResponse extends Response {
   String eventId;
 
   @override
-  Map<String, dynamic> asMap() => super.asMap()..addAll({
+  Map<String, Object> asMap() => super.asMap()..addAll({
     'event_id': eventId,
   });
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     super.readFromMap(inputMap);
     eventId = inputMap['event_id'];
   }

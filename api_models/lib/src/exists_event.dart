@@ -1,19 +1,18 @@
-
 import 'package:aqueduct/aqueduct.dart' hide Response;
 
-import 'package:api_models/src/response.dart';
+import 'response.dart';
 
 class ExistsEventRequest extends Serializable {
 
   String eventId;
 
   @override
-  Map<String, dynamic> asMap() => {
+  Map<String, Object> asMap() => {
       'event_id': eventId,
   };
 
   @override
-  void readFromMap(Map<String, dynamic> inputMap) {
+  void readFromMap(Map<String, Object> inputMap) {
     eventId = inputMap['event_id'];
   }
 

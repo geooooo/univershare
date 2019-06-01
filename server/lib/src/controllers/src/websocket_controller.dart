@@ -21,19 +21,6 @@ class WebSocketController extends Controller {
     return null;
   }
 
-//  @Operation.post()
-//  Future<Response> handler() async {
-//    print('+');
-////    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-////    final data = await _diInjector.db.selectSettings(request.login);
-////    final response = PresenterEventExitResponse();
-////    return Response.ok(response);
-//    final socket = await io.WebSocketTransformer.upgrade(request.raw);
-//    print('+');
-//    socket.listen(listener);
-//    return null;
-//  }
-
   Future<void> onDataListener(io.WebSocket connection, Object jsonData) async {
     final data = conv.jsonDecode(jsonData);
     final eventName = data['event'];
@@ -46,7 +33,7 @@ class WebSocketController extends Controller {
         onConnect(connection, eventData);
         break;
       case 'disconnect_presenter':
-        onDisconnectPresenter(connection, eventData);
+        await onDisconnectPresenter(connection, eventData);
         break;
       case 'disconnect_listener':
         onDisconnectListener(connection, eventData);
@@ -68,10 +55,18 @@ class WebSocketController extends Controller {
     connections[data.eventId][data.userId] = connectionSender;
   }
 
-  void onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) {
+  Future<void> onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) async {
     final data = api_models.WebSocketDisconnectPresenterData()..readFromMap(eventData);
     connections.remove(data.eventId);
-    _diInjector.db.removeEventData(data.eventId);
+
+    connections[data.eventId].forEach((_, connection) {
+      if (connection == connectionSender) {
+        return;
+      }
+      connection.add(api_models.WebSocketEventEndData());
+    });
+
+    await _diInjector.db.removeEventData(data.eventId);
   }
 
   void onDisconnectListener(io.WebSocket connectionSender, Map<String, Object> eventData) {
@@ -82,19 +77,18 @@ class WebSocketController extends Controller {
   Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
     final data = api_models.WebSocketNewMessageData()..readFromMap(eventData);
 
-    await _diInjector.db.newMessage(data.userId, data.text, data.isQuestion);
-
     connections[data.eventId].forEach((_, connection) {
       if (connection == connectionSender) {
         return;
       }
-      print('get_message');
       connection.add(api_models.WebSocketGetMessageData()
-          ..text = data.text
-          ..userName = data.userName
-          ..isQuestion = data.isQuestion
+        ..text = data.text
+        ..userName = data.userName
+        ..isQuestion = data.isQuestion
       );
     });
+
+    await _diInjector.db.newMessage(data.userId, data.text, data.isQuestion);
   }
 
 }
