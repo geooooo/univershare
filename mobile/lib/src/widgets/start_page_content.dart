@@ -4,9 +4,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../services/intl.dart' as intl;
 import '../services/asset.dart' as asset;
-import 'package:mobile/src/services/redux/action.dart' as action;
+import '../services/redux/action.dart' as action;
 import '../services/route.dart' as route;
-import 'package:mobile/src/services/redux/app_state.dart';
+import '../services/redux/app_state.dart';
 import 'vertical_space.dart';
 import 'event_id.dart';
 import 'dialog_join.dart';
@@ -26,29 +26,10 @@ class StartPageContent extends StatelessWidget {
     mainAxisSize: MainAxisSize.max,
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-//      StoreConnector<AppState, bool>(
-//        converter: (store) => store.state.startPageState.isShowDialogJoin,
-//        builder: (context, isShow) {
-//          if (isShow) {
-//            _showDialogJoin(context);
-//          }
-//          return Container();
-//        },
-//          future: isShow? _showDialogJoin(context) : null,
-//          builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-//            return snapshot.data;
-////            switch (snapshot.connectionState) {
-//////              case ConnectionState.active:
-//////              case ConnectionState.waiting:
-//////                return Text('Awaiting result...');
-////              case ConnectionState.done:
-////                return snapshot.data;
-////              default:
-////                return Container();
-////            }
-//          },// unreachable
-//        ),
-//      ),
+      StoreConnector<AppState, bool>(
+        converter: (store) => store.state.startPageState.isShowDialogJoin,
+        builder: (context, isShowDialogJoin) => isShowDialogJoin? _showDialogJoin(context) : Container(),
+      ),
       Image(
         image: AssetImage(asset.icon),
         height: _logoSize,
@@ -65,12 +46,16 @@ class StartPageContent extends StatelessWidget {
       StoreConnector<AppState, Map<String, Object>>(
         converter: (store) => <String, Object>{
           'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
-          'callback': (eventId) => store.dispatch(action.ExistsEvent(eventId)),
+          'callback': () { print(store.state.eventId); return store.dispatch(action.ExistsEvent(store.state.eventId));},
         },
-        builder: (context, data) => RaisedButton(
-          child: Text(intl.join),
-          onPressed: (data['isJoinButtonDisabled'])? null : data['callback'],
-        ),
+        builder: (context, data) {
+          final callback = data['callback'] as Function;
+          final isJoinButtonDisabled = data['isJoinButtonDisabled'] as bool;
+          return RaisedButton(
+            child: Text(intl.join),
+            onPressed: callback,
+          );
+        },
       ),
       VerticalSpace(30),
       Text(intl.or),
@@ -87,19 +72,16 @@ class StartPageContent extends StatelessWidget {
     route.createEventRoute,
   );
 
-  void _showDialogJoin(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
-      converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
-      builder: (context, callback) => DialogJoin(
-        onPressedJoin: (name) {
-          callback(name);
-          Navigator.pushReplacementNamed(
-            context,
-            route.listenerRoute,
-          );
-        },
-      ),
+  Widget _showDialogJoin(BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
+    converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
+    builder: (context, callback) => DialogJoin(
+      onPressedJoin: (name) {
+        callback(name);
+        Navigator.pushReplacementNamed(
+          context,
+          route.listenerRoute,
+        );
+      },
     ),
   );
 

@@ -9,7 +9,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
-  TypedReducer<AppState, ExistsEventResult>(_onExistsEventResult),
+//  TypedReducer<AppState, ExistsEventResult>(_onExistsEventResult),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {

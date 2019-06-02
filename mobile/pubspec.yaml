@@ -12,13 +12,13 @@ dependencies:
   redux_epics: ^0.10.6
   url_launcher: ^5.0.2
   http: ^0.12.0+2
+  api_models:
+    path: ../api_models
   flutter_document_picker: ^3.0.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  api_models:
-    path: ../api_models
   json_serializable: any
   flutter_launcher_icons: ^0.7.1
   pedantic: ^1.5.0
