@@ -45,13 +45,15 @@ class StartPageContent extends StatelessWidget {
         converter: (store) => <String, Object>{
           'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
           'eventId': store.state.eventId,
+          'callback': (isShow) => store.dispatch(action.Loading(isShow)),
         },
         builder: (context, data) {
           final eventId = data['eventId'] as String;
           final isJoinButtonDisabled = data['isJoinButtonDisabled'] as bool;
+          final callback = data['callback'] as Function;
           return RaisedButton(
             child: Text(intl.join),
-            onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context, eventId),
+            onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context, eventId, callback),
           );
         },
       ),
@@ -70,9 +72,11 @@ class StartPageContent extends StatelessWidget {
     route.createEventRoute,
   );
 
-  void _onJoinButtonPressed(BuildContext context, String eventId) async {
-    final r = await rest_api.existsEvent(eventId);
-    if (r.status == 0) {
+  void _onJoinButtonPressed(BuildContext context, String eventId, Function callback) async {
+    callback(true);
+    final response = await rest_api.existsEvent(eventId);
+    callback(false);
+    if (response.status == 0) {
       await _showDialogJoin(context);
     } else {
       await showDialogError(context, intl.eventNotExists);

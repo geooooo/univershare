@@ -43,3 +43,11 @@ class DeleteMessageFromQuestions {
   DeleteMessageFromQuestions(this.message);
 
 }
+
+class Loading {
+
+  final bool isShow;
+
+  Loading(this.isShow);
+
+}

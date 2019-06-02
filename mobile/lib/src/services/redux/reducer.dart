@@ -9,6 +9,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
+  TypedReducer<AppState, Loading>(_onLoading),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -68,4 +69,14 @@ AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestion
   );
   return state..messages.firstWhere((message) => message == action.message)
                         .isQuestion = false;
+}
+
+AppState _onLoading(AppState state, Loading action) {
+  print(
+    'Action: Loading {\n'
+      '\tisShow: ${action.isShow}\n'
+    '}\n'
+  );
+  return state
+    ..startPageState.isLoadingShow = action.isShow;
 }

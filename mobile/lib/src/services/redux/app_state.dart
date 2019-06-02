@@ -19,6 +19,7 @@ class StartPageState {
 
   bool isJoinButtonDisabled = true;
 //  bool isJoinButtonDisabled = false;
+  bool isLoadingShow = false;
 
   StartPageState._();
 
