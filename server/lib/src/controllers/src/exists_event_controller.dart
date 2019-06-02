@@ -1,5 +1,5 @@
 import 'package:aqueduct/aqueduct.dart';
-import 'package:api_models/api_models.dart';
+import 'package:api_models/api_models.dart' as api_models;
 
 import 'package:server/src/internal/di_injector.dart';
 
@@ -10,12 +10,13 @@ class ExistsEventController extends ResourceController {
   ExistsEventController(this._diInjector);
 
   @Operation.post()
-  Future<Response> existsEvent(@Bind.body() ExistsEventRequest request) async {
-    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, request.asMap());
-    final data = await _diInjector.db.existsEvent(request.eventId);
-    final response = ExistsEventResponse()
-      ..status = data? 0 : 1;
-    return Response.ok(response);
+  Future<Response> existsEvent(@Bind.body() Object request) async {
+    final requestData = api_models.ExistsEventRequest()..readFromMap(request);
+    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.asMap());
+    final responseData = await _diInjector.db.existsEvent(requestData.eventId);
+    final response = api_models.ExistsEventResponse()
+      ..status = responseData? 0 : 1;
+    return Response.ok(response.asMap());
   }
 
 }

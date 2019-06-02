@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import '../services/intl.dart' as intl;
 import 'dialog_error.dart';
 

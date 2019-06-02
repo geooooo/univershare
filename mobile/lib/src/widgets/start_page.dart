@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import 'start_page_content.dart';
 
 class StartPage extends StatelessWidget {

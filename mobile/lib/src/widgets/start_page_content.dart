@@ -4,9 +4,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../services/intl.dart' as intl;
 import '../services/asset.dart' as asset;
-import '../services/action.dart' as action;
+import 'package:mobile/src/services/redux/action.dart' as action;
 import '../services/route.dart' as route;
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import 'vertical_space.dart';
 import 'event_id.dart';
 import 'dialog_join.dart';
@@ -62,16 +62,16 @@ class StartPageContent extends StatelessWidget {
         ),
       ),
       VerticalSpace(20),
-//      StoreConnector<AppState, Map<String, Object>>(
-//        converter: (store) => <String, Object>{
-//          'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
-//          'callback': (eventId) => store.dispatch(action.ExistsEvent(eventId)),
-//        },
-//        builder: (context, data) => RaisedButton(
-//          child: Text(intl.join),
-//          onPressed: (data['isJoinButtonDisabled'])? null : data['callback'],
-//        ),
-//      ),
+      StoreConnector<AppState, Map<String, Object>>(
+        converter: (store) => <String, Object>{
+          'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
+          'callback': (eventId) => store.dispatch(action.ExistsEvent(eventId)),
+        },
+        builder: (context, data) => RaisedButton(
+          child: Text(intl.join),
+          onPressed: (data['isJoinButtonDisabled'])? null : data['callback'],
+        ),
+      ),
       VerticalSpace(30),
       Text(intl.or),
       VerticalSpace(30),
@@ -87,7 +87,7 @@ class StartPageContent extends StatelessWidget {
     route.createEventRoute,
   );
 
-  _showDialogJoin(BuildContext context) => showDialog(
+  void _showDialogJoin(BuildContext context) => showDialog(
     context: context,
     builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
       converter: (store) => (name) => store.dispatch(action.SetUserName(name)),

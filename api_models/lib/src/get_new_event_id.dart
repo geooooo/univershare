@@ -1,8 +1,7 @@
-import 'package:aqueduct/aqueduct.dart' hide Response;
-
 import 'response.dart';
+import 'request.dart';
 
-class GetNewEventIdRequest extends Serializable {
+class GetNewEventIdRequest extends Request {
 
   @override
   Map<String, Object> asMap() => {};

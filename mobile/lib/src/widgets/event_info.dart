@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../services/intl.dart' as intl;
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import 'vertical_space.dart';
 
 class EventInfo extends StatelessWidget {

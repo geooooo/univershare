@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import 'chat_message.dart';
 
 class ChatMessages extends StatefulWidget {

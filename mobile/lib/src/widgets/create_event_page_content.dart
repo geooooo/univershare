@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import '../services/intl.dart' as intl;
-import '../services/action.dart' as action;
+import 'package:mobile/src/services/redux/action.dart' as action;
 import '../services/route.dart' as route;
 import 'vertical_space.dart';
 import 'download_presentation.dart';
@@ -117,7 +117,7 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
       return;
     }
     callback();
-    Navigator.pushReplacementNamed(
+    await Navigator.pushReplacementNamed(
       context,
       route.presenterRoute,
     );

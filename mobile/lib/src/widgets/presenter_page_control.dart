@@ -3,7 +3,7 @@ import 'package:redux/redux.dart';
 
 import '../services/intl.dart' as intl;
 import '../services/route.dart' as route;
-import '../services/app_state.dart';
+import 'package:mobile/src/services/redux/app_state.dart';
 import 'vertical_space.dart';
 import 'event_info.dart';
 
