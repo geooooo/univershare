@@ -1,9 +1,8 @@
-import 'package:aqueduct/aqueduct.dart' hide Response;
-
 import 'response.dart';
+import 'request.dart';
 import 'message.dart';
 
-class GetEventMessagesRequest extends Serializable {
+class GetEventMessagesRequest extends Request {
 
   String eventId;
 

@@ -1,8 +1,7 @@
-import 'package:aqueduct/aqueduct.dart' show Serializable;
-
 import 'websocket_data.dart';
+import 'request.dart';
 
-class WebSocketEvent extends Serializable {
+class WebSocketEvent extends Request {
 
   String name;
   WebSocketData data;

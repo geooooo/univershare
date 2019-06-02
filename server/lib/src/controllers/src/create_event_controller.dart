@@ -1,8 +1,8 @@
 import 'dart:io' as io;
 import 'dart:convert' as conv;
+import 'package:api_models/api_models.dart' as api_models;
 
 import 'package:aqueduct/aqueduct.dart';
-import 'package:api_models/api_models.dart';
 
 import 'package:server/src/internal/di_injector.dart';
 
@@ -17,22 +17,23 @@ class CreateEventController extends ResourceController {
   CreateEventController(this._diInjector);
 
   @Operation.post()
-  Future<Response> createEvent(@Bind.body() CreateEventRequest request) async {
-    final fileName = await movePresentationFile(request.presentationFile);
-    final fileLogData = '[$fileName]: "${request.presentationFile.substring(0, printFileByteCount)}"';
+  Future<Response> createEvent(@Bind.body() Object request) async {
+    final requestData = api_models.CreateEventRequest()..readFromMap(request);
+    final fileName = await movePresentationFile(requestData.presentationFile);
+    final fileLogData = '[$fileName]: "${requestData.presentationFile.substring(0, printFileByteCount)}"';
     _diInjector.logger.logRestApi(
       this.request.method,
-      this.request.path.string, 
-      (request..presentationFile = fileLogData).asMap(),
+      this.request.path.string,
+      (requestData..presentationFile = fileLogData).asMap(),
     );
     await _diInjector.db.createEvent(
-      request.eventId,
-      request.eventName,
-      request.userName,
+      requestData.eventId,
+      requestData.eventName,
+      requestData.userName,
       fileName,
     );
-    final response = CreateEventResponse();
-    return Response.ok(response);
+    final response = api_models.CreateEventResponse();
+    return Response.ok(response.asMap());
   }
   
   Future<String>movePresentationFile(String fileData) async {

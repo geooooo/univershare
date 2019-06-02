@@ -1,6 +1,6 @@
-import 'package:aqueduct/aqueduct.dart' show Serializable;
+import 'request.dart';
 
-class Message extends Serializable {
+class Message extends Request {
 
   String text;
   String userName;
