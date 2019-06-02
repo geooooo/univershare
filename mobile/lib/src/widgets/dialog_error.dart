@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/intl.dart' as intl;
 
-Future<void> showDialogError(BuildContext context, String message) async =>
+Future<Widget> showDialogError(BuildContext context, String message) async =>
   await showDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(

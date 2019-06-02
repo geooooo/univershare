@@ -1,7 +1,8 @@
 class AppState {
 
   String userName = '';
-  String eventId = '111-222-333';
+  String eventId = '';
+//  String eventId = '111-222-333';
   String eventName = '';
   String presentationUrl = '';
   List<Message> messages = [];
@@ -16,8 +17,8 @@ class AppState {
 
 class StartPageState {
 
-  bool isJoinButtonDisabled = false;
-  bool isShowDialogJoin = false;
+  bool isJoinButtonDisabled = true;
+//  bool isJoinButtonDisabled = false;
 
   StartPageState._();
 

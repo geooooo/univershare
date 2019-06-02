@@ -6,10 +6,12 @@ import '../services/intl.dart' as intl;
 import '../services/asset.dart' as asset;
 import '../services/redux/action.dart' as action;
 import '../services/route.dart' as route;
+import '../services/rest_api.dart' as rest_api;
 import '../services/redux/app_state.dart';
 import 'vertical_space.dart';
 import 'event_id.dart';
 import 'dialog_join.dart';
+import 'dialog_error.dart';
 
 class StartPageContent extends StatelessWidget {
 
@@ -26,10 +28,6 @@ class StartPageContent extends StatelessWidget {
     mainAxisSize: MainAxisSize.max,
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-      StoreConnector<AppState, bool>(
-        converter: (store) => store.state.startPageState.isShowDialogJoin,
-        builder: (context, isShowDialogJoin) => isShowDialogJoin? _showDialogJoin(context) : Container(),
-      ),
       Image(
         image: AssetImage(asset.icon),
         height: _logoSize,
@@ -46,14 +44,14 @@ class StartPageContent extends StatelessWidget {
       StoreConnector<AppState, Map<String, Object>>(
         converter: (store) => <String, Object>{
           'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
-          'callback': () { print(store.state.eventId); return store.dispatch(action.ExistsEvent(store.state.eventId));},
+          'eventId': store.state.eventId,
         },
         builder: (context, data) {
-          final callback = data['callback'] as Function;
+          final eventId = data['eventId'] as String;
           final isJoinButtonDisabled = data['isJoinButtonDisabled'] as bool;
           return RaisedButton(
             child: Text(intl.join),
-            onPressed: callback,
+            onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context, eventId),
           );
         },
       ),
@@ -72,16 +70,28 @@ class StartPageContent extends StatelessWidget {
     route.createEventRoute,
   );
 
-  Widget _showDialogJoin(BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
-    converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
-    builder: (context, callback) => DialogJoin(
-      onPressedJoin: (name) {
-        callback(name);
-        Navigator.pushReplacementNamed(
-          context,
-          route.listenerRoute,
-        );
-      },
+  void _onJoinButtonPressed(BuildContext context, String eventId) async {
+    final r = await rest_api.existsEvent(eventId);
+    if (r.status == 0) {
+      await _showDialogJoin(context);
+    } else {
+      await showDialogError(context, intl.eventNotExists);
+    }
+  }
+
+  Future<Widget> _showDialogJoin(BuildContext context) async => await showDialog(
+    context: context,
+    builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
+      converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
+      builder: (context, callback) => DialogJoin(
+        onPressedJoin: (name) {
+          callback(name);
+          Navigator.pushReplacementNamed(
+            context,
+            route.listenerRoute,
+          );
+        },
+      ),
     ),
   );
 

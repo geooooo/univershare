@@ -9,7 +9,6 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
-//  TypedReducer<AppState, ExistsEventResult>(_onExistsEventResult),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -69,14 +68,4 @@ AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestion
   );
   return state..messages.firstWhere((message) => message == action.message)
                         .isQuestion = false;
-}
-
-AppState _onExistsEventResult(AppState state, ExistsEventResult action) {
-  print(
-    'Action: ExistsEventResult {\n'
-      '\status: ${action.status}\n'
-    '}\n'
-  );
-  return state
-    ..startPageState.isShowDialogJoin = action.status;
 }
