@@ -13,7 +13,10 @@ const String presenterRoute = '/presenter';
 const String listenerRoute = '/listener';
 
 Map<String, WidgetBuilder> routesFactory(Store<AppState> store) => {
-  startPageRoute: (BuildContext context) => StartPage(
+//  startPageRoute: (BuildContext context) => StartPage(
+//    store: store,
+//  ),
+  startPageRoute: (BuildContext context) => CreateEventPage(
     store: store,
   ),
   createEventRoute: (BuildContext context) => CreateEventPage(

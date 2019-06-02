@@ -14,6 +14,13 @@ Future<api_models.ExistsEventResponse> existsEvent(String eventId) async {
   return responseData;
 }
 
+Future<api_models.GetNewEventIdResponse> getNewEventId() async {
+  final requestData = api_models.GetNewEventIdRequest();
+  final responseDataRaw = await _post('${host}get_new_event_id', requestData.asMap());
+  final responseData = api_models.GetNewEventIdResponse()..readFromMap(conv.jsonDecode(responseDataRaw));
+  return responseData;
+}
+
 Future<String> _post(String url, Map<String, Object> data) async => (await http.post(
   url,
   body: conv.jsonEncode(data),

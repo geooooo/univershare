@@ -78,5 +78,5 @@ AppState _onLoading(AppState state, Loading action) {
     '}\n'
   );
   return state
-    ..startPageState.isLoadingShow = action.isShow;
+    ..isLoadingShow = action.isShow;
 }

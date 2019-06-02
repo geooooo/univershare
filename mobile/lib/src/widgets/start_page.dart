@@ -35,7 +35,7 @@ class StartPage extends StatelessWidget {
             ),
           ),
           StoreConnector<AppState, bool>(
-            converter: (store) => store.state.startPageState.isLoadingShow,
+            converter: (store) => store.state.isLoadingShow,
             builder: (context, isShow) => isShow? Loading() : Container(),
           ),
         ],

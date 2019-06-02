@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'package:mobile/src/services/redux/app_state.dart';
+import '../services/redux/app_state.dart';
 import '../services/intl.dart' as intl;
-import 'package:mobile/src/services/redux/action.dart' as action;
+import '../services/redux/action.dart' as action;
 import '../services/route.dart' as route;
+import '../services/rest_api.dart' as rest_api;
 import 'vertical_space.dart';
 import 'download_presentation.dart';
 import 'dialog_error.dart';
@@ -44,6 +45,12 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
   });
 
   @override
+  void initState() {
+    super.initState();
+    _loadEventId();
+  }
+
+  @override
   Widget build(BuildContext context) => Container(
     margin: EdgeInsets.symmetric(
       horizontal: 50,
@@ -79,9 +86,9 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
         StoreConnector<AppState, String>(
           converter: (store) => store.state.eventId,
           builder: (context, eventId) => TextFormField(
-            initialValue: eventId,
             decoration: InputDecoration(
-              labelText: intl.idEvent,
+              alignLabelWithHint: true,
+              labelText: eventId.isEmpty? intl.idEvent : eventId,
             ),
             enabled: false,
           ),
@@ -91,7 +98,7 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
           onSelectFile: _onSelectFile,
         ),
         VerticalSpace(30),
-        StoreConnector<AppState, VoidCallback>(
+        StoreConnector<AppState, Function>(
           converter: (store) => () => store.dispatch(action.CreateEvent(_eventName, _userName)),
           builder: (context, callback) => RaisedButton(
             child: Text(intl.create),
@@ -102,6 +109,13 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
     ),
   );
 
+  Future<void> _loadEventId() async {
+    store.dispatch(action.Loading(true));
+    final response = await rest_api.getNewEventId();
+    store.dispatch(action.SetEventId(response.eventId, true));
+    store.dispatch(action.Loading(false));
+  }
+
   void _onChangedEventName(String value) => setState((){
     _eventName = value;
   });
@@ -110,7 +124,7 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
     _userName = value;
   });
 
-  Future<void> _onPressedCreateButton(VoidCallback callback) async {
+  Future<void> _onPressedCreateButton(Function callback) async {
     final allFieldsOk = _eventName.isNotEmpty && _userName.isNotEmpty && _isPresentationLoaded;
     if (!allFieldsOk) {
       await showDialogError(context, intl.createEventError);

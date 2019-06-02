@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:mobile/src/services/redux/app_state.dart';
+import '../services/redux/app_state.dart';
 import 'create_event_page_content.dart';
+import 'loading.dart';
 
 class CreateEventPage extends StatelessWidget {
 
@@ -17,18 +19,26 @@ class CreateEventPage extends StatelessWidget {
     child: Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-              minWidth: viewportConstraints.maxWidth,
-            ),
-            child: CreateEventPageContent(
-              store: store,
+      body: Stack(
+        children: <Widget>[
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                  minWidth: viewportConstraints.maxWidth,
+                ),
+                child: CreateEventPageContent(
+                  store: store,
+                ),
+              ),
             ),
           ),
-        ),
+          StoreConnector<AppState, bool>(
+            converter: (store) => store.state.isLoadingShow,
+            builder: (context, isShow) => isShow? Loading() : Container(),
+          ),
+        ],
       ),
     ),
   );
