@@ -6,7 +6,6 @@ class AppConfig extends Configuration {
 
   static const String productionConfigPath = 'config.heroku.yaml';
   static const String localConfigPath = 'config.dev.yaml';
-  static const String testConfigPath = 'config.test.yaml';
 
   DatabaseConfiguration database;
 

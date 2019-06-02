@@ -38,6 +38,7 @@ class CreateEventController extends ResourceController {
   
   Future<String>movePresentationFile(String fileData) async {
     final rawFileData = conv.base64Decode(fileData);
+    await io.Directory.fromUri(Uri.file(presentationDirPath)).create(recursive: true);
     final filePath = '$presentationDirPath${io.Platform.pathSeparator}${generateFileName()}$presentationExtension';
     final file = io.File(filePath);
     await file.writeAsBytes(rawFileData, flush: true);
