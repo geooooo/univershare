@@ -68,8 +68,14 @@ class Db {
       ..values.event = event;
     final newUser = await queryCreateUser.insert();
 
+    final querySelectPresentation = Query<PresentationTable>(managedContext)
+      ..where((PresentationTable presentation) => presentation.id).equalTo(event.presentation.id);
+    final presentation = await querySelectPresentation.fetchOne();
+
     return <String, Object>{
       'user_id': newUser.id,
+      'event_name': event.name,
+      'presentation_url': presentation.url,
     };
   }
 

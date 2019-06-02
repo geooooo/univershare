@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:aqueduct/aqueduct.dart';
 import 'package:api_models/api_models.dart' as api_models;
 
@@ -16,8 +18,11 @@ class JoinEventController extends ResourceController {
     final responseData = await _diInjector.db.joinEvent(requestData.eventId, requestData.userName);
     final response = api_models.JoinEventResponse()
       ..readFromMap(responseData)
+      ..presentationUrl = getFullUrl(responseData['presentation_url'])
       ..status = 0;
     return Response.ok(response.asMap());
   }
 
+  String getFullUrl(String path) =>
+    '${io.Directory.current.path}${io.Platform.pathSeparator}$path';
 }
