@@ -8,7 +8,7 @@ import 'services/services.dart';
 
 class DartelloApp extends ApplicationChannel {
 
-  AppConfig appConfig = AppConfig();
+  AppConfig appConfig = AppConfig(AppConfig.productionConfigPath);
   DiInjector diInjector;
 
   @override
