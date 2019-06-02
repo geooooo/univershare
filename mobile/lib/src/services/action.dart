@@ -43,3 +43,19 @@ class DeleteMessageFromQuestions {
   DeleteMessageFromQuestions(this.message);
 
 }
+
+class ExistsEvent {
+
+  final String eventId;
+
+  ExistsEvent(this.eventId);
+
+}
+
+class ExistsEventResult {
+
+  final bool status;
+
+  ExistsEventResult(this.status);
+
+}

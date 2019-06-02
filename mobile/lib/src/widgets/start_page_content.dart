@@ -26,6 +26,29 @@ class StartPageContent extends StatelessWidget {
     mainAxisSize: MainAxisSize.max,
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
+//      StoreConnector<AppState, bool>(
+//        converter: (store) => store.state.startPageState.isShowDialogJoin,
+//        builder: (context, isShow) {
+//          if (isShow) {
+//            _showDialogJoin(context);
+//          }
+//          return Container();
+//        },
+//          future: isShow? _showDialogJoin(context) : null,
+//          builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+//            return snapshot.data;
+////            switch (snapshot.connectionState) {
+//////              case ConnectionState.active:
+//////              case ConnectionState.waiting:
+//////                return Text('Awaiting result...');
+////              case ConnectionState.done:
+////                return snapshot.data;
+////              default:
+////                return Container();
+////            }
+//          },// unreachable
+//        ),
+//      ),
       Image(
         image: AssetImage(asset.icon),
         height: _logoSize,
@@ -39,13 +62,16 @@ class StartPageContent extends StatelessWidget {
         ),
       ),
       VerticalSpace(20),
-      StoreConnector<AppState, bool>(
-        converter: (store) => store.state.startPageState.isJoinButtonDisabled,
-        builder: (context, isJoinButtonDisabled) => RaisedButton(
-          child: Text(intl.join),
-          onPressed: (isJoinButtonDisabled)? null : () => _onPressedJoinButton(context),
-        ),
-      ),
+//      StoreConnector<AppState, Map<String, Object>>(
+//        converter: (store) => <String, Object>{
+//          'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
+//          'callback': (eventId) => store.dispatch(action.ExistsEvent(eventId)),
+//        },
+//        builder: (context, data) => RaisedButton(
+//          child: Text(intl.join),
+//          onPressed: (data['isJoinButtonDisabled'])? null : data['callback'],
+//        ),
+//      ),
       VerticalSpace(30),
       Text(intl.or),
       VerticalSpace(30),
@@ -56,15 +82,12 @@ class StartPageContent extends StatelessWidget {
     ],
   );
 
-  void _onPressedJoinButton(BuildContext context) =>
-    _showDialogJoin(context);
-
   void _onPressedCreateButton(BuildContext context) => Navigator.pushNamed(
     context,
     route.createEventRoute,
   );
 
-  void _showDialogJoin(BuildContext context) => showDialog(
+  _showDialogJoin(BuildContext context) => showDialog(
     context: context,
     builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
       converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
