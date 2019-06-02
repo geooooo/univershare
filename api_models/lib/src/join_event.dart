@@ -25,16 +25,22 @@ class JoinEventRequest extends Request {
 class JoinEventResponse extends Response {
 
   int userId;
+  String eventName;
+  String presentationUrl;
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({
     'user_id': userId,
+    'event_name': eventName,
+    'presentation_url': presentationUrl,
   });
 
   @override
   void readFromMap(Map<String, Object> inputMap) {
     super.readFromMap(inputMap);
     userId = inputMap['user_id'];
+    eventName = inputMap['event_name'];
+    presentationUrl = inputMap['presentation_url'];
   }
 
 }

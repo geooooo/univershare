@@ -18,13 +18,6 @@ post join_event
     status:
         0 - ok
     user_id
-}
-
-post get_event_info
-    event_id
-{
-    status:
-        0 - ok
     event_name
     presentation_url
 }

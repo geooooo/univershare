@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,6 +41,7 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
   String _eventName = '';
   String _userName = '';
   bool _isPresentationLoaded = true;
+  List<int> fileData = [];
 
   CreateEventPageContentState({
     this.store,
@@ -98,12 +101,9 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
           onSelectFile: _onSelectFile,
         ),
         VerticalSpace(30),
-        StoreConnector<AppState, Function>(
-          converter: (store) => () => store.dispatch(action.CreateEvent(_eventName, _userName)),
-          builder: (context, callback) => RaisedButton(
-            child: Text(intl.create),
-            onPressed: () => _onPressedCreateButton(callback),
-          ),
+        RaisedButton(
+          child: Text(intl.create),
+          onPressed: _onPressedCreateButton,
         ),
       ],
     ),
@@ -124,21 +124,33 @@ class CreateEventPageContentState extends State<CreateEventPageContent> {
     _userName = value;
   });
 
-  Future<void> _onPressedCreateButton(Function callback) async {
+  Future<void> _onPressedCreateButton() async {
     final allFieldsOk = _eventName.isNotEmpty && _userName.isNotEmpty && _isPresentationLoaded;
     if (!allFieldsOk) {
       await showDialogError(context, intl.createEventError);
       return;
     }
-    callback();
+    store.dispatch(action.Loading(true));
+    await rest_api.createEvent(
+      userName: _userName,
+      eventId: store.state.eventId,
+      eventName: _eventName,
+      presentationFile: fileData,
+    );
+    store.dispatch(action.CreateEvent(_eventName, _userName));
+    store.dispatch(action.Loading(false));
     await Navigator.pushReplacementNamed(
       context,
       route.presenterRoute,
     );
   }
 
-  void _onSelectFile(String path) => setState(() {
-    _isPresentationLoaded = true;
-  });
+  Future<void> _onSelectFile(String path) async {
+    final fileData = await io.File(path).readAsBytes();
+    setState(() {
+      this.fileData = fileData;
+      _isPresentationLoaded = true;
+    });
+  }
 
 }

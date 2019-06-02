@@ -10,6 +10,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
   TypedReducer<AppState, Loading>(_onLoading),
+  TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -80,3 +81,19 @@ AppState _onLoading(AppState state, Loading action) {
   return state
     ..isLoadingShow = action.isShow;
 }
+
+AppState _onSetEventInfo(AppState state, SetEventInfo action) {
+  print(
+    'Action: SetEventInfo {\n'
+      '\teventName: ${action.eventName}\n'
+      '\tpresentationUrl: ${action.presentationUrl}\n'
+      '\tuserId: ${action.userId}\n'
+    '}\n'
+  );
+  return state
+    ..eventName = action.eventName
+    ..presentationUrl = action.presentationUrl
+    ..userId = action.userId;
+}
+
+

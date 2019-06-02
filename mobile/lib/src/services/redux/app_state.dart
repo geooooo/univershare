@@ -1,8 +1,8 @@
 class AppState {
 
+  int userId = 0;
   String userName = '';
   String eventId = '';
-//  String eventId = '111-222-333';
   String eventName = '';
   String presentationUrl = '';
   List<Message> messages = [];
@@ -19,7 +19,6 @@ class AppState {
 class StartPageState {
 
   bool isJoinButtonDisabled = true;
-//  bool isJoinButtonDisabled = false;
 
   StartPageState._();
 

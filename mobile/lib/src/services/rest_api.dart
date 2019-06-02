@@ -21,6 +21,34 @@ Future<api_models.GetNewEventIdResponse> getNewEventId() async {
   return responseData;
 }
 
+Future<api_models.CreateEventResponse> createEvent({
+  String eventId,
+  String eventName,
+  String userName,
+  List<int> presentationFile,
+}) async {
+  final requestData = api_models.CreateEventRequest()
+    ..eventName = eventName
+    ..eventId = eventId
+    ..userName = userName
+    ..presentationFile = conv.base64Encode(presentationFile);
+  final responseDataRaw = await _post('${host}create_event', requestData.asMap());
+  final responseData = api_models.CreateEventResponse()..readFromMap(conv.jsonDecode(responseDataRaw));
+  return responseData;
+}
+
+Future<api_models.JoinEventResponse> joinEvent({
+  String eventId,
+  String userName,
+}) async {
+  final requestData = api_models.JoinEventRequest()
+    ..eventId = eventId
+    ..userName = userName;
+  final responseDataRaw = await _post('${host}join_event', requestData.asMap());
+  final responseData = api_models.JoinEventResponse()..readFromMap(conv.jsonDecode(responseDataRaw));
+  return responseData;
+}
+
 Future<String> _post(String url, Map<String, Object> data) async => (await http.post(
   url,
   body: conv.jsonEncode(data),

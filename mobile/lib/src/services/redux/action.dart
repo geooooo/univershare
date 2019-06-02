@@ -51,3 +51,13 @@ class Loading {
   Loading(this.isShow);
 
 }
+
+class SetEventInfo {
+
+  final String eventName;
+  final String presentationUrl;
+  final int userId;
+
+  SetEventInfo(this.eventName, this.presentationUrl, this.userId);
+
+}

@@ -34,28 +34,19 @@ class StartPageContent extends StatelessWidget {
         width: _logoSize,
       ),
       VerticalSpace(30),
-      StoreConnector<AppState, EventIdOnChangedFunction>(
+      StoreConnector<AppState, Function>(
         converter: (store) => (id, isValid) => store.dispatch(action.SetEventId(id, isValid)),
         builder: (context, callback) => EventId(
           onChanged: callback,
         ),
       ),
       VerticalSpace(20),
-      StoreConnector<AppState, Map<String, Object>>(
-        converter: (store) => <String, Object>{
-          'isJoinButtonDisabled':  store.state.startPageState.isJoinButtonDisabled,
-          'eventId': store.state.eventId,
-          'callback': (isShow) => store.dispatch(action.Loading(isShow)),
-        },
-        builder: (context, data) {
-          final eventId = data['eventId'] as String;
-          final isJoinButtonDisabled = data['isJoinButtonDisabled'] as bool;
-          final callback = data['callback'] as Function;
-          return RaisedButton(
-            child: Text(intl.join),
-            onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context, eventId, callback),
-          );
-        },
+      StoreConnector<AppState, bool>(
+        converter: (store) => store.state.startPageState.isJoinButtonDisabled,
+        builder: (context, isJoinButtonDisabled) => RaisedButton(
+          child: Text(intl.join),
+          onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context),
+        ),
       ),
       VerticalSpace(30),
       Text(intl.or),
@@ -72,10 +63,10 @@ class StartPageContent extends StatelessWidget {
     route.createEventRoute,
   );
 
-  void _onJoinButtonPressed(BuildContext context, String eventId, Function callback) async {
-    callback(true);
-    final response = await rest_api.existsEvent(eventId);
-    callback(false);
+  void _onJoinButtonPressed(BuildContext context) async {
+    store.dispatch(action.Loading(true));
+    final response = await rest_api.existsEvent(store.state.eventId);
+    store.dispatch(action.Loading(false));
     if (response.status == 0) {
       await _showDialogJoin(context);
     } else {
@@ -85,18 +76,26 @@ class StartPageContent extends StatelessWidget {
 
   Future<Widget> _showDialogJoin(BuildContext context) async => await showDialog(
     context: context,
-    builder: (BuildContext context) => StoreConnector<AppState, DialogJoinOnPressedJoinFunction>(
-      converter: (store) => (name) => store.dispatch(action.SetUserName(name)),
-      builder: (context, callback) => DialogJoin(
-        onPressedJoin: (name) {
-          callback(name);
-          Navigator.pushReplacementNamed(
-            context,
-            route.listenerRoute,
-          );
-        },
-      ),
+    builder: (BuildContext context) => DialogJoin(
+      onPressedJoin: (userName) {
+        store.dispatch(action.SetUserName(userName));
+        _joinEvent();
+        Navigator.pushReplacementNamed(
+          context,
+          route.listenerRoute,
+        );
+      },
     ),
   );
+
+  Future<void> _joinEvent() async {
+    store.dispatch(action.Loading(true));
+    final response = await rest_api.joinEvent(
+      userName: store.state.userName,
+      eventId: store.state.eventId,
+    );
+    store.dispatch(action.SetEventInfo(response.eventName, response.presentationUrl, response.userId));
+    store.dispatch(action.Loading(false));
+  }
 
 }
