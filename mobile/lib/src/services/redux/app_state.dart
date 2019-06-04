@@ -1,12 +1,15 @@
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 class AppState {
 
   int userId = 0;
-  String userName = '';
-  String eventId = '';
+  String userName = 'a';
+  String eventId = '123-456-322';
   String eventName = '';
   String presentationUrl = '';
   List<Message> messages = [];
   bool isLoadingShow = false;
+  WebSocketChannel socket;
 
   StartPageState startPageState = StartPageState.initial();
 
@@ -18,7 +21,7 @@ class AppState {
 
 class StartPageState {
 
-  bool isJoinButtonDisabled = true;
+  bool isJoinButtonDisabled = false;
 
   StartPageState._();
 

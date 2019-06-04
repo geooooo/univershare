@@ -1,3 +1,6 @@
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:api_models/api_models.dart' as api_models;
+
 import 'app_state.dart';
 
 class SetEventId {
@@ -59,5 +62,27 @@ class SetEventInfo {
   final int userId;
 
   SetEventInfo(this.eventName, this.presentationUrl, this.userId);
+
+}
+
+class SocketConnect {
+
+  final WebSocketChannel socket;
+
+  SocketConnect(this.socket);
+
+}
+
+class SaveMessages {
+
+  final List<api_models.Message> messages;
+
+  SaveMessages(this.messages);
+
+}
+
+class SocketClose {
+
+  SocketClose();
 
 }

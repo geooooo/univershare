@@ -1,4 +1,5 @@
 import 'package:redux/redux.dart';
+import 'package:api_models/api_models.dart' as api_models;
 
 import 'app_state.dart';
 import 'action.dart';
@@ -11,6 +12,9 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
   TypedReducer<AppState, Loading>(_onLoading),
   TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
+  TypedReducer<AppState, SocketConnect>(_onSocketConnect),
+  TypedReducer<AppState, SaveMessages>(_onSaveMessages),
+  TypedReducer<AppState, SocketClose>(_onSocketClose),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -96,4 +100,35 @@ AppState _onSetEventInfo(AppState state, SetEventInfo action) {
     ..userId = action.userId;
 }
 
+AppState _onSocketConnect(AppState state, SocketConnect action) {
+  print(
+    'Action: SocketConnect {\n'
+      '\tsocket.hasCode: ${action.hashCode}\n'
+    '}\n'
+  );
+  return state
+    ..socket = action.socket;
+}
+
+AppState _onSaveMessages(AppState state, SaveMessages action) {
+  print(
+    'Action: SaveMessages {\n'
+      '\tmessages.length: ${action.messages.length}\n'
+    '}\n'
+  );
+  return state
+    ..messages = action.messages.map((apiMessage) => Message(
+      userName: apiMessage.userName,
+      isQuestion:  apiMessage.isQuestion,
+      text: apiMessage.text,
+    ));
+}
+
+AppState _onSocketClose(AppState state, SocketClose action) {
+  print(
+    'Action: SocketClose {}'
+  );
+  return state
+    ..socket.sink.close();
+}
 

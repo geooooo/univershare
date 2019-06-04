@@ -76,26 +76,22 @@ class StartPageContent extends StatelessWidget {
 
   Future<Widget> _showDialogJoin(BuildContext context) async => await showDialog(
     context: context,
-    builder: (BuildContext context) => DialogJoin(
-      onPressedJoin: (userName) {
+    builder: (BuildContext _) => DialogJoin(
+      onPressedJoin: (userName) async {
+        store.dispatch(action.Loading(true));
         store.dispatch(action.SetUserName(userName));
-        _joinEvent();
-        Navigator.pushReplacementNamed(
+        final response = await rest_api.joinEvent(
+          userName: store.state.userName,
+          eventId: store.state.eventId,
+        );
+        store.dispatch(action.SetEventInfo(response.eventName, response.presentationUrl, response.userId));
+        store.dispatch(action.Loading(false));
+        await Navigator.pushNamed(
           context,
           route.listenerRoute,
         );
       },
     ),
   );
-
-  Future<void> _joinEvent() async {
-    store.dispatch(action.Loading(true));
-    final response = await rest_api.joinEvent(
-      userName: store.state.userName,
-      eventId: store.state.eventId,
-    );
-    store.dispatch(action.SetEventInfo(response.eventName, response.presentationUrl, response.userId));
-    store.dispatch(action.Loading(false));
-  }
 
 }

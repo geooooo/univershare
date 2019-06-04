@@ -20,6 +20,8 @@ const String selectFile = 'Выберите файл';
 const String createEventError = 'Заполните все поля !';
 const String completeEvent = 'Завершить мероприятие';
 const String eventNotExists = 'Мероприятия с указаным ID не существует!';
+const String warning = 'Внимание';
+const String eventEnd = 'Мероприятие закончилось';
 
 
 
