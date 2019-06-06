@@ -18,6 +18,6 @@ class _PresentationTable {
   )
   String url;
 
-  EventTable event;
+  EventTable eventPresentation;
 
 }

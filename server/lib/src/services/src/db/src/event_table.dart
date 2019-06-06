@@ -1,7 +1,8 @@
 import 'package:aqueduct/aqueduct.dart';
 
 import 'presentation_table.dart';
-import 'user_table.dart';
+import 'listener_table.dart';
+import 'presenter_table.dart';
 
 class EventTable extends ManagedObject<_EventTable> implements _EventTable {}
 
@@ -25,12 +26,12 @@ class _EventTable {
   )
   String name;
 
-  @Relate(#event)
+  @Relate(#eventPresentation)
   PresentationTable presentation;
 
   @Relate(#eventPresenter)
-  UserTable presenter;
+  PresenterTable presenter;
 
-  ManagedSet<UserTable> userListener;
+  ManagedSet<ListenerTable> listenerEvent;
 
 }

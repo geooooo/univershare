@@ -4,6 +4,7 @@ import 'internal/di_injector.dart';
 import 'internal/router.dart';
 import 'internal/app_logger.dart';
 import 'internal/app_config.dart';
+import 'internal/general.dart';
 import 'services/services.dart';
 
 class DartelloApp extends ApplicationChannel {
@@ -15,6 +16,7 @@ class DartelloApp extends ApplicationChannel {
   Future<void> prepare() async {
     diInjector = DiInjector(
       logger: AppLogger(logger),
+      general: General(),
       db: Db(appConfig),
     );
   }

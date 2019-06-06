@@ -8,19 +8,17 @@ import 'package:server/src/internal/di_injector.dart';
 
 class CreateEventController extends ResourceController {
 
-  static const int printFileByteCount = 16;
   static const String presentationExtension = '.pdf';
   static final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
 
   final DiInjector _diInjector;
 
   CreateEventController(this._diInjector);
-
   @Operation.post()
   Future<Response> createEvent(@Bind.body() Object request) async {
     final requestData = api_models.CreateEventRequest()..readFromMap(request);
     final fileName = await movePresentationFile(requestData.presentationFile);
-    final fileLogData = '[$fileName]: "${requestData.presentationFile.substring(0, printFileByteCount)}"';
+    final fileLogData = '[$fileName]';
     _diInjector.logger.logRestApi(
       this.request.method,
       this.request.path.string,

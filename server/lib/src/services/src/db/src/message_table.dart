@@ -30,7 +30,7 @@ class _MessageTable {
   )
   String time;
 
-  @Relate(#message)
+  @Relate(#messageUser)
   UserTable user;
 
 }

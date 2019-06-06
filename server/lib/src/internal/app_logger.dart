@@ -31,7 +31,8 @@ class AppLogger {
       ..xterm(13, bg: false);
 
     wsEventName
-      ..xterm(10, bg: false);
+      ..xterm(10, bg: true)
+      ..xterm(232, bg: false);
 
     methodColor
       ..xterm(33, bg: true)

@@ -24,5 +24,5 @@ class JoinEventController extends ResourceController {
   }
 
   String getFullUrl(String path) =>
-    '${io.Directory.current.path}${io.Platform.pathSeparator}$path';
+    'http://localhost:8888${io.Platform.pathSeparator}$path';
 }

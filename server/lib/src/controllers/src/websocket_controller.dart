@@ -5,11 +5,11 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:api_models/api_models.dart' as api_models;
 
 import 'package:server/src/internal/di_injector.dart';
+import 'package:server/src/internal/general.dart';
 
 class WebSocketController extends Controller {
 
   final DiInjector _diInjector;
-  final Map<String, Map<int, io.WebSocket>> connections = {};
 
   WebSocketController(this._diInjector);
 
@@ -22,8 +22,10 @@ class WebSocketController extends Controller {
   }
 
   Future<void> onDataListener(io.WebSocket connection, Object jsonData) async {
-    final data = conv.jsonDecode(jsonData);
-    final eventName = data['event'];
+    print(General.connections.length);
+    print(General.connections[General.connections.keys.first].length);
+    final data = conv.json.decode(jsonData);
+    final eventName = data['name'];
     final eventData = data['data'];
 
     _diInjector.logger.logWebSocketApi(eventName, eventData);
@@ -49,21 +51,25 @@ class WebSocketController extends Controller {
 
   void onConnect(io.WebSocket connectionSender, Map<String, Object> eventData) {
     final data = api_models.WebSocketConnectData()..readFromMap(eventData);
-    if (connections[data.eventId].isEmpty) {
-      connections[data.eventId] = <int, io.WebSocket>{};
+    if (General.connections[data.eventId].isEmpty) {
+      General.connections[data.eventId] = <int, io.WebSocket>{};
     }
-    connections[data.eventId][data.userId] = connectionSender;
+    General.connections[data.eventId][data.userId] = connectionSender;
   }
 
   Future<void> onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) async {
     final data = api_models.WebSocketDisconnectPresenterData()..readFromMap(eventData);
-    connections.remove(data.eventId);
+    General.connections.remove(data.eventId);
 
-    connections[data.eventId].forEach((_, connection) {
+    General.connections[data.eventId].forEach((_, connection) {
       if (connection == connectionSender) {
         return;
       }
-      connection.add(api_models.WebSocketEventEndData());
+      final responseData = conv.jsonEncode((api_models.WebSocketEvent()
+        ..name = 'event_end'
+        ..data = api_models.WebSocketEventEndData()
+      ).asMap());
+      connection.add(responseData);
     });
 
     await _diInjector.db.removeEventData(data.eventId);
@@ -71,21 +77,24 @@ class WebSocketController extends Controller {
 
   void onDisconnectListener(io.WebSocket connectionSender, Map<String, Object> eventData) {
     final data = api_models.WebSocketDisconnectListenerData()..readFromMap(eventData);
-    connections[data.eventId].remove(data.userId);
+    General.connections[data.eventId].remove(data.userId);
   }
 
   Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
     final data = api_models.WebSocketNewMessageData()..readFromMap(eventData);
 
-    connections[data.eventId].forEach((_, connection) {
+    General.connections[data.eventId].forEach((_, connection) {
       if (connection == connectionSender) {
         return;
       }
-      connection.add(api_models.WebSocketGetMessageData()
-        ..text = data.text
-        ..userName = data.userName
-        ..isQuestion = data.isQuestion
-      );
+      final responseData = conv.jsonEncode((api_models.WebSocketEvent()
+        ..name = 'get_message'
+        ..data = (api_models.WebSocketGetMessageData()
+          ..text = data.text
+          ..userName = data.userName
+          ..isQuestion = data.isQuestion)
+      ).asMap());
+      connection.add(responseData);
     });
 
     await _diInjector.db.newMessage(data.userId, data.text, data.isQuestion);
