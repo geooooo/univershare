@@ -1,5 +1,5 @@
 import 'websocket_data.dart';
-import 'request.dart';
+import 'package:api_models/src/rest/src/request.dart';
 
 class WebSocketEvent extends Request {
 

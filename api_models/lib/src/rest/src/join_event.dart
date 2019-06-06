@@ -7,15 +7,21 @@ class JoinEventRequest extends Request {
   String userName;
 
   @override
+  JoinEventRequest({
+    this.eventId,
+    this.userName,
+  });
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
     'user_name': userName,
   };
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    eventId = inputMap['event_id'];
-    userName = inputMap['user_name'];
+  void readFromMap(Map<String, Object> data) {
+    eventId = data['event_id'];
+    userName = data['user_name'];
   }
 
 }
@@ -28,6 +34,12 @@ class JoinEventResponse extends Response {
   String eventName;
   String presentationUrl;
 
+  JoinEventResponse({
+    this.userId,
+    this.eventName,
+    this.presentationUrl,
+  });
+
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({
     'user_id': userId,
@@ -36,11 +48,11 @@ class JoinEventResponse extends Response {
   });
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    super.readFromMap(inputMap);
-    userId = inputMap['user_id'];
-    eventName = inputMap['event_name'];
-    presentationUrl = inputMap['presentation_url'];
+  void readFromMap(Map<String, Object> data) {
+    super.readFromMap(data);
+    userId = data['user_id'];
+    eventName = data['event_name'];
+    presentationUrl = data['presentation_url'];
   }
 
 }

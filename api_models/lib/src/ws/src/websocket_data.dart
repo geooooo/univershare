@@ -1,4 +1,4 @@
-import 'request.dart';
+import 'package:api_models/src/rest/src/request.dart';
 
 abstract class WebSocketData extends Request {
 

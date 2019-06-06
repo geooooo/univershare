@@ -6,13 +6,18 @@ class ExistsEventRequest extends Request {
   String eventId;
 
   @override
+  ExistsEventRequest({
+    this.eventId,
+  });
+
+  @override
   Map<String, Object> asMap() => {
-      'event_id': eventId,
+    'event_id': eventId,
   };
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    eventId = inputMap['event_id'];
+  void readFromMap(Map<String, Object> data) {
+    eventId = data['event_id'];
   }
 
 }

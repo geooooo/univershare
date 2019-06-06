@@ -4,10 +4,13 @@ import 'request.dart';
 class GetNewEventIdRequest extends Request {
 
   @override
+  GetNewEventIdRequest();
+
+  @override
   Map<String, Object> asMap() => {};
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {}
+  void readFromMap(Map<String, Object> data) {}
 
 }
 
@@ -17,15 +20,19 @@ class GetNewEventIdResponse extends Response {
 
   String eventId;
 
+  GetNewEventIdResponse({
+    this.eventId,
+  });
+
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({
     'event_id': eventId,
   });
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    super.readFromMap(inputMap);
-    eventId = inputMap['event_id'];
+  void readFromMap(Map<String, Object> data) {
+    super.readFromMap(data);
+    eventId = data['event_id'];
   }
 
 }
