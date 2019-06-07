@@ -1,43 +1,46 @@
 import 'dart:io' as io;
 import 'dart:convert' as conv;
+
 import 'package:api_models/api_models.dart' as api_models;
-
 import 'package:aqueduct/aqueduct.dart';
-
 import 'package:server/src/internal/di_injector.dart';
+import 'package:server/src/internal/common.dart' as common;
 
 class CreateEventController extends ResourceController {
-
-  static const String presentationExtension = '.pdf';
-  static final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
 
   final DiInjector _diInjector;
 
   CreateEventController(this._diInjector);
+
   @Operation.post()
   Future<Response> createEvent(@Bind.body() Object request) async {
-    final requestData = api_models.CreateEventRequest()..readFromMap(request);
+    final requestData = api_models.CreateEventRequest.fromMap(request);
     final fileName = await movePresentationFile(requestData.presentationFile);
+
     final fileLogData = '[$fileName]';
     _diInjector.logger.logRestApi(
       this.request.method,
       this.request.path.string,
-      (requestData..presentationFile = fileLogData).asMap(),
+      (requestData..presentationFile = fileLogData).toJson(),
     );
+
     await _diInjector.db.createEvent(
       requestData.eventId,
       requestData.eventName,
       requestData.userName,
       fileName,
     );
+
     final response = api_models.CreateEventResponse();
-    return Response.ok(response.asMap());
+    return Response.ok(response.toJson());
   }
   
   Future<String>movePresentationFile(String fileData) async {
     final rawFileData = conv.base64Decode(fileData);
-    await io.Directory.fromUri(Uri.file(presentationDirPath)).create(recursive: true);
-    final filePath = '$presentationDirPath${io.Platform.pathSeparator}${generateFileName()}$presentationExtension';
+    await io.Directory.fromUri(Uri.file(common.presentationDirPath)).create(recursive: true);
+    final filePath = '${common.presentationDirPath}'
+                     '${io.Platform.pathSeparator}${generateFileName()}'
+                     '${common.presentationExtension}';
     final file = io.File(filePath);
     await file.writeAsBytes(rawFileData, flush: true);
     return filePath;

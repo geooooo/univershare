@@ -1,7 +1,6 @@
 import 'package:aqueduct/aqueduct.dart';
-import 'package:api_models/api_models.dart' as api_models;
-
 import 'package:server/src/internal/di_injector.dart';
+import 'package:api_models/api_models.dart' as api_models;
 
 class GetEventMessagesController extends ResourceController {
 
@@ -11,13 +10,15 @@ class GetEventMessagesController extends ResourceController {
 
   @Operation.post()
   Future<Response> getEventMessages(@Bind.body() Object request) async {
-    final requestData = api_models.GetEventMessagesRequest()..readFromMap(request);
-    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.asMap());
+    final requestData = api_models.GetEventMessagesRequest.fromMap(request);
+
+    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.toJson());
+
     final responseData = await _diInjector.db.getEventMessages(requestData.eventId);
-    final response = api_models.GetEventMessagesResponse()
-      ..readFromMap(responseData)
+    final response = api_models.GetEventMessagesResponse.fromMap(responseData)
       ..status = 0;
-    return Response.ok(response.asMap());
+
+    return Response.ok(response.toJson());
   }
 
 }

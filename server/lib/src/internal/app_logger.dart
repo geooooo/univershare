@@ -11,6 +11,8 @@ class AppLogger {
   static final wsEventName = AnsiPen();
   static final Logger _logger = Logger('main');
 
+  bool isTestingMode;
+
   AppLogger(Logger aqueductLogger) {
     hierarchicalLoggingEnabled = true;
 
@@ -45,22 +47,38 @@ class AppLogger {
       ..xterm(15, bg: false);
   }
 
-  void logRestApi(String method, String uri, Map<String, Object> body) => _logger.info(
-    '${methodColor(method.toUpperCase())} ${uriColor(uri)}\n'
-    '${bodyColor(body.toString())}'
-  );
+  void logRestApi(String method, String uri, String body) {
+    if (isTestingMode) {
+      return;
+    }
+    _logger.info(
+      '${methodColor(method.toUpperCase())} ${uriColor(uri)}\n'
+      '${bodyColor(body.toString())}'
+    );
+  }
 
-  void logWebSocketApi(String eventName, Map<String, Object> eventData) => _logger.info(
-    '${wsEventName(eventName)}\n'
-    '${bodyColor(eventData.toString())}'
-  );
+  void logWebSocketApi(String eventName, String eventData) {
+    if (isTestingMode) {
+      return;
+    }
+    _logger.info(
+      '${wsEventName(eventName)}\n'
+      '${bodyColor(eventData.toString())}'
+    );
+  }
 
-  void logWebSocketApiConnect() => _logger.info(
-    '${wsConnect('+ ws client')}'
-  );
+  void logWebSocketApiConnect() {
+    if (isTestingMode) {
+      return;
+    }
+    _logger.info('${wsConnect('+ ws client')}');
+  }
 
-  void logWebSocketApiDisconnect() =>_logger.info(
-    '${wsDisconnect('- ws client')}'
-  );
+  void logWebSocketApiDisconnect() {
+    if (isTestingMode) {
+      return;
+    }
+    _logger.info('${wsDisconnect('- ws client')}');
+  }
 
 }
