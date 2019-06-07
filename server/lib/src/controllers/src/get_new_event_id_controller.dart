@@ -15,7 +15,7 @@ class GetNewEventIdController extends ResourceController {
   Future<Response> getNewEventId(@Bind.body() Object request) async {
     final requestData = api_models.GetNewEventIdRequest.fromMap(request);
 
-    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.toJson());
+    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.asMap());
 
     final responseData = <String, Object> {
       'event_id': generateEventId(),
@@ -23,7 +23,7 @@ class GetNewEventIdController extends ResourceController {
     final response = api_models.GetNewEventIdResponse.fromMap(responseData)
       ..status = 0;
 
-    return Response.ok(response.toJson());
+    return Response.ok(response.asMap());
   }
 
   String generateEventId() {

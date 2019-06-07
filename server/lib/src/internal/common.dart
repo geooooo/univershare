@@ -5,3 +5,6 @@ final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentatio
 const int eventIdLength = 9;
 const String eventIdSeparator = '-';
 const String host = 'http://localhost:8888';
+
+String getFullUrl(String path) =>
+  '${host}${io.Platform.pathSeparator}$path';

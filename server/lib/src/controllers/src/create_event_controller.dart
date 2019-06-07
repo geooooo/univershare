@@ -21,7 +21,7 @@ class CreateEventController extends ResourceController {
     _diInjector.logger.logRestApi(
       this.request.method,
       this.request.path.string,
-      (requestData..presentationFile = fileLogData).toJson(),
+      (requestData..presentationFile = fileLogData).asMap(),
     );
 
     await _diInjector.db.createEvent(
@@ -30,9 +30,9 @@ class CreateEventController extends ResourceController {
       requestData.userName,
       fileName,
     );
+    final response = api_models.CreateEventResponse(status: 0);
 
-    final response = api_models.CreateEventResponse();
-    return Response.ok(response.toJson());
+    return Response.ok(response.asMap());
   }
   
   Future<String>movePresentationFile(String fileData) async {

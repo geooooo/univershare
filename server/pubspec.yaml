@@ -14,3 +14,5 @@ dependencies:
 
 dev_dependencies:
   pedantic: ^1.5.0
+  aqueduct_test: ^1.0.1
+  test: ^1.5.3

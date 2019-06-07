@@ -12,13 +12,13 @@ class GetEventMessagesController extends ResourceController {
   Future<Response> getEventMessages(@Bind.body() Object request) async {
     final requestData = api_models.GetEventMessagesRequest.fromMap(request);
 
-    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.toJson());
+    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.asMap());
 
     final responseData = await _diInjector.db.getEventMessages(requestData.eventId);
     final response = api_models.GetEventMessagesResponse.fromMap(responseData)
       ..status = 0;
 
-    return Response.ok(response.toJson());
+    return Response.ok(response.asMap());
   }
 
 }

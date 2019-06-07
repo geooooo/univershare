@@ -13,7 +13,7 @@ class AppLogger {
 
   bool isTestingMode;
 
-  AppLogger(Logger aqueductLogger) {
+  AppLogger(Logger aqueductLogger, {this.isTestingMode = false}) {
     hierarchicalLoggingEnabled = true;
 
     aqueductLogger.onRecord.listen((record) {
@@ -47,7 +47,7 @@ class AppLogger {
       ..xterm(15, bg: false);
   }
 
-  void logRestApi(String method, String uri, String body) {
+  void logRestApi(String method, String uri, Map<String, Object> body) {
     if (isTestingMode) {
       return;
     }
@@ -57,7 +57,7 @@ class AppLogger {
     );
   }
 
-  void logWebSocketApi(String eventName, String eventData) {
+  void logWebSocketApi(String eventName, Map<String, Object> eventData) {
     if (isTestingMode) {
       return;
     }

@@ -12,14 +12,14 @@ class ExistsEventController extends ResourceController {
   Future<Response> existsEvent(@Bind.body() Object request) async {
     final requestData = api_models.ExistsEventRequest.fromMap(request);
 
-    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.toJson());
+    _diInjector.logger.logRestApi(this.request.method, this.request.path.string, requestData.asMap());
 
     final responseData = await _diInjector.db.existsEvent(requestData.eventId);
     final response = api_models.ExistsEventResponse(
       status: responseData? 0 : 1
     );
 
-    return Response.ok(response.toJson());
+    return Response.ok(response.asMap());
   }
 
 }
