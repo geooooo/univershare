@@ -28,7 +28,7 @@ class _MessageTable {
     nullable: false,
     unique: false,
   )
-  String time;
+  int time;
 
   @Relate(#messageUser)
   UserTable user;

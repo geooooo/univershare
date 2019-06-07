@@ -5,6 +5,8 @@ import 'event_table.dart';
 import 'user_table.dart';
 import 'message_table.dart';
 import 'presentation_table.dart';
+import 'presenter_table.dart';
+import 'listener_table.dart';
 
 ManagedContext createManagedContext(AppConfig appConfig) => ManagedContext(
   ManagedDataModel([
@@ -12,6 +14,8 @@ ManagedContext createManagedContext(AppConfig appConfig) => ManagedContext(
     UserTable,
     MessageTable,
     PresentationTable,
+    PresenterTable,
+    ListenerTable,
   ]),
   PostgreSQLPersistentStore.fromConnectionInfo(
     appConfig.database.username,
