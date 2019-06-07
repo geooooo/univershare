@@ -1,5 +1,5 @@
-//import 'dart:io' as io;
-//import 'dart:convert' as conv;
+import 'dart:io' as io;
+import 'dart:convert' as conv;
 
 import 'package:aqueduct/aqueduct.dart';
 import 'package:server/src/internal/di_injector.dart';
@@ -14,25 +14,21 @@ class WebSocketController extends Controller {
 
   @override
   Future<Response> handle(Request request) async {
-//    final connection = await io.WebSocketTransformer.upgrade(request.raw);
-//    _diInjector.logger.logWebSocketApiConnect();
-//    connection.listen((jsonData) => onDataListener(connection, jsonData), onDone: onDoneListener);
+    final socket = await io.WebSocketTransformer.upgrade(request.raw);
+    _diInjector.logger.logWebSocketApiConnect();
+    socket.listen((event) => onDataListener(socket, event), onDone: onDoneListener);
     return null;
   }
 
-//  Future<void> onDataListener(io.WebSocket connection, Object jsonData) async {
-//    print(General.connections.length);
-//    print(General.connections[General.connections.keys.first].length);
-//    final data = conv.json.decode(jsonData);
-//    final eventName = data['name'];
-//    final eventData = data['data'];
-//
-//    _diInjector.logger.logWebSocketApi(eventName, eventData);
-//
-//    switch (eventName) {
-//      case 'connect':
-//        onConnect(connection, eventData);
-//        break;
+  Future<void> onDataListener(io.WebSocket socket, String event) async {
+    final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
+
+    _diInjector.logger.logWebSocketApi(event);
+
+    switch (webSocketEvent.name) {
+      case 'connect':
+        onConnect(event, socket);
+        break;
 //      case 'disconnect_presenter':
 //        await onDisconnectPresenter(connection, eventData);
 //        break;
@@ -42,19 +38,19 @@ class WebSocketController extends Controller {
 //      case 'new_message':
 //        await onNewMessage(connection, eventData);
 //        break;
-//    }
-//  }
+    }
+  }
 //
-//  void onDoneListener() =>
-//    _diInjector.logger.logWebSocketApiDisconnect();
-//
-//  void onConnect(io.WebSocket connectionSender, Map<String, Object> eventData) {
-//    final data = api_models.WebSocketConnectData()..readFromMap(eventData);
-//    if (General.connections[data.eventId].isEmpty) {
-//      General.connections[data.eventId] = <int, io.WebSocket>{};
-//    }
-//    General.connections[data.eventId][data.userId] = connectionSender;
-//  }
+  void onDoneListener() =>
+    _diInjector.logger.logWebSocketApiDisconnect();
+
+  void onConnect(String event, io.WebSocket socket) {
+    final data = api_models.WebSocketConnect.fromJson(event);
+    if (!common.connections.containsKey(data.eventId)) {
+      common.connections[data.eventId] = <int, io.WebSocket>{};
+    }
+    common.connections[data.eventId][data.userId] = socket;
+  }
 //
 //  Future<void> onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) async {
 //    final data = api_models.WebSocketDisconnectPresenterData()..readFromMap(eventData);

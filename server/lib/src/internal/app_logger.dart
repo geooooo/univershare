@@ -8,7 +8,7 @@ class AppLogger {
   static final bodyColor = AnsiPen();
   static final wsConnect = AnsiPen();
   static final wsDisconnect = AnsiPen();
-  static final wsEventName = AnsiPen();
+  static final wsEvent = AnsiPen();
   static final Logger _logger = Logger('main');
 
   bool isTestingMode;
@@ -32,7 +32,7 @@ class AppLogger {
     wsDisconnect
       ..xterm(13, bg: false);
 
-    wsEventName
+    wsEvent
       ..xterm(10, bg: true)
       ..xterm(232, bg: false);
 
@@ -57,13 +57,13 @@ class AppLogger {
     );
   }
 
-  void logWebSocketApi(String eventName, Map<String, Object> eventData) {
+  void logWebSocketApi(String event) {
     if (isTestingMode) {
       return;
     }
     _logger.info(
-      '${wsEventName(eventName)}\n'
-      '${bodyColor(eventData.toString())}'
+      '${wsEvent("ws event:")}\n'
+      '${bodyColor(event)}'
     );
   }
 
