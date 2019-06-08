@@ -3,7 +3,6 @@ import 'package:test/test.dart';
 import 'package:aqueduct_test/aqueduct_test.dart';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:api_models/api_models.dart' as api_models;
-import 'package:server/src/internal/common.dart';
 
 import 'harness/app.dart';
 
@@ -72,6 +71,20 @@ void existsEventTest() {
       200,
       body: api_models.ExistsEventResponse(status: 1).asMap(),
     );
+
+    final request3 = api_models.ExistsEventRequest(
+      eventId: '333-333-333',
+    );
+    final response3 = await harness.agent.post(
+      '/exists_event',
+      body: request3.asMap(),
+    );
+
+    expectResponse(
+      response3,
+      200,
+      body: api_models.ExistsEventResponse(status: 1).asMap(),
+    );
   });
 }
 
@@ -114,7 +127,7 @@ void joinEventTest() {
       body: api_models.JoinEventResponse(
         status: 0,
         eventName: 'name1',
-        presentationUrl: Common.getFullUrl('url1'),
+        presentationUrl: harness.channel.diInjector.common.getFullUrl('url1'),
         userId: newUserId,
       ).asMap(),
     );

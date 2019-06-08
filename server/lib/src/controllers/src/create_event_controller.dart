@@ -4,7 +4,6 @@ import 'dart:convert' as conv;
 import 'package:api_models/api_models.dart' as api_models;
 import 'package:aqueduct/aqueduct.dart';
 import 'package:server/src/internal/di_injector.dart';
-import 'package:server/src/internal/common.dart';
 
 class CreateEventController extends ResourceController {
 
@@ -37,10 +36,10 @@ class CreateEventController extends ResourceController {
   
   Future<String>movePresentationFile(String fileData) async {
     final rawFileData = conv.base64Decode(fileData);
-    await io.Directory.fromUri(Uri.file(Common.presentationDirPath)).create(recursive: true);
-    final filePath = '${Common.presentationDirPath}'
+    await io.Directory.fromUri(Uri.file(_diInjector.common.presentationDirPath)).create(recursive: true);
+    final filePath = '${_diInjector.common.presentationDirPath}'
                      '${io.Platform.pathSeparator}${generateFileName()}'
-                     '${Common.presentationExtension}';
+                     '${_diInjector.common.presentationExtension}';
     final file = io.File(filePath);
     await file.writeAsBytes(rawFileData, flush: true);
     return filePath;

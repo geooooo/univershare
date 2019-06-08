@@ -13,16 +13,20 @@ import 'package:server/src/services/src/db/src/user_table.dart';
 class AppHarness extends TestHarness<App> with TestHarnessORMMixin {
 
   EventTable event1;
+  EventTable event2;
   PresenterTable presenter1;
+  PresenterTable presenter2;
   ListenerTable listener1;
   ListenerTable listener2;
   PresentationTable presentation1;
+  PresentationTable presentation2;
   MessageTable message1;
   MessageTable message2;
   MessageTable message3;
   UserTable user1;
   UserTable user2;
   UserTable user3;
+  UserTable user4;
 
   @override
   ManagedContext get context => channel.diInjector.db.managedContext;
@@ -52,6 +56,14 @@ class AppHarness extends TestHarness<App> with TestHarnessORMMixin {
       ..values.id_code = '111-111-111'
       ..values.presentation = presentation1
       ..values.presenter = presenter1
+      ..values.is_active = true
+    ).insert();
+    event2 = await (Query<EventTable>(context)
+      ..values.name = 'name2'
+      ..values.id_code = '222-222-222'
+      ..values.presentation = presentation2
+      ..values.presenter = presenter2
+      ..values.is_active = false
     ).insert();
   }
 
@@ -59,11 +71,17 @@ class AppHarness extends TestHarness<App> with TestHarnessORMMixin {
     presenter1 = await (Query<PresenterTable>(context)
       ..values.user = user1
     ).insert();
+    presenter2 = await (Query<PresenterTable>(context)
+      ..values.user = user4
+    ).insert();
   }
 
   Future<void> _fillPresentationTable() async {
     presentation1 = await (Query<PresentationTable>(context)
       ..values.url = 'url1'
+    ).insert();
+    presentation2 = await (Query<PresentationTable>(context)
+      ..values.url = 'url2'
     ).insert();
   }
 
@@ -108,6 +126,9 @@ class AppHarness extends TestHarness<App> with TestHarnessORMMixin {
     ).insert();
     user3 = await (Query<UserTable>(context)
       ..values.name = 'name3'
+    ).insert();
+    user4 = await (Query<UserTable>(context)
+      ..values.name = 'name4'
     ).insert();
   }
 

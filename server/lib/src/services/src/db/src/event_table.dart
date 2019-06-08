@@ -24,6 +24,12 @@ class _EventTable {
     nullable: false,
     unique: false,
   )
+  bool is_active;
+
+  @Column(
+    nullable: false,
+    unique: false,
+  )
   String name;
 
   @Relate(#eventPresentation)

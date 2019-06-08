@@ -1,9 +1,7 @@
 import 'dart:io' as io;
-import 'dart:convert' as conv;
 
 import 'package:aqueduct/aqueduct.dart';
 import 'package:server/src/internal/di_injector.dart';
-import 'package:server/src/internal/common.dart';
 import 'package:api_models/api_models.dart' as api_models;
 
 class WebSocketController extends Controller {
@@ -16,13 +14,17 @@ class WebSocketController extends Controller {
 
   @override
   Future<Response> handle(Request request) async {
-    final socket = await io.WebSocketTransformer.upgrade(request.raw);
+    final socket = await io.WebSocketTransformer.upgrade(request.raw)
+      ..pingInterval = _diInjector.common.pingInterval;
+    
     _diInjector.logger.logWebSocketApiConnect();
+    
     socket.listen((event) => onDataListener(socket, event), onDone: onDoneListener);
     return null;
   }
 
   Future<void> onDataListener(io.WebSocket socket, String event) async {
+    print(event);
     final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
 
     _diInjector.logger.logWebSocketApi(event);
@@ -38,17 +40,17 @@ class WebSocketController extends Controller {
         await onDisconnectPresenter(event, socket);
         break;
       case 'disconnect_listener':
-        onDisconnectListener(event, socket);
+        await onDisconnectListener(event, socket);
         break;
-//      case 'new_message':
-//        await onNewMessage(connection, eventData);
-//        break;
+      case 'new_message':
+        await onNewMessage(event, socket);
+        break;
     }
 
     print(connections.keys);
     connections.keys.forEach((k) => print(connections[k].keys));
   }
-//
+
   void onDoneListener() =>
     _diInjector.logger.logWebSocketApiDisconnect();
 
@@ -60,7 +62,6 @@ class WebSocketController extends Controller {
   }
 
   void onConnectListener(String event, io.WebSocket socket) {
-    print('+');
     final data = api_models.WebSocketConnectListener.fromJson(event);
     if (!connections.containsKey(data.eventId)) {
       socket.add(api_models.WebSocketRetry().toJson());
@@ -79,35 +80,62 @@ class WebSocketController extends Controller {
       connection.add(api_models.WebSocketEventEndData().toJson());
     });
 
+    for (var userId in connections[data.eventId].keys) {
+      await connections[data.eventId][userId].close();
+    }
     connections.remove(data.eventId);
-    await _diInjector.db.removeEvent(data.eventId);
+    scheduleRemoveEvent(data.eventId);
+    await _diInjector.db.endEvent(data.eventId);
   }
 
-  void onDisconnectListener(String event, io.WebSocket socket) {
+  Future<void> onDisconnectListener(String event, io.WebSocket socket) async {
     final data = api_models.WebSocketDisconnectListener.fromJson(event);
     if (connections.containsKey(data.eventId)) {
+      await connections[data.eventId][data.userId].close();
       connections[data.eventId].remove(data.userId);
     }
   }
-//
-//  Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
-//    final data = api_models.WebSocketNewMessageData()..readFromMap(eventData);
-//
-//    General.connections[data.eventId].forEach((_, connection) {
-//      if (connection == connectionSender) {
-//        return;
-//      }
-//      final responseData = conv.jsonEncode((api_models.WebSocketEvent()
-//        ..name = 'get_message'
-//        ..data = (api_models.WebSocketGetMessageData()
-//          ..text = data.text
-//          ..userName = data.userName
-//          ..isQuestion = data.isQuestion)
-//      ).asMap());
-//      connection.add(responseData);
-//    });
-//
-//    await _diInjector.db.newMessage(data.userId, data.text, data.isQuestion);
-//  }
 
+  Future<void> onNewMessage(String event, io.WebSocket socket) async {
+    final data = api_models.WebSocketNewMessage.fromJson(event);
+
+    connections[data.eventId].forEach((userId, connection) async {
+      if (connection == socket) {
+        return;
+      }
+      if (socket.readyState != io.WebSocket.open) {
+        await connection.close();
+        connections[data.eventId].remove(userId);
+        return;
+      }
+      socket.add(api_models.WebSocketGetMessage(
+        text: data.text,
+        userName: data.userName,
+        isQuestion: data.isQuestion).toJson()
+      );
+    });
+
+    await _diInjector.db.newMessage(data.userId, data.text, data.isQuestion);
+  }
+
+  void scheduleRemoveEvent(String eventId) =>
+    Future.delayed(_diInjector.common.removeEventDelay).then(
+      (_) => _diInjector.db.removeEvent(eventId)
+    );
+
+  void scheduleCheckPresenters() =>
+    Future.delayed(_diInjector.common.pingInterval).then((_) async {
+      connections.forEach((eventId, connectionData) async {
+        final socket = connectionData.values.first;
+        final isClose = (socket.readyState == io.WebSocket.closed) ||
+                        (socket.readyState == io.WebSocket.closing);
+        if (isClose) {
+          await onDisconnectPresenter(
+            api_models.WebSocketDisconnectPresenter(
+              eventId: eventId,
+            ).toJson(), socket
+          );
+        }
+      });
+    });
 }
