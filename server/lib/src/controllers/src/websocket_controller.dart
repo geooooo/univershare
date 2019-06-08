@@ -24,7 +24,6 @@ class WebSocketController extends Controller {
   }
 
   Future<void> onDataListener(io.WebSocket socket, String event) async {
-    print(event);
     final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
 
     _diInjector.logger.logWebSocketApi(event);
@@ -46,9 +45,6 @@ class WebSocketController extends Controller {
         await onNewMessage(event, socket);
         break;
     }
-
-    print(connections.keys);
-    connections.keys.forEach((k) => print(connections[k].keys));
   }
 
   void onDoneListener() =>
@@ -108,7 +104,7 @@ class WebSocketController extends Controller {
         connections[data.eventId].remove(userId);
         return;
       }
-      socket.add(api_models.WebSocketGetMessage(
+      connection.add(api_models.WebSocketGetMessage(
         text: data.text,
         userName: data.userName,
         isQuestion: data.isQuestion).toJson()
