@@ -1,7 +1,7 @@
 import 'package:aqueduct/aqueduct.dart';
 import 'package:server/src/internal/di_injector.dart';
 import 'package:api_models/api_models.dart' as api_models;
-import 'package:server/src/internal/common.dart' as common;
+import 'package:server/src/internal/common.dart';
 
 class JoinEventController extends ResourceController {
 
@@ -17,7 +17,7 @@ class JoinEventController extends ResourceController {
 
     final responseData = await _diInjector.db.joinEvent(requestData.eventId, requestData.userName);
     final response = api_models.JoinEventResponse.fromMap(responseData)
-      ..presentationUrl = common.getFullUrl(responseData['presentation_url'])
+      ..presentationUrl = Common.getFullUrl(responseData['presentation_url'])
       ..status = 0;
 
     return Response.ok(response.asMap());

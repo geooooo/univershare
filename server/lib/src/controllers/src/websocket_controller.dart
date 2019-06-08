@@ -3,12 +3,14 @@ import 'dart:convert' as conv;
 
 import 'package:aqueduct/aqueduct.dart';
 import 'package:server/src/internal/di_injector.dart';
-import 'package:server/src/internal/common.dart' as common;
+import 'package:server/src/internal/common.dart';
 import 'package:api_models/api_models.dart' as api_models;
 
 class WebSocketController extends Controller {
 
   final DiInjector _diInjector;
+
+  Map<String, Map<int, io.WebSocket>> get connections => _diInjector.common.connections;
 
   WebSocketController(this._diInjector);
 
@@ -29,12 +31,12 @@ class WebSocketController extends Controller {
       case 'connect':
         onConnect(event, socket);
         break;
-//      case 'disconnect_presenter':
-//        await onDisconnectPresenter(connection, eventData);
-//        break;
-//      case 'disconnect_listener':
-//        onDisconnectListener(connection, eventData);
-//        break;
+      case 'disconnect_presenter':
+        await onDisconnectPresenter(event, socket);
+        break;
+      case 'disconnect_listener':
+        onDisconnectListener(event, socket);
+        break;
 //      case 'new_message':
 //        await onNewMessage(connection, eventData);
 //        break;
@@ -46,34 +48,31 @@ class WebSocketController extends Controller {
 
   void onConnect(String event, io.WebSocket socket) {
     final data = api_models.WebSocketConnect.fromJson(event);
-    if (!common.connections.containsKey(data.eventId)) {
-      common.connections[data.eventId] = <int, io.WebSocket>{};
+    if (!connections.containsKey(data.eventId)) {
+      connections[data.eventId] = <int, io.WebSocket>{};
     }
-    common.connections[data.eventId][data.userId] = socket;
+    connections[data.eventId][data.userId] = socket;
   }
-//
-//  Future<void> onDisconnectPresenter(io.WebSocket connectionSender, Map<String, Object> eventData) async {
-//    final data = api_models.WebSocketDisconnectPresenterData()..readFromMap(eventData);
-//    General.connections.remove(data.eventId);
-//
-//    General.connections[data.eventId].forEach((_, connection) {
-//      if (connection == connectionSender) {
-//        return;
-//      }
-//      final responseData = conv.jsonEncode((api_models.WebSocketEvent()
-//        ..name = 'event_end'
-//        ..data = api_models.WebSocketEventEndData()
-//      ).asMap());
-//      connection.add(responseData);
-//    });
-//
-//    await _diInjector.db.removeEventData(data.eventId);
-//  }
-//
-//  void onDisconnectListener(io.WebSocket connectionSender, Map<String, Object> eventData) {
-//    final data = api_models.WebSocketDisconnectListenerData()..readFromMap(eventData);
-//    General.connections[data.eventId].remove(data.userId);
-//  }
+
+  Future<void> onDisconnectPresenter(String event, io.WebSocket socket) async {
+    final data = api_models.WebSocketDisconnectPresenter.fromJson(event);
+    connections.remove(data.eventId);
+
+    await _diInjector.db.removeEvent(data.eventId);
+
+    connections[data.eventId].forEach((_, connection) {
+      if (connection == socket) {
+        return;
+      }
+      final responseData = api_models.WebSocketEventEndData().toJson();
+      connection.add(responseData);
+    });
+  }
+
+  void onDisconnectListener(String event, io.WebSocket socket) {
+    final data = api_models.WebSocketDisconnectListener.fromJson(event);
+    connections[data.eventId].remove(data.userId);
+  }
 //
 //  Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
 //    final data = api_models.WebSocketNewMessageData()..readFromMap(eventData);

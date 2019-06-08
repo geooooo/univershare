@@ -5,7 +5,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'src/app.dart';
 
 Future<void> run({int port = 8888, int isolatesCount = 1}) async {
-  final app = Application<DartelloApp>()
+  final app = Application<App>()
     ..options.port = port;
 
   print(

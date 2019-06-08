@@ -1,13 +1,17 @@
 import 'dart:io' as io;
 
-const String presentationExtension = '.pdf';
-final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
-const int eventIdLength = 9;
-const String eventIdSeparator = '-';
-const String http_host = 'http://localhost:8888';
-const String ws_host = 'ws://localhost:8888/connect';
+class Common {
 
-final Map<String, Map<int, io.WebSocket>> connections = {};
+  static const String presentationExtension = '.pdf';
+  static final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
+  static const int eventIdLength = 9;
+  static const String eventIdSeparator = '-';
+  static const String http_host = 'http://localhost:8888';
+  static const String ws_host = 'ws://localhost:8888/connect';
 
-String getFullUrl(String path) =>
-  '${http_host}${io.Platform.pathSeparator}$path';
+  final Map<String, Map<int, io.WebSocket>> connections = {};
+
+  static String getFullUrl(String path) =>
+      '${http_host}${io.Platform.pathSeparator}$path';
+
+}

@@ -3,10 +3,11 @@ import 'package:aqueduct/aqueduct.dart';
 import 'internal/di_injector.dart';
 import 'internal/router.dart';
 import 'internal/app_logger.dart';
+import 'internal/common.dart';
 import 'internal/app_config.dart';
 import 'services/services.dart';
 
-class DartelloApp extends ApplicationChannel {
+class App extends ApplicationChannel {
 
   AppConfig appConfig = AppConfig.local();
   DiInjector diInjector;
@@ -16,6 +17,7 @@ class DartelloApp extends ApplicationChannel {
     diInjector = DiInjector(
       logger: AppLogger(logger),
       db: Db(appConfig),
+      common: Common(),
     );
   }
 

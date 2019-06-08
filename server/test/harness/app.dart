@@ -10,7 +10,7 @@ import 'package:server/src/services/src/db/src/presentation_table.dart';
 import 'package:server/src/services/src/db/src/presenter_table.dart';
 import 'package:server/src/services/src/db/src/user_table.dart';
 
-class AppHarness extends TestHarness<DartelloApp> with TestHarnessORMMixin {
+class AppHarness extends TestHarness<App> with TestHarnessORMMixin {
 
   EventTable event1;
   PresenterTable presenter1;

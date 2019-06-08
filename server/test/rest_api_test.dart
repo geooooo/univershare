@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:aqueduct_test/aqueduct_test.dart';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:api_models/api_models.dart' as api_models;
-import 'package:server/src/internal/common.dart' as common;
+import 'package:server/src/internal/common.dart';
 
 import 'harness/app.dart';
 
@@ -116,7 +116,7 @@ void joinEventTest() {
       body: api_models.JoinEventResponse(
         status: 0,
         eventName: 'name1',
-        presentationUrl: common.getFullUrl('url1'),
+        presentationUrl: Common.getFullUrl('url1'),
         userId: newUserId,
       ).asMap(),
     );
