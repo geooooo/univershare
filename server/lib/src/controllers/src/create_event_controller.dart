@@ -47,8 +47,7 @@ class CreateEventController extends ResourceController {
 
   String generateFileName() {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
-    final data = DateTime.now().toString();
-    return '${data}_$time';
+    return 'presentation_file_$time';
   }
 
 }

@@ -43,9 +43,15 @@ post create_event
 ## Схема WebSocket:
 
 ```
-server connect
+server connect_listener
     event_id
     user_id
+    
+server connect_presenter
+    event_id
+    user_id
+    
+client retry
     
 server disconnect_listener
     event_id
@@ -83,9 +89,10 @@ event
     name string not null
     presentation_id int
     presenter_id int
+    is_active bool
     
     foreign key(presentation_id) references presentation(id)
-    foreign key(presenter_id) references user(id)
+    foreign key(presenter_id) references presenter(id)
     
 presentation
     id int primary key
@@ -94,9 +101,20 @@ presentation
 user 
     id int primary key
     name string not null
+    
+listener
+    id int primary key  
+    user_id int
     event_id int
     
+    foreign key(user_id) references user(id)
     foreign key(event_id) references event(id)
+
+presenter
+    id int primary key
+    user_id int
+        
+    foreign key(user_id) references user(id)
     
 message
     id int primary key

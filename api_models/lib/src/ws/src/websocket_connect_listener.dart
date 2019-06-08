@@ -1,23 +1,23 @@
 import 'websocket_event.dart';
 
-class WebSocketConnect extends WebSocketEvent {
+class WebSocketConnectListener extends WebSocketEvent {
 
   @override
-  String name = 'connect';
+  String name = 'connect_listener';
   String eventId;
   int userId;
 
   @override
-  WebSocketConnect({
+  WebSocketConnectListener({
     this.eventId,
     this.userId,
   });
 
   @override
-  WebSocketConnect.fromMap(Map<String, Object> data): super.fromMap(data);
+  WebSocketConnectListener.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
-  WebSocketConnect.fromJson(String data): super.fromJson(data);
+  WebSocketConnectListener.fromJson(String data): super.fromJson(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

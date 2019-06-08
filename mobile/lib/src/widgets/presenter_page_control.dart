@@ -1,3 +1,5 @@
+import 'dart:convert' as conv;
+
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:api_models/api_models.dart' as api_models;
@@ -34,10 +36,15 @@ class PresenterPageControl extends StatelessWidget {
   );
 
   void _onPressedCompleteButton(BuildContext context) {
-    store.state.socket.sink.add(api_models.WebSocketDisconnectPresenterData()
-      ..userId = store.state.userId
-      ..eventId = store.state.eventId
-    );
+    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
+      ..name = 'disconnect_presenter'
+      ..data = (api_models.WebSocketDisconnectPresenterData()
+        ..userId = store.state.userId
+        ..eventId = store.state.eventId
+        ..userId = store.state.userId
+        ..eventId = store.state.eventId)
+    ).asMap());
+    store.state.socket.add(requestData);
     store.dispatch(action.SocketClose());
     Navigator.pushReplacementNamed(
       context,

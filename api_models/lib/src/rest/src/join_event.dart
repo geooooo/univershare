@@ -13,6 +13,9 @@ class JoinEventRequest extends Request {
   });
 
   @override
+  JoinEventRequest.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
     'user_name': userName,
@@ -35,10 +38,14 @@ class JoinEventResponse extends Response {
   String presentationUrl;
 
   JoinEventResponse({
+    int status,
     this.userId,
     this.eventName,
     this.presentationUrl,
-  });
+  }): super(status: status);
+
+  @override
+  JoinEventResponse.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

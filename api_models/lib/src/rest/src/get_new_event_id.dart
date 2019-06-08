@@ -7,6 +7,9 @@ class GetNewEventIdRequest extends Request {
   GetNewEventIdRequest();
 
   @override
+  GetNewEventIdRequest.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
   Map<String, Object> asMap() => {};
 
   @override
@@ -21,8 +24,12 @@ class GetNewEventIdResponse extends Response {
   String eventId;
 
   GetNewEventIdResponse({
+    int status,
     this.eventId,
-  });
+  }): super(status: status);
+
+  @override
+  GetNewEventIdResponse.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

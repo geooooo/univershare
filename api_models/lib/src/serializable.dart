@@ -13,13 +13,10 @@ abstract class Serializable {
     readFromMap(mapData);
   }
 
-  String toJson() => conv.jsonEncode(toString());
-
   Map<String, Object> asMap();
 
   void readFromMap(Map<String, Object> data);
 
-  @override
-  String toString() => asMap().toString();
+  String toJson() => conv.jsonEncode(asMap());
 
 }

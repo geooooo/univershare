@@ -52,7 +52,6 @@ Future<api_models.JoinEventResponse> joinEvent({
 Future<api_models.GetEventMessagesResponse> getEventMessages(String eventId) async {
   final requestData = api_models.GetEventMessagesRequest()
     ..eventId = eventId;
-
   final responseDataRaw = await _post('${data.http_host}get_event_messages', requestData.asMap());
   final responseData = api_models.GetEventMessagesResponse()..readFromMap(conv.jsonDecode(responseDataRaw));
   return responseData;

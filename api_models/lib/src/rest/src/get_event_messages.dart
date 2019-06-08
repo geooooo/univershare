@@ -1,6 +1,6 @@
 import 'response.dart';
 import 'request.dart';
-import 'message.dart';
+import '../../struct/struct.dart';
 
 class GetEventMessagesRequest extends Request {
 
@@ -10,6 +10,9 @@ class GetEventMessagesRequest extends Request {
   GetEventMessagesRequest({
     this.eventId,
   });
+
+  @override
+  GetEventMessagesRequest.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
   Map<String, Object> asMap() => {
@@ -31,8 +34,12 @@ class GetEventMessagesResponse extends Response {
 
   @override
   GetEventMessagesResponse({
+    int status,
     this.messages,
-  });
+  }): super(status: status);
+
+  @override
+  GetEventMessagesResponse.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

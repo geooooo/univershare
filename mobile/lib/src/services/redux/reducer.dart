@@ -1,5 +1,4 @@
 import 'package:redux/redux.dart';
-import 'package:api_models/api_models.dart' as api_models;
 
 import 'app_state.dart';
 import 'action.dart';
@@ -117,11 +116,11 @@ AppState _onSaveMessages(AppState state, SaveMessages action) {
     '}\n'
   );
   return state
-    ..messages = action.messages.map((apiMessage) => Message(
+    ..messages.addAll(action.messages.map((apiMessage) => Message(
       userName: apiMessage.userName,
       isQuestion:  apiMessage.isQuestion,
       text: apiMessage.text,
-    ));
+    )).toList());
 }
 
 AppState _onSocketClose(AppState state, SocketClose action) {
@@ -129,6 +128,6 @@ AppState _onSocketClose(AppState state, SocketClose action) {
     'Action: SocketClose {}'
   );
   return state
-    ..socket.sink.close();
+    ..socket.close();
 }
 

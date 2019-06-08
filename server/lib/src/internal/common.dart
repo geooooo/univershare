@@ -3,7 +3,8 @@ import 'dart:io' as io;
 class Common {
 
   final String presentationExtension = '.pdf';
-  final String presentationDirPath = 'asset${io.Platform.pathSeparator}presentation';
+  final String presentationDirPath = 'assets${io.Platform.pathSeparator}presentations';
+//  final String presentationDirPath = 'assets${io.Platform.pathSeparator}presentations';
   final int eventIdLength = 9;
   final String eventIdSeparator = '-';
   final String http_host = 'http://localhost:8888';

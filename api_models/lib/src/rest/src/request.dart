@@ -1,3 +1,11 @@
-import 'serializable.dart';
+import '../../serializable.dart';
 
-abstract class Request extends Serializable {}
+abstract class Request extends Serializable {
+
+  @override
+  Request();
+
+  @override
+  Request.fromMap(Map<String, Object> data): super.fromMap(data);
+
+}

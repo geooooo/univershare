@@ -1,31 +1,17 @@
 import 'websocket_event.dart';
 
-class WebSocketDisconnectPresenter extends WebSocketEvent {
+class WebSocketRetry extends WebSocketEvent {
 
   @override
-  String name = 'disconnect_presenter';
-  String eventId;
+  String name = 'retry';
 
   @override
-  WebSocketDisconnectPresenter({
-    this.eventId,
-  });
+  WebSocketRetry();
 
   @override
-  WebSocketDisconnectPresenter.fromMap(Map<String, Object> data): super.fromMap(data);
+  WebSocketRetry.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
-  WebSocketDisconnectPresenter.fromJson(String data): super.fromJson(data);
-
-  @override
-  Map<String, Object> asMap() => super.asMap()..addAll({
-    'event_id': eventId,
-  });
-
-  @override
-  void readFromMap(Map<String, Object> data) {
-    super.readFromMap(data);
-    eventId = data['event_id'];
-  }
+  WebSocketRetry.fromJson(String data): super.fromJson(data);
 
 }

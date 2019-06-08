@@ -1,21 +1,26 @@
-import 'websocket_data.dart';
-import 'package:api_models/src/rest/src/request.dart';
+import '../../serializable.dart';
 
-class WebSocketEvent extends Request {
+class WebSocketEvent extends Serializable {
 
-  String name;
-  WebSocketData data;
+  String name = '';
+
+  @override
+  WebSocketEvent();
+
+  @override
+  WebSocketEvent.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  WebSocketEvent.fromJson(String data): super.fromJson(data);
 
   @override
   Map<String, Object> asMap() => {
     'name': name,
-    'data': data.asMap(),
   };
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    name = inputMap['name'];
-    data.readFromMap(inputMap['data']);
+  void readFromMap(Map<String, Object> mapData) {
+    name = mapData['name'];
   }
 
 }

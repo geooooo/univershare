@@ -1,12 +1,15 @@
-import 'websocket_data.dart';
+import 'websocket_event.dart';
 
-class WebSocketDisconnectListener extends WebSocketData {
-
-  @override
-  WebSocketDisconnectListener();
+class WebSocketPing extends WebSocketEvent {
 
   @override
-  WebSocketDisconnectListener.fromMap(Map<String, Object> data): super.fromMap(data);
+  WebSocketPing();
+
+  @override
+  WebSocketPing.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  WebSocketPing.fromJson(String data): super.fromJson(data);
 
   @override
   Map<String, Object> asMap() => {};

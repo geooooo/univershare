@@ -1,15 +1,15 @@
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:io' as io;
 
 class AppState {
 
   int userId = 0;
-  String userName = 'a';
-  String eventId = '123-456-322';
+  String userName = '';
+  String eventId = '123-456-789';
   String eventName = '';
   String presentationUrl = '';
   List<Message> messages = [];
   bool isLoadingShow = false;
-  WebSocketChannel socket;
+  io.WebSocket socket;
 
   StartPageState startPageState = StartPageState.initial();
 

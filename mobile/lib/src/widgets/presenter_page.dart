@@ -2,7 +2,7 @@ import 'dart:convert' as conv;
 
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import 'package:web_socket_channel/io.dart';
+import 'dart:io' as io;
 import 'package:api_models/api_models.dart' as api_models;
 
 import '../services/data.dart' as data;
@@ -13,6 +13,8 @@ import 'page_chat.dart';
 import 'presenter_page_control.dart';
 import 'presenter_page_questions.dart';
 
+var f = false;
+
 class PresenterPage extends StatelessWidget {
 
   final Store<AppState> store;
@@ -20,7 +22,10 @@ class PresenterPage extends StatelessWidget {
   PresenterPage({
     this.store,
   }) {
-    _init();
+    if (!f) {
+      _init();
+      f = true;
+    }
   }
 
   @override
@@ -54,22 +59,27 @@ class PresenterPage extends StatelessWidget {
   );
 
   Future<void> _init() async {
-    final socket = IOWebSocketChannel.connect(data.ws_host);
-    socket.sink.add(api_models.WebSocketConnectData()
-      ..userId = store.state.userId
-      ..eventId = store.state.eventId
-    );
+    final socket = await io.WebSocket.connect(data.ws_host);
+    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
+      ..name = 'connect'
+      ..data = (api_models.WebSocketConnectData()
+        ..userId = store.state.userId
+        ..eventId = store.state.eventId)
+    ).asMap());
+    socket.add(requestData);
     store.dispatch(action.SocketConnect(socket));
 
-    socket.stream.listen(_socketListener);
+    socket.listen(_socketListener);
 
     final responseData = await rest_api.getEventMessages(store.state.eventId);
     store.dispatch(action.SaveMessages(responseData.messages));
   }
 
   Future<void> _socketListener(Object jsonData) async {
+    print('+++++');
+    print(jsonData);
     final data = conv.jsonDecode(jsonData);
-    final eventName = data['event'];
+    final eventName = data['name'];
     final eventData = data['data'];
 
     switch (eventName) {

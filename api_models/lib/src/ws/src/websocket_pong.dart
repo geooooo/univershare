@@ -1,17 +1,14 @@
-import 'websocket_data.dart';
+import 'websocket_event.dart';
 
-class WebSocketPing extends WebSocketData {
-
-  @override
-  WebSocketPing();
+class WebSocketPong extends WebSocketEvent {
 
   @override
-  WebSocketPing.fromMap(Map<String, Object> data): super.fromMap(data);
+  WebSocketPong();
 
   @override
-  Map<String, Object> asMap() => {};
+  WebSocketPong.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
-  void readFromMap(Map<String, Object> data) {}
+  WebSocketPong.fromJson(String data): super.fromJson(data);
 
 }

@@ -1,10 +1,20 @@
-import 'package:api_models/src/rest/src/request.dart';
+import '../../serializable.dart';
 
-class Message extends Request {
+class Message extends Serializable {
 
   String text;
   String userName;
   bool isQuestion;
+
+  @override
+  Message({
+    this.text,
+    this.userName,
+    this.isQuestion
+  });
+
+  @override
+  Message.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
   Map<String, Object> asMap() => {
@@ -14,10 +24,10 @@ class Message extends Request {
   };
 
   @override
-  void readFromMap(Map<String, Object> inputMap) {
-    text = inputMap['text'];
-    userName = inputMap['user_name'];
-    isQuestion = inputMap['is_question'];
+  void readFromMap(Map<String, Object> data) {
+    text = data['text'];
+    userName = data['user_name'];
+    isQuestion = data['is_question'];
   }
 
 }

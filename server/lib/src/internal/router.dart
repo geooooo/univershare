@@ -8,7 +8,8 @@ Router createRouter(DiInjector diInjector) => Router()
   ..route('/get_event_messages').link(() => GetEventMessagesController(diInjector))
   ..route('/get_new_event_id').link(() => GetNewEventIdController(diInjector))
   ..route('/join_event').link(() => JoinEventController(diInjector))
-  ..route('/connect').link(() => WebSocketController(diInjector));
+  ..route('/connect').link(() => WebSocketController(diInjector))
+  ..route('/assets/presentations/*').link(() => AssetsController(diInjector));
 
 
 

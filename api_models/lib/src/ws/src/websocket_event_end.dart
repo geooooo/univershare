@@ -1,3 +1,17 @@
-import 'package:api_models/src/ws/src/websocket_data.dart';
+import 'websocket_event.dart';
 
-class WebSocketEventEndData extends WebSocketData {}
+class WebSocketEventEndData extends WebSocketEvent {
+
+  @override
+  String name = 'event_end';
+
+  @override
+  WebSocketEventEndData();
+
+  @override
+  WebSocketEventEndData.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  WebSocketEventEndData.fromJson(String data): super.fromJson(data);
+
+}

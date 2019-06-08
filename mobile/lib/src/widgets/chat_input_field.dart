@@ -67,14 +67,15 @@ class ChatInputFieldState extends State<ChatInputField> {
   );
 
   void _onSendMessage(bool isQuestion) {
+    if (_value.isNotEmpty) {
+      onSendMessage(_value, isQuestion);
+    }
     FocusScope.of(context).detach();
     setState(() {
       _controller.clear();
       _maxLines = 1;
+      _value = '';
     });
-    if (_value.isNotEmpty) {
-      onSendMessage(_value, isQuestion);
-    }
   }
 
   void _onTap() => setState(() {

@@ -1,4 +1,5 @@
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:io' as io;
+
 import 'package:api_models/api_models.dart' as api_models;
 
 import 'app_state.dart';
@@ -67,7 +68,7 @@ class SetEventInfo {
 
 class SocketConnect {
 
-  final WebSocketChannel socket;
+  final io.WebSocket socket;
 
   SocketConnect(this.socket);
 
