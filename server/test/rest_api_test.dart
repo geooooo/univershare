@@ -1,5 +1,3 @@
-@Skip('temp')
-
 import 'package:server/src/services/src/db/src/user_table.dart';
 import 'package:test/test.dart';
 import 'package:aqueduct_test/aqueduct_test.dart';

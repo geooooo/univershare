@@ -10,12 +10,14 @@ class AppConfig extends Configuration {
 
   DatabaseConfiguration database;
 
-  AppConfig.production(): super.fromFile(io.File(_productionConfigPath)) {
+  AppConfig.production(): super.fromFile(io.File(_productionConfigPath));
+
+  AppConfig.local(): super.fromFile(io.File(_localConfigPath)) {
     Controller.includeErrorDetailsInServerErrorResponses = true;
   }
 
-  AppConfig.local(): super.fromFile(io.File(_localConfigPath));
-
-  AppConfig.test(): super.fromFile(io.File(_testConfigPath));
+  AppConfig.test(): super.fromFile(io.File(_testConfigPath)) {
+    Controller.includeErrorDetailsInServerErrorResponses = true;
+  }
 
 }

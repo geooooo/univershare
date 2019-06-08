@@ -28,8 +28,11 @@ class WebSocketController extends Controller {
     _diInjector.logger.logWebSocketApi(event);
 
     switch (webSocketEvent.name) {
-      case 'connect':
-        onConnect(event, socket);
+      case 'connect_presenter':
+        onConnectPresenter(event, socket);
+        break;
+      case 'connect_listener':
+        onConnectListener(event, socket);
         break;
       case 'disconnect_presenter':
         await onDisconnectPresenter(event, socket);
@@ -41,37 +44,50 @@ class WebSocketController extends Controller {
 //        await onNewMessage(connection, eventData);
 //        break;
     }
+
+    print(connections.keys);
+    connections.keys.forEach((k) => print(connections[k].keys));
   }
 //
   void onDoneListener() =>
     _diInjector.logger.logWebSocketApiDisconnect();
 
-  void onConnect(String event, io.WebSocket socket) {
-    final data = api_models.WebSocketConnect.fromJson(event);
+  void onConnectPresenter(String event, io.WebSocket socket) {
+    final data = api_models.WebSocketConnectPresenter.fromJson(event);
+    connections[data.eventId] = <int, io.WebSocket>{
+      data.userId: socket,
+    };
+  }
+
+  void onConnectListener(String event, io.WebSocket socket) {
+    print('+');
+    final data = api_models.WebSocketConnectListener.fromJson(event);
     if (!connections.containsKey(data.eventId)) {
-      connections[data.eventId] = <int, io.WebSocket>{};
+      socket.add(api_models.WebSocketRetry().toJson());
+      return;
     }
     connections[data.eventId][data.userId] = socket;
   }
 
   Future<void> onDisconnectPresenter(String event, io.WebSocket socket) async {
     final data = api_models.WebSocketDisconnectPresenter.fromJson(event);
-    connections.remove(data.eventId);
-
-    await _diInjector.db.removeEvent(data.eventId);
 
     connections[data.eventId].forEach((_, connection) {
       if (connection == socket) {
         return;
       }
-      final responseData = api_models.WebSocketEventEndData().toJson();
-      connection.add(responseData);
+      connection.add(api_models.WebSocketEventEndData().toJson());
     });
+
+    connections.remove(data.eventId);
+    await _diInjector.db.removeEvent(data.eventId);
   }
 
   void onDisconnectListener(String event, io.WebSocket socket) {
     final data = api_models.WebSocketDisconnectListener.fromJson(event);
-    connections[data.eventId].remove(data.userId);
+    if (connections.containsKey(data.eventId)) {
+      connections[data.eventId].remove(data.userId);
+    }
   }
 //
 //  Future<void> onNewMessage(io.WebSocket connectionSender, Map<String, Object> eventData) async {
