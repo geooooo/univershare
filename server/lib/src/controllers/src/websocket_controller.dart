@@ -59,10 +59,6 @@ class WebSocketController extends Controller {
 
   void onConnectListener(String event, io.WebSocket socket) {
     final data = api_models.WebSocketConnectListener.fromJson(event);
-    if (!connections.containsKey(data.eventId)) {
-      socket.add(api_models.WebSocketRetry().toJson());
-      return;
-    }
     connections[data.eventId][data.userId] = socket;
   }
 

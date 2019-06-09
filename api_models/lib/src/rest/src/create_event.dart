@@ -20,6 +20,9 @@ class CreateEventRequest extends Request {
   CreateEventRequest.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
+  CreateEventRequest.fromJson(String data): super.fromJson(data);
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
     'event_name': eventName,
@@ -45,5 +48,11 @@ class CreateEventResponse extends Response {
   CreateEventResponse({
     int status,
   }): super(status: status);
+
+  @override
+  CreateEventResponse.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  CreateEventResponse.fromJson(String data): super.fromJson(data);
 
 }

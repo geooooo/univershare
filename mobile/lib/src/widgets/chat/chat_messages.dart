@@ -47,14 +47,23 @@ class ChatMessagesState extends State<ChatMessages> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Expanded(
-    child: ListView(
-      controller: _scrollController,
-      children: messages.map((message) => ChatMessage(
-        text: message.text,
-        userName: message.userName,
-        isCurrentUser: currentUserName == message.userName,
-      )).toList(),
+    child: Container(
+      color: Colors.white10,
+      child: ListView(
+        controller: _scrollController,
+        children: messages.map((message) => ChatMessage(
+          text: message.text,
+          userName: message.userName,
+          isCurrentUser: currentUserName == message.userName,
+        )).toList(),
+      ),
     ),
   );
 

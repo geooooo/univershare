@@ -12,9 +12,9 @@ final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, CheckQuestion>(_onCheckQuestion),
   TypedReducer<AppState, Loading>(_onLoading),
   TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
-  TypedReducer<AppState, SocketConnect>(_onSocketConnect),
+  TypedReducer<AppState, SetSocket>(_onSetSocket),
   TypedReducer<AppState, SaveMessages>(_onSaveMessages),
-  TypedReducer<AppState, SocketClose>(_onSocketClose),
+  TypedReducer<AppState, CloseSocket>(_onCloseSocket),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -100,9 +100,9 @@ AppState _onSetEventInfo(AppState state, SetEventInfo action) {
     ..userId = action.userId;
 }
 
-AppState _onSocketConnect(AppState state, SocketConnect action) {
+AppState _onSetSocket(AppState state, SetSocket action) {
   print(
-    'Action: SocketConnect {\n'
+    'Action: SetSocket {\n'
       '\tsocket.hasCode: ${action.hashCode}\n'
     '}\n'
   );
@@ -124,9 +124,9 @@ AppState _onSaveMessages(AppState state, SaveMessages action) {
     )).toList());
 }
 
-AppState _onSocketClose(AppState state, SocketClose action) {
+AppState _onCloseSocket(AppState state, CloseSocket action) {
   print(
-    'Action: SocketClose {}'
+    'Action: CloseSocket {}'
   );
   return state
     ..socket.close();

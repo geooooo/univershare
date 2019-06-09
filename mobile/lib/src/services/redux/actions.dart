@@ -3,7 +3,6 @@ import 'dart:io' as io;
 import 'package:api_models/api_models.dart' as api_models;
 
 import '../../models/message.dart';
-import 'app_state.dart';
 
 class SetEventId {
 
@@ -67,11 +66,11 @@ class SetEventInfo {
 
 }
 
-class SocketConnect {
+class SetSocket {
 
   final io.WebSocket socket;
 
-  SocketConnect(this.socket);
+  SetSocket(this.socket);
 
 }
 
@@ -83,8 +82,8 @@ class SaveMessages {
 
 }
 
-class SocketClose {
+class CloseSocket {
 
-  SocketClose();
+  CloseSocket();
 
 }

@@ -6,6 +6,7 @@ import '../../services/intl.dart' as intl;
 import '../../services/rest_api.dart' as rest_api;
 import '../../services/redux/actions.dart' as actions;
 import '../../services/route.dart' as route;
+import '../../services/ws_api.dart' as ws_api;
 import '../../services/redux/app_state.dart';
 
 typedef void DialogJoinOnPressedJoinFunction(String name);
@@ -20,6 +21,7 @@ Future<Widget> showDialogJoin({BuildContext context, Store<AppState> store}) asy
         userName: store.state.userName,
         eventId: store.state.eventId,
       );
+      ws_api.connectListener();
       store.dispatch(actions.SetEventInfo(response.eventName, response.presentationUrl, response.userId));
       store.dispatch(actions.Loading(false));
       await Navigator.pushNamed(

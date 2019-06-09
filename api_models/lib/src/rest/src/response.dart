@@ -13,6 +13,9 @@ abstract class Response extends Serializable {
   Response.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
+  Response.fromJson(String data): super.fromJson(data);
+
+  @override
   Map<String, Object> asMap() => {
     'status': status,
   };

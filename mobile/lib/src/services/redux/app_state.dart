@@ -5,57 +5,11 @@ import '../../models/message.dart';
 class AppState {
 
   int userId = 0;
-  String userName = 'vasia';
+  String userName = '';
   String eventId = '';
   String eventName = '';
   String presentationUrl = '';
-  List<Message> messages = [
-    Message(
-      userName: 'vasia',
-      text: 'message message message',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia1',
-      text: 'message message message 1',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia',
-      text: 'message message message 2',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia',
-      text: 'message message message',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia1',
-      text: 'message message message 1',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia',
-      text: 'message message message 2',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia',
-      text: 'message message message',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia1',
-      text: 'message message message 1',
-      isQuestion: true,
-    ),
-    Message(
-      userName: 'vasia',
-      text: 'message message message 2',
-      isQuestion: true,
-    ),
-  ];
+  List<Message> messages = [];
   bool isLoadingVisible = false;
   io.WebSocket socket;
 
@@ -69,7 +23,7 @@ class AppState {
 
 class StartPageState {
 
-  bool isJoinButtonDisabled = true;
+  bool isJoinButtonDisabled = false;
 
   StartPageState._();
 

@@ -51,8 +51,6 @@ server connect_presenter
     event_id
     user_id
     
-client retry
-    
 server disconnect_listener
     event_id
     user_id

@@ -36,6 +36,12 @@ class ChatInputFieldState extends State<ChatInputField> {
   });
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Container(
     foregroundDecoration: BoxDecoration(
       color: Colors.blueAccent.withAlpha(10),

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../../services/ws_api.dart' as ws_api;
 import '../../services/intl.dart' as intl;
 import '../../services/rest_api.dart' as rest_api;
 import '../../services/route.dart' as route;
@@ -44,7 +45,7 @@ class CreateEventPageState extends State<CreateEventPage> {
   String _eventName = '';
   String _userName = '';
   bool _isPresentationLoaded = false;
-  List<int> fileData = [];
+  List<int> _fileData = [];
 
   CreateEventPageState({
     this.store,
@@ -155,9 +156,10 @@ class CreateEventPageState extends State<CreateEventPage> {
       userName: _userName,
       eventId: store.state.eventId,
       eventName: _eventName,
-      presentationFile: fileData,
+      presentationFile: _fileData,
     );
     store.dispatch(actions.CreateEvent(_eventName, _userName));
+    ws_api.connectPresenter();
     store.dispatch(actions.Loading(false));
     await Navigator.pushReplacementNamed(
       context,
@@ -168,7 +170,7 @@ class CreateEventPageState extends State<CreateEventPage> {
   Future<void> _onSelectFile(String path) async {
     final fileData = await io.File(path).readAsBytes();
     setState(() {
-      this.fileData = fileData;
+      this._fileData = fileData;
       _isPresentationLoaded = true;
     });
   }

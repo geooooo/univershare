@@ -30,6 +30,12 @@ class DownloadPresentationState extends State<DownloadPresentation> {
   });
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Container(
     margin: EdgeInsets.symmetric(
       horizontal: 50,

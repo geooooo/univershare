@@ -16,6 +16,9 @@ class JoinEventRequest extends Request {
   JoinEventRequest.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
+  JoinEventRequest.fromJson(String data): super.fromJson(data);
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
     'user_name': userName,
@@ -46,6 +49,9 @@ class JoinEventResponse extends Response {
 
   @override
   JoinEventResponse.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  JoinEventResponse.fromJson(String data): super.fromJson(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

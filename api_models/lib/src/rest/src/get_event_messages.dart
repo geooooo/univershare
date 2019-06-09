@@ -15,6 +15,9 @@ class GetEventMessagesRequest extends Request {
   GetEventMessagesRequest.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
+  GetEventMessagesRequest.fromJson(String data): super.fromJson(data);
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
   };
@@ -40,6 +43,9 @@ class GetEventMessagesResponse extends Response {
 
   @override
   GetEventMessagesResponse.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  GetEventMessagesResponse.fromJson(String data): super.fromJson(data);
 
   @override
   Map<String, Object> asMap() => super.asMap()..addAll({

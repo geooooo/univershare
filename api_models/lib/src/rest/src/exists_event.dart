@@ -14,6 +14,9 @@ class ExistsEventRequest extends Request {
   ExistsEventRequest.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
+  ExistsEventRequest.fromJson(String data): super.fromJson(data);
+
+  @override
   Map<String, Object> asMap() => {
     'event_id': eventId,
   };
@@ -34,5 +37,11 @@ class ExistsEventResponse extends Response {
   ExistsEventResponse({
     int status,
   }): super(status: status);
+
+  @override
+  ExistsEventResponse.fromMap(Map<String, Object> data): super.fromMap(data);
+
+  @override
+  ExistsEventResponse.fromJson(String data): super.fromJson(data);
 
 }

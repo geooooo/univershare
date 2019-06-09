@@ -105,12 +105,12 @@ class ListenerPage extends StatelessWidget {
       ),
       child: TabBarView(
         children: [
+          ListenerPageControl(
+            store: store,
+          ),
           Chat(
             store: store,
             isQuestionEnabled: true,
-          ),
-          ListenerPageControl(
-            store: store,
           ),
           StoreConnector<AppState, String>(
             converter: (store) => store.state.presentationUrl,
