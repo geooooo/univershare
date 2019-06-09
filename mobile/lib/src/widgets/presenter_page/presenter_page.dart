@@ -9,7 +9,7 @@
 //import '../services/rest_api.dart' as rest_api;
 //import '../services/redux/actions.dart' as action;
 //import 'package:mobile/src/services/redux/app_state.dart';
-//import 'page_chat.dart';
+//import 'chat.dart';
 //import 'presenter_page_control.dart';
 //import 'presenter_page_questions.dart';
 //

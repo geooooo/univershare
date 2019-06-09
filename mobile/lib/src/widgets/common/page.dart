@@ -9,37 +9,48 @@ class Page extends StatelessWidget {
 
   final Store<AppState> store;
   final Widget child;
+  final PreferredSizeWidget appBar;
+  final bool isScroll;
+  final bool resizeToAvoidBottomInset;
+  final bool resizeToAvoidBottomPadding;
 
   Page({
     this.store,
     this.child,
+    this.appBar,
+    this.isScroll,
+    this.resizeToAvoidBottomInset = false,
+    this.resizeToAvoidBottomPadding = false,
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    resizeToAvoidBottomInset: false,
-    resizeToAvoidBottomPadding: false,
-    body: Stack(
-      children: <Widget>[
-        LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-                minWidth: viewportConstraints.maxWidth,
+  Widget build(BuildContext context) => SafeArea(
+    child: Scaffold(
+      appBar: appBar,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
+      body: Stack(
+        children: <Widget>[
+          isScroll? LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints viewportConstraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                  minWidth: viewportConstraints.maxWidth,
+                ),
+                child: child,
               ),
-              child: child,
+            ),
+          ) : child,
+          StoreConnector<AppState, bool>(
+            converter: (store) => store.state.isLoadingVisible,
+            builder: (context, isVisible) => Visibility(
+              child: Loading(),
+              visible: isVisible,
             ),
           ),
-        ),
-        StoreConnector<AppState, bool>(
-          converter: (store) => store.state.isLoadingVisible,
-          builder: (context, isVisible) => Visibility(
-            child: Loading(),
-            visible: isVisible,
-          ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 

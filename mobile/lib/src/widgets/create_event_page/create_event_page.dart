@@ -58,6 +58,7 @@ class CreateEventPageState extends State<CreateEventPage> {
 
   @override
   Widget build(BuildContext context) => Page(
+    isScroll: true,
     child: Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,

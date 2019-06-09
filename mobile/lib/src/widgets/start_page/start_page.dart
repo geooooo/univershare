@@ -26,6 +26,7 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Page(
+    isScroll: true,
     child: Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
