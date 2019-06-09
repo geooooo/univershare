@@ -9,7 +9,7 @@ final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetUserName>(_onSetUserName),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
-  TypedReducer<AppState, DeleteMessageFromQuestions>(_onDeleteMessageFromQuestions),
+  TypedReducer<AppState, CheckQuestion>(_onCheckQuestion),
   TypedReducer<AppState, Loading>(_onLoading),
   TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
   TypedReducer<AppState, SocketConnect>(_onSocketConnect),
@@ -66,14 +66,14 @@ AppState _onCreateEvent(AppState state, CreateEvent action) {
     ..eventName = action.eventName;
 }
 
-AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestions action) {
+AppState _onCheckQuestion(AppState state, CheckQuestion action) {
   print(
-    'Action: DeleteMessageFromQuestions {\n'
+    'Action: CheckQuestion {\n'
       '\tmessage.hashCode: ${action.message.hashCode}\n'
     '}\n'
   );
   return state..messages.firstWhere((message) => message == action.message)
-                        .isQuestion = false;
+                        .isChecked = !action.message.isChecked;
 }
 
 AppState _onLoading(AppState state, Loading action) {

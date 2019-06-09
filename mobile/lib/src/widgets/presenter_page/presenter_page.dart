@@ -1,63 +1,72 @@
 //import 'dart:convert' as conv;
-//
-//import 'package:flutter/material.dart';
-//import 'package:redux/redux.dart';
+
+import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+
+import '../../services/redux/app_state.dart';
+import '../common/page.dart';
+import '../chat/chat.dart';
+import 'presenter_page_control.dart';
+import 'presenter_page_questions.dart';
 //import 'dart:io' as io;
 //import 'package:api_models/api_models.dart' as api_models;
 //
 //import '../services/common.dart' as data;
 //import '../services/rest_api.dart' as rest_api;
 //import '../services/redux/actions.dart' as action;
-//import 'package:mobile/src/services/redux/app_state.dart';
+
 //import 'chat.dart';
 //import 'presenter_page_control.dart';
 //import 'presenter_page_questions.dart';
-//
+
 //var f = false;
-//
-//class PresenterPage extends StatelessWidget {
-//
-//  final Store<AppState> store;
-//
-//  PresenterPage({
-//    this.store,
-//  }) {
+
+class PresenterPage extends StatelessWidget {
+
+  final Store<AppState> store;
+
+  PresenterPage({
+    this.store,
+  });
+//  {
 //    if (!f) {
 //      _init();
 //      f = true;
 //    }
 //  }
-//
-//  @override
-//  Widget build(BuildContext context) => SafeArea(
-//    child: DefaultTabController(
-//      length: 3,
-//      child: Scaffold(
-//        appBar: TabBar(
-//          tabs: <Widget>[
-//            Tab(child: Icon(Icons.settings)),
-//            Tab(child: Icon(Icons.chat)),
-//            Tab(child: Icon(Icons.list)),
-//          ],
-//        ),
-//        body: TabBarView(
-//          children: [
-//            PresenterPageControl(
-//              store: store,
-//            ),
-//            PageChat(
-//              store: store,
-//              isQuestionEnabled: false,
-//            ),
-//            PresenterPageQuestions(
-//              store: store,
-//            ),
-//          ],
-//        ),
-//      ),
-//    ),
-//  );
-//
+
+  @override
+  Widget build(BuildContext context) => DefaultTabController(
+    length: 3,
+    child: Page(
+      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
+      isScroll: false,
+      appBar: TabBar(
+        tabs: <Widget>[
+          Tab(child: Icon(Icons.settings)),
+          Tab(child: Icon(Icons.chat)),
+          Tab(child: Icon(Icons.list)),
+        ],
+      ),
+      child: TabBarView(
+        children: [
+          PresenterPageQuestions(
+            store: store,
+          ),
+          PresenterPageControl(
+            store: store,
+          ),
+          Chat(
+            store: store,
+            isQuestionEnabled: false,
+          ),
+
+        ],
+      ),
+    ),
+  );
+
 //  Future<void> _init() async {
 //    final socket = await io.WebSocket.connect(data.ws_host);
 //    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
@@ -98,6 +107,6 @@
 //        ..userName = data.userName
 //    ]));
 //  }
-//
-//}
-//
+
+}
+

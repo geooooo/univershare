@@ -41,11 +41,11 @@ class CreateEvent {
 
 }
 
-class DeleteMessageFromQuestions {
+class CheckQuestion {
 
   final Message message;
 
-  DeleteMessageFromQuestions(this.message);
+  CheckQuestion(this.message);
 
 }
 
