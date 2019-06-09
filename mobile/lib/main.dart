@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import 'src/services/redux/app_state.dart';
+import 'src/services/redux/reducer.dart';
 import 'src/widgets/app.dart';
-import 'package:mobile/src/services/redux/app_state.dart';
-import 'package:mobile/src/services/redux/reducer.dart';
 
 void main() {
   final store = Store<AppState>(
-    appReducer,
+    appReducers,
     initialState: AppState.initial(),
   );
 
-  runApp(App(
+  runApp(StoreProvider<AppState>(
     store: store,
+    child: App(
+      store: store,
+    ),
   ));
 }

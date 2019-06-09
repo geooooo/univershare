@@ -1,5 +1,7 @@
 import 'dart:io' as io;
 
+import '../../models/message.dart';
+
 class AppState {
 
   int userId = 0;
@@ -8,7 +10,7 @@ class AppState {
   String eventName = '';
   String presentationUrl = '';
   List<Message> messages = [];
-  bool isLoadingShow = false;
+  bool isLoadingVisible = false;
   io.WebSocket socket;
 
   StartPageState startPageState = StartPageState.initial();
@@ -26,19 +28,5 @@ class StartPageState {
   StartPageState._();
 
   StartPageState.initial();
-
-}
-
-class Message {
-
-  String userName;
-  String text;
-  bool isQuestion;
-
-  Message({
-    this.userName,
-    this.text,
-    this.isQuestion,
-  });
 
 }

@@ -9,7 +9,7 @@ class Loading extends StatelessWidget {
         color: Colors.black.withAlpha(150),
       ),
       child: Center(
-        child:CircularProgressIndicator(),
+        child: CircularProgressIndicator(),
       ),
     ),
   );

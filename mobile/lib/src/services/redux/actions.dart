@@ -2,6 +2,7 @@ import 'dart:io' as io;
 
 import 'package:api_models/api_models.dart' as api_models;
 
+import '../../models/message.dart';
 import 'app_state.dart';
 
 class SetEventId {
@@ -50,9 +51,9 @@ class DeleteMessageFromQuestions {
 
 class Loading {
 
-  final bool isShow;
+  final bool isVisible;
 
-  Loading(this.isShow);
+  Loading(this.isVisible);
 
 }
 

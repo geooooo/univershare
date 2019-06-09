@@ -4,7 +4,7 @@ import 'dart:convert' as conv;
 import 'package:http/http.dart' as http;
 import 'package:api_models/api_models.dart' as api_models;
 
-import 'data.dart' as data;
+import 'common.dart' as data;
 
 Future<api_models.ExistsEventResponse> existsEvent(String eventId) async {
   final requestData = api_models.ExistsEventRequest()

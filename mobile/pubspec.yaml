@@ -11,23 +11,22 @@ dependencies:
   redux: ^3.0.0
   url_launcher: ^5.0.2
   http: ^0.12.0+2
+  flutter_document_picker: ^3.0.0
   api_models:
     path: ../api_models
-  flutter_document_picker: ^3.0.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  json_serializable: any
   flutter_launcher_icons: ^0.7.1
   pedantic: ^1.5.0
 
 flutter_icons:
   ios: true
   android: true
-  image_path: asset/image/icon/icon.png
+  image_path: assets/images/icons/icon.png
 
 flutter:
   uses-material-design: true
   assets:
-    - asset/image/icon/icon.png
+    - assets/images/icons/icon.png

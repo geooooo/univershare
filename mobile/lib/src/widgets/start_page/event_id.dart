@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../services/intl.dart' as intl;
+import '../../services/intl.dart' as intl;
 
 typedef void EventIdOnChangedFunction(String id, bool isValid);
 
@@ -49,7 +49,7 @@ class EventIdState extends State<EventId> {
         alignLabelWithHint: true,
         labelText: intl.inputIdEvent,
         hintText: intl.idPlaceholder,
-        errorText: _errorVisible? intl.errorEventIdFormat : null,
+        errorText: _errorVisible? intl.eventIdFormatError : null,
       ),
       inputFormatters: <TextInputFormatter>[
         LengthLimitingTextInputFormatter(_maxLength),
@@ -80,7 +80,6 @@ class EventIdState extends State<EventId> {
     onChanged(value, isValid);
   }
 
-  bool _isValid(String value) =>
-    _eventIdFormat.hasMatch(value);
+  bool _isValid(String value) => _eventIdFormat.hasMatch(value);
 
 }

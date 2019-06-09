@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../services/intl.dart' as intl;
+import '../../services/intl.dart' as intl;
 
-Future<Widget> showDialogError(BuildContext context, String message) async =>
+Future<Widget> showDialogInfo({BuildContext context, String title, String message}) async =>
   await showDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: Text(intl.error),
+      title: Text(title),
       content: Text(message),
       actions: <Widget>[
         FlatButton(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../services/redux/app_state.dart';
 import '../services/route.dart';
-import 'package:mobile/src/services/redux/app_state.dart';
+import '../services/intl.dart' as intl;
 
 class App extends StatelessWidget {
 
@@ -14,16 +15,13 @@ class App extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => StoreProvider<AppState>(
-    store: store,
-    child: MaterialApp(
-      title: 'Univershare',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Colors.blueAccent,
-      ),
-      routes: routesFactory(store),
+  Widget build(BuildContext context) => MaterialApp(
+    title: intl.appName,
+    theme: ThemeData(
+      brightness: Brightness.dark,
+      accentColor: Colors.blueAccent,
     ),
+    routes: routesFactory(store),
   );
 
 }

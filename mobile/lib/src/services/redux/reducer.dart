@@ -1,9 +1,10 @@
 import 'package:redux/redux.dart';
 
+import '../../models/message.dart';
 import 'app_state.dart';
-import 'action.dart';
+import 'actions.dart';
 
-final appReducer = combineReducers<AppState>([
+final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetEventId>(_onSetEventId),
   TypedReducer<AppState, SetUserName>(_onSetUserName),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
@@ -78,11 +79,11 @@ AppState _onDeleteMessageFromQuestions(AppState state, DeleteMessageFromQuestion
 AppState _onLoading(AppState state, Loading action) {
   print(
     'Action: Loading {\n'
-      '\tisShow: ${action.isShow}\n'
+      '\tisVisible: ${action.isVisible}\n'
     '}\n'
   );
   return state
-    ..isLoadingShow = action.isShow;
+    ..isLoadingVisible = action.isVisible;
 }
 
 AppState _onSetEventInfo(AppState state, SetEventInfo action) {
