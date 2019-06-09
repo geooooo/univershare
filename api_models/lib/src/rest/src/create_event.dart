@@ -44,9 +44,12 @@ class CreateEventRequest extends Request {
 //    0 - ok
 class CreateEventResponse extends Response {
 
+  int userId;
+
   @override
   CreateEventResponse({
     int status,
+    this.userId,
   }): super(status: status);
 
   @override
@@ -54,5 +57,16 @@ class CreateEventResponse extends Response {
 
   @override
   CreateEventResponse.fromJson(String data): super.fromJson(data);
+
+  @override
+  Map<String, Object> asMap() => super.asMap()..addAll({
+    'user_id': userId,
+  });
+
+  @override
+  void readFromMap(Map<String, Object> data) {
+    super.readFromMap(data);
+    userId = data['user_id'];
+  }
 
 }

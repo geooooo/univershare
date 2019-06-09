@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:api_models/api_models.dart' as api_models;
+import 'package:flutter/material.dart';
 
 import '../../models/message.dart';
 
@@ -13,6 +13,14 @@ class SetEventId {
 
 }
 
+class SetUserId {
+
+  final int userId;
+
+  SetUserId(this.userId);
+
+}
+
 class SetUserName {
 
   final String userName;
@@ -21,13 +29,19 @@ class SetUserName {
 
 }
 
+class SetContext {
+
+  final BuildContext context;
+
+  SetContext(this.context);
+
+}
+
 class SendMessage {
 
-  final String message;
-  final String userName;
-  final bool isQuestion;
+  Message message;
 
-  SendMessage(this.message, this.userName, this.isQuestion);
+  SendMessage(this.message);
 
 }
 
@@ -60,9 +74,8 @@ class SetEventInfo {
 
   final String eventName;
   final String presentationUrl;
-  final int userId;
 
-  SetEventInfo(this.eventName, this.presentationUrl, this.userId);
+  SetEventInfo(this.eventName, this.presentationUrl);
 
 }
 
@@ -76,7 +89,7 @@ class SetSocket {
 
 class SaveMessages {
 
-  final List<api_models.Message> messages;
+  final List<Message> messages;
 
   SaveMessages(this.messages);
 

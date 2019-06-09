@@ -15,7 +15,7 @@ class Db {
 
   Db(AppConfig appConfig): managedContext = createManagedContext(appConfig);
 
-  Future<void> createEvent(
+  Future<int> createEvent(
       String eventId,
       String eventName,
       String presenterName,
@@ -34,12 +34,15 @@ class Db {
     final newPresentation = await queryCreatePresentation.insert();
 
     final queryCreateEvent = Query<EventTable>(managedContext)
+      ..values.id
       ..values.name = eventName
       ..values.id_code = eventId
       ..values.presentation = newPresentation
       ..values.presenter = newPresenter
       ..values.is_active = true;
     await queryCreateEvent.insert();
+
+    return newUser.id;
   }
 
   Future<bool> existsEvent(String eventId) async {

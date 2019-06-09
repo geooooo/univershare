@@ -1,5 +1,7 @@
 import 'dart:io' as io;
 
+import 'package:flutter/material.dart';
+
 import '../../models/message.dart';
 
 class AppState {
@@ -12,6 +14,7 @@ class AppState {
   List<Message> messages = [];
   bool isLoadingVisible = false;
   io.WebSocket socket;
+  BuildContext context;
 
   StartPageState startPageState = StartPageState.initial();
 

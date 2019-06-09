@@ -23,13 +23,16 @@ class CreateEventController extends ResourceController {
       (requestData..presentationFile = fileLogData).asMap(),
     );
 
-    await _diInjector.db.createEvent(
+    final userId = await _diInjector.db.createEvent(
       requestData.eventId,
       requestData.eventName,
       requestData.userName,
       fileName,
     );
-    final response = api_models.CreateEventResponse(status: 0);
+    final response = api_models.CreateEventResponse(
+      status: 0,
+      userId: userId,
+    );
 
     return Response.ok(response.asMap());
   }

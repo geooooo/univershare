@@ -34,10 +34,17 @@ void createEventTest() {
       body: request.asMap(),
     );
 
+    final querySelectUser = Query<UserTable>(harness.context);
+    final users = await querySelectUser.fetch();
+    final newUserId = users.length;
+
     expectResponse(
       response,
       200,
-      body: api_models.CreateEventResponse(status: 0).asMap(),
+      body: api_models.CreateEventResponse(
+        status: 0,
+        userId: newUserId,
+      ).asMap(),
     );
   });
 }
@@ -151,16 +158,19 @@ void getEventMessagesTest() {
         status: 0,
         messages: <api_models.Message>[
           api_models.Message(
+            userId: 1,
             userName: 'name1',
             text: 'text1',
             isQuestion: false,
           ),
           api_models.Message(
+            userId: 2,
             userName: 'name2',
             text: 'text2',
             isQuestion: false,
           ),
           api_models.Message(
+            userId: 3,
             userName: 'name3',
             text: 'text3',
             isQuestion: false,

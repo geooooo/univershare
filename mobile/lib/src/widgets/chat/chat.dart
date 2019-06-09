@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../../services/ws_api.dart' as ws_api;
 import '../../services/redux/actions.dart' as actions;
 import '../../services/redux/app_state.dart';
+import '../../models/message.dart';
 import 'chat_input_field.dart';
 import 'chat_messages.dart';
 
@@ -41,7 +42,12 @@ class Chat extends StatelessWidget {
   );
 
   void _onSendMessage(String value, bool isQuestion) {
-    store.dispatch(actions.SendMessage(value, store.state.userName, isQuestion));
+    store.dispatch(actions.SendMessage(Message(
+      text: value,
+      userName: store.state.userName,
+      isQuestion: isQuestion,
+      userId: store.state.userId,
+    )));
     ws_api.newMessage();
   }
 

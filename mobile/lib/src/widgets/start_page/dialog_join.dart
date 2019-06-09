@@ -21,8 +21,9 @@ Future<Widget> showDialogJoin({BuildContext context, Store<AppState> store}) asy
         userName: store.state.userName,
         eventId: store.state.eventId,
       );
-      ws_api.connectListener();
-      store.dispatch(actions.SetEventInfo(response.eventName, response.presentationUrl, response.userId));
+      store.dispatch(actions.SetEventInfo(response.eventName, response.presentationUrl));
+      store.dispatch(actions.SetUserId(response.userId));
+      await ws_api.connectListener();
       store.dispatch(actions.Loading(false));
       await Navigator.pushNamed(
         context,

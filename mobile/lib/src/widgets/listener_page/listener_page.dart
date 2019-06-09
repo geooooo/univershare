@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../services/rest_api.dart' as rest_api;
 import '../../services/redux/actions.dart' as actions;
 import '../../services/redux/app_state.dart';
 import '../common/page.dart';
@@ -16,12 +15,10 @@ class ListenerPage extends StatelessWidget {
 
   ListenerPage({
     this.store,
-  }) {
-    _init();
-  }
+  });
 
   @override
-  Widget build(BuildContext context) => DefaultTabController(
+  Widget build(BuildContext context) {store.dispatch(actions.SetContext(context)); return DefaultTabController(
     length: 3,
     child: Page(
       resizeToAvoidBottomPadding: true,
@@ -52,12 +49,7 @@ class ListenerPage extends StatelessWidget {
         ],
       ),
     ),
-  );
-
-  Future<void> _init() async {
-    final response = await rest_api.getEventMessages(store.state.eventId);
-    store.dispatch(actions.SaveMessages(response.messages));
-  }
+  );}
 
 }
 

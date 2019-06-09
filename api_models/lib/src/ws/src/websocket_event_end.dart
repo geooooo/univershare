@@ -1,17 +1,17 @@
 import 'websocket_event.dart';
 
-class WebSocketEventEndData extends WebSocketEvent {
+class WebSocketEventEnd extends WebSocketEvent {
 
   @override
   String name = 'event_end';
 
   @override
-  WebSocketEventEndData();
+  WebSocketEventEnd();
 
   @override
-  WebSocketEventEndData.fromMap(Map<String, Object> data): super.fromMap(data);
+  WebSocketEventEnd.fromMap(Map<String, Object> data): super.fromMap(data);
 
   @override
-  WebSocketEventEndData.fromJson(String data): super.fromJson(data);
+  WebSocketEventEnd.fromJson(String data): super.fromJson(data);
 
 }

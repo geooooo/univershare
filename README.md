@@ -37,6 +37,7 @@ post create_event
 {
     status:
         0 - ok
+    user_id
 }
 
 post get_event_messages
@@ -67,7 +68,6 @@ server disconnect_listener
   
 server disconnect_presenter
     event_id
-    user_id
     
 client event_end
     

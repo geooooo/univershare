@@ -1,12 +1,12 @@
 import 'package:redux/redux.dart';
 
-import '../../models/message.dart';
 import 'app_state.dart';
 import 'actions.dart';
 
 final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetEventId>(_onSetEventId),
   TypedReducer<AppState, SetUserName>(_onSetUserName),
+  TypedReducer<AppState, SetUserId>(_onSetUserId),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, CheckQuestion>(_onCheckQuestion),
@@ -15,6 +15,7 @@ final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetSocket>(_onSetSocket),
   TypedReducer<AppState, SaveMessages>(_onSaveMessages),
   TypedReducer<AppState, CloseSocket>(_onCloseSocket),
+  TypedReducer<AppState, SetContext>(_onSetContext),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -39,19 +40,27 @@ AppState _onSetUserName(AppState state, SetUserName action) {
     ..userName = action.userName;
 }
 
+AppState _onSetUserId(AppState state, SetUserId action) {
+  print(
+    'Action: SetUserId {\n'
+      '\tuserId: ${action.userId}\n'
+    '}\n'
+  );
+  return state
+    ..userId = action.userId;
+}
+
 AppState _onSendMessage(AppState state, SendMessage action) {
   print(
     'Action: SendMessage {\n'
-      '\tuserName: ${action.userName}\n'
-      '\tmessage: ${action.message}\n'
-      '\tisQuestion: ${action.isQuestion}\n'
+      '\tmessage.userId.: ${action.message.userId}\n'
+      '\tmessage.userName: ${action.message.userName}\n'
+      '\tmessage.text: ${action.message.text}\n'
+      '\tmessage.isQuestion: ${action.message.isQuestion}\n'
     '}\n'
   );
-  return state..messages.add(Message(
-    userName: action.userName,
-    text: action.message,
-    isQuestion: action.isQuestion,
-  ));
+  return state
+    ..messages.add(action.message);
 }
 
 AppState _onCreateEvent(AppState state, CreateEvent action) {
@@ -91,13 +100,11 @@ AppState _onSetEventInfo(AppState state, SetEventInfo action) {
     'Action: SetEventInfo {\n'
       '\teventName: ${action.eventName}\n'
       '\tpresentationUrl: ${action.presentationUrl}\n'
-      '\tuserId: ${action.userId}\n'
     '}\n'
   );
   return state
     ..eventName = action.eventName
-    ..presentationUrl = action.presentationUrl
-    ..userId = action.userId;
+    ..presentationUrl = action.presentationUrl;
 }
 
 AppState _onSetSocket(AppState state, SetSocket action) {
@@ -117,11 +124,7 @@ AppState _onSaveMessages(AppState state, SaveMessages action) {
     '}\n'
   );
   return state
-    ..messages.addAll(action.messages.map((apiMessage) => Message(
-      userName: apiMessage.userName,
-      isQuestion:  apiMessage.isQuestion,
-      text: apiMessage.text,
-    )).toList());
+    ..messages.addAll(action.messages);
 }
 
 AppState _onCloseSocket(AppState state, CloseSocket action) {
@@ -130,5 +133,15 @@ AppState _onCloseSocket(AppState state, CloseSocket action) {
   );
   return state
     ..socket.close();
+}
+
+AppState _onSetContext(AppState state, SetContext action) {
+  print(
+    'Action: SetContext {\n'
+      '\tcontext.hashCode: ${action.context.hashCode}\n'
+    '}\n'
+  );
+  return state
+    ..context = action.context;
 }
 

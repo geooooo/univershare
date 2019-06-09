@@ -69,7 +69,7 @@ class WebSocketController extends Controller {
       if (connection == socket) {
         return;
       }
-      connection.add(api_models.WebSocketEventEndData().toJson());
+      connection.add(api_models.WebSocketEventEnd().toJson());
     });
 
     for (var userId in connections[data.eventId].keys) {
@@ -92,6 +92,7 @@ class WebSocketController extends Controller {
     final data = api_models.WebSocketNewMessage.fromJson(event);
 
     connections[data.eventId].forEach((userId, connection) async {
+      print([userId, connection.readyState]);
       if (connection == socket) {
         return;
       }
@@ -116,19 +117,19 @@ class WebSocketController extends Controller {
       (_) => _diInjector.db.removeEvent(eventId)
     );
 
-  void scheduleCheckPresenters() =>
-    Future.delayed(_diInjector.common.pingInterval).then((_) async {
-      connections.forEach((eventId, connectionData) async {
-        final socket = connectionData.values.first;
-        final isClose = (socket.readyState == io.WebSocket.closed) ||
-                        (socket.readyState == io.WebSocket.closing);
-        if (isClose) {
-          await onDisconnectPresenter(
-            api_models.WebSocketDisconnectPresenter(
-              eventId: eventId,
-            ).toJson(), socket
-          );
-        }
-      });
-    });
+//  void scheduleCheckPresenters() =>
+//    Future.delayed(_diInjector.common.pingInterval).then((_) async {
+//      connections.forEach((eventId, connectionData) async {
+//        final socket = connectionData.values.first;
+//        final isClose = (socket.readyState == io.WebSocket.closed) ||
+//                        (socket.readyState == io.WebSocket.closing);
+//        if (isClose) {
+//          await onDisconnectPresenter(
+//            api_models.WebSocketDisconnectPresenter(
+//              eventId: eventId,
+//            ).toJson(), socket
+//          );
+//        }
+//      });
+//    });
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 
-import '../../services/rest_api.dart' as rest_api;
-import '../../services/redux/actions.dart' as actions;
 import '../../services/redux/app_state.dart';
 import '../common/page.dart';
 import '../chat/chat.dart';
@@ -15,9 +13,7 @@ class PresenterPage extends StatelessWidget {
 
   PresenterPage({
     this.store,
-  }) {
-    _init();
-  }
+  });
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
@@ -49,10 +45,5 @@ class PresenterPage extends StatelessWidget {
       ),
     ),
   );
-
-  Future<void> _init() async {
-    final response = await rest_api.getEventMessages(store.state.eventId);
-    store.dispatch(actions.SaveMessages(response.messages));
-  }
 
 }

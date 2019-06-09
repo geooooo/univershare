@@ -1,12 +1,15 @@
 import 'dart:io' as io;
 
-import 'package:api_models/api_models.dart' as api_models;
 import 'package:redux/redux.dart';
-
-import '../services/redux/actions.dart' as actions;
-import '../services/redux/app_state.dart';
+import 'package:api_models/api_models.dart' as api_models;
 
 import 'common.dart' as common;
+import '../services/intl.dart' as intl;
+import '../services/rest_api.dart' as rest_api;
+import '../services/redux/actions.dart' as actions;
+import '../services/redux/app_state.dart';
+import '../models/message.dart';
+import '../widgets/common/dialog_info.dart';
 
 Store<AppState> _store;
 
@@ -17,17 +20,31 @@ Future<void> init(Store<AppState> store) async {
   socket.listen((Object data) => _socketListener(data, store));
 }
 
-void connectListener() => _store.state.socket.add(
-  api_models.WebSocketConnectListener(
-    eventId: _store.state.eventId,
-    userId: _store.state.userId,
-).toJson());
+Future<void> _getEventMessages() async {
+  final response = await rest_api.getEventMessages(_store.state.eventId);
+  _store.dispatch(actions.SaveMessages(response.messages.map((message) => Message(
+    text: message.text,
+    isQuestion: message.isQuestion,
+    userId: message.userId,
+    userName: message.userName,
+  )).toList()));
+}
 
-void connectPresenter() => _store.state.socket.add(
-  api_models.WebSocketConnectPresenter(
+Future<void> connectListener() async {
+  _store.state.socket.add(api_models.WebSocketConnectListener(
     eventId: _store.state.eventId,
     userId: _store.state.userId,
-).toJson());
+  ).toJson());
+  await _getEventMessages();
+}
+
+Future<void> connectPresenter() async {
+  _store.state.socket.add(api_models.WebSocketConnectPresenter(
+    eventId: _store.state.eventId,
+    userId: _store.state.userId,
+  ).toJson());
+  await _getEventMessages();
+}
 
 void newMessage() => _store.state.socket.add(
   api_models.WebSocketNewMessage(
@@ -38,102 +55,49 @@ void newMessage() => _store.state.socket.add(
     text: _store.state.messages.last.text,
 ).toJson());
 
-void _socketListener(Object data, Store<AppState> store) {
-  print(data.runtimeType);
-  print(data);
+void disconnectListener() {
+  _store.state.socket.add(api_models.WebSocketDisconnectListener(
+    eventId: _store.state.eventId,
+    userId: _store.state.userId,
+  ).toJson());
+  _store.dispatch(actions.CloseSocket());
 }
 
-//  Future<void> _init() async {
-//    final socket = await io.WebSocket.connect(data.ws_host);
-//    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
-//      ..name = 'connect'
-//      ..data = (api_models.WebSocketConnectData()
-//        ..userId = store.state.userId
-//        ..eventId = store.state.eventId)
-//    ).asMap());
-//    socket.add(requestData);
-//    store.dispatch(action.SocketConnect(socket));
-//
-//    socket.listen(_socketListener);
-//
-//
-//  }
-//
-//  Future<void> _socketListener(Object jsonData) async {
-//    print('+++++');
-//    print(jsonData);
-//    final data = conv.jsonDecode(jsonData);
-//    final eventName = data['name'];
-//    final eventData = data['data'];
-//
-//    switch (eventName) {
-//      case 'event_end':
-//        _onEventEnd(eventData);
-//        break;
-//      case 'get_message':
-//        _onGetMessage(eventData);
-//        break;
-//    }
-//  }
-//
-//  void _onEventEnd(Map<String, Object> eventData) {
-//    store.dispatch(action.SocketClose());
-////    showDialogWarning(context, intl.eventEnd);
-//  }
-//
-//  void _onGetMessage(Map<String, Object> eventData) {
-//    print(eventData);
-//    final data = api_models.WebSocketGetMessageData()..readFromMap(eventData);
-//    store.dispatch(action.SaveMessages(<api_models.Message>[
-//      api_models.Message()
-//        ..text = data.text
-//        ..isQuestion = data.isQuestion
-//        ..userName = data.userName
-//    ]));
-//  }
+void disconnectPresenter() {
+  _store.state.socket.add(api_models.WebSocketDisconnectPresenter(
+    eventId: _store.state.eventId,
+  ).toJson());
+  _store.dispatch(actions.CloseSocket());
+}
 
+void _socketListener(Object event, Store<AppState> store) {
+  final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
 
+  switch (webSocketEvent.name) {
+    case 'event_end':
+      _onEventEnd(event);
+      break;
+    case 'get_message':
+      _onGetMessage(event);
+      break;
+  }
+}
 
-//  Future<void> _init() async {
-//    final socket = await io.WebSocket.connect(data.ws_host);
-//    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
-//      ..name = 'connect'
-//      ..data = (api_models.WebSocketConnectData()
-//        ..userId = store.state.userId
-//        ..eventId = store.state.eventId)
-//    ).asMap());
-//    socket.add(requestData);
-//    store.dispatch(action.SocketConnect(socket));
-//
-//    socket.listen(_socketListener);
-//
-//    final responseData = await rest_api.getEventMessages(store.state.eventId);
-//    store.dispatch(action.SaveMessages(responseData.messages));
-//  }
-//
-//  Future<void> _socketListener(Object jsonData) async {
-//    print('+++++');
-//    print(jsonData);
-//    final data = conv.jsonDecode(jsonData);
-//    final eventName = data['name'];
-//    final eventData = data['data'];
-//
-//    switch (eventName) {
-//      case 'get_message':
-//        _onGetMessage(eventData);
-//        break;
-//    }
-//  }
-//
-//  void _onGetMessage(Map<String, Object> eventData) {
-//    final data = api_models.WebSocketGetMessageData()..readFromMap(eventData);
-//    store.dispatch(action.SaveMessages(<api_models.Message>[
-//      api_models.Message()
-//        ..text = data.text
-//        ..isQuestion = data.isQuestion
-//        ..userName = data.userName
-//    ]));
-//  }
+  void _onEventEnd(String event) {
+    api_models.WebSocketEventEnd.fromJson(event);
+    _store.dispatch(actions.CloseSocket());
+    showDialogInfo(
+      context: _store.state.context,
+      title: intl.warning,
+      message: intl.eventEnd,
+    );
+  }
 
-//}
-
+  void _onGetMessage(String event) {
+    final data = api_models.WebSocketGetMessage.fromJson(event);
+    _store.dispatch(actions.SaveMessages(<Message>[Message(
+      text: data.text,
+      isQuestion: data.isQuestion,
+      userName: data.userName,
+    )]));
+  }

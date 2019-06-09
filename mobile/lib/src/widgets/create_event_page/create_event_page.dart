@@ -152,14 +152,15 @@ class CreateEventPageState extends State<CreateEventPage> {
       return;
     }
     store.dispatch(actions.Loading(true));
-    await rest_api.createEvent(
+    final response = await rest_api.createEvent(
       userName: _userName,
       eventId: store.state.eventId,
       eventName: _eventName,
       presentationFile: _fileData,
     );
     store.dispatch(actions.CreateEvent(_eventName, _userName));
-    ws_api.connectPresenter();
+    store.dispatch(actions.SetUserId(response.userId));
+    await ws_api.connectPresenter();
     store.dispatch(actions.Loading(false));
     await Navigator.pushReplacementNamed(
       context,
