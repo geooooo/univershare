@@ -32,8 +32,6 @@ Future<api_models.CreateEventResponse> createEvent({
     userName: userName,
     presentationFile: conv.base64Encode(presentationFile),
   ).asMap();
-  print(presentationFile.length);
-  print(request);
   final response = await _post('${data.http_host}create_event', request);
   return api_models.CreateEventResponse.fromJson(response);
 }

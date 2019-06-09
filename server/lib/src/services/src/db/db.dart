@@ -166,6 +166,7 @@ class Db {
         'user_name': user.name,
         'text': message.text,
         'is_question': message.is_question,
+        'user_id': message.user.id
       }));
     }
 

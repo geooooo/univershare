@@ -5,12 +5,14 @@ class Message extends Serializable {
   String text;
   String userName;
   bool isQuestion;
+  int userId;
 
   @override
   Message({
     this.text,
     this.userName,
-    this.isQuestion
+    this.isQuestion,
+    this.userId,
   });
 
   @override
@@ -21,6 +23,7 @@ class Message extends Serializable {
     'text': text,
     'user_name': userName,
     'is_question': isQuestion,
+    'user_id': userId,
   };
 
   @override
@@ -28,6 +31,7 @@ class Message extends Serializable {
     text = data['text'];
     userName = data['user_name'];
     isQuestion = data['is_question'];
+    userId = data['user_id'];
   }
 
 }

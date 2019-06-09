@@ -7,17 +7,17 @@ import 'chat_message.dart';
 
 class ChatMessages extends StatefulWidget {
 
-  final String currentUserName;
+  final int currentUserId;
   final List<Message> messages;
 
   ChatMessages({
-    this.currentUserName,
+    this.currentUserId,
     this.messages,
   });
 
   @override
   State<ChatMessages> createState() => ChatMessagesState(
-    currentUserName: currentUserName,
+    currentUserId: currentUserId,
     messages: messages,
   );
 
@@ -26,11 +26,11 @@ class ChatMessages extends StatefulWidget {
 class ChatMessagesState extends State<ChatMessages> {
 
   ScrollController _scrollController;
-  final String currentUserName;
+  final int currentUserId;
   final List<Message> messages;
 
   ChatMessagesState({
-    this.currentUserName,
+    this.currentUserId,
     this.messages,
   });
 
@@ -61,7 +61,7 @@ class ChatMessagesState extends State<ChatMessages> {
         children: messages.map((message) => ChatMessage(
           text: message.text,
           userName: message.userName,
-          isCurrentUser: currentUserName == message.userName,
+          isCurrentUser: currentUserId == message.userId,
         )).toList(),
       ),
     ),

@@ -38,6 +38,14 @@ post create_event
     status:
         0 - ok
 }
+
+post get_event_messages
+    event_id
+{
+    status:
+        0 - ok
+    messages
+}
 ```
 
 ## Схема WebSocket:

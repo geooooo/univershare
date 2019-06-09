@@ -1,10 +1,8 @@
-//import 'dart:convert' as conv;
-
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-//import 'package:api_models/api_models.dart' as api_models;
 
+import '../../services/ws_api.dart' as ws_api;
 import '../../services/redux/actions.dart' as actions;
 import '../../services/redux/app_state.dart';
 import 'chat_input_field.dart';
@@ -28,11 +26,11 @@ class Chat extends StatelessWidget {
       StoreConnector<AppState, Map<String, Object>>(
         converter: (store) => <String, Object>{
           'messages': store.state.messages,
-          'current_user_name': store.state.userName,
+          'current_user_id': store.state.userId,
          },
         builder: (context, data) => ChatMessages(
           messages: data['messages'],
-          currentUserName: data['current_user_name'],
+          currentUserId: data['current_user_id'],
         ),
       ),
       ChatInputField(
@@ -43,17 +41,8 @@ class Chat extends StatelessWidget {
   );
 
   void _onSendMessage(String value, bool isQuestion) {
-//    final requestData = conv.jsonEncode((api_models.WebSocketEvent()
-//      ..name = 'new_message'
-//      ..data = (api_models.WebSocketNewMessageData()
-//        ..userId = store.state.userId
-//        ..eventId = store.state.eventId
-//        ..userName = store.state.userName
-//        ..text = value
-//        ..isQuestion = isQuestion)
-//    ).asMap());
-//    store.state.socket.add(requestData);
     store.dispatch(actions.SendMessage(value, store.state.userName, isQuestion));
+    ws_api.newMessage();
   }
 
 }
