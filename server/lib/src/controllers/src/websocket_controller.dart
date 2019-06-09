@@ -105,6 +105,7 @@ class WebSocketController extends Controller {
         return;
       }
       connection.add(api_models.WebSocketGetMessage(
+        userId: data.userId,
         text: data.text,
         userName: data.userName,
         isQuestion: data.isQuestion).toJson()

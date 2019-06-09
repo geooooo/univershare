@@ -75,6 +75,7 @@ server new_message
     is_question
     
 client get_message
+    user_id
     user_name
     text
     is_question

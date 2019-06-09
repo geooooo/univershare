@@ -20,5 +20,3 @@ void main() {
   ));
 }
 
-//TODO: userId for messages
-//TODO: check api for question
