@@ -63,7 +63,6 @@ void disconnectListener() {
     ).toJson());
     _store.dispatch(actions.ExitEvent());
   }
-  init(_store);
 }
 
 void disconnectPresenter() {
@@ -71,7 +70,6 @@ void disconnectPresenter() {
     eventId: _store.state.eventId,
   ).toJson());
   _store.dispatch(actions.ExitEvent());
-  init(_store);
 }
 
 Future<void> _socketListener(Object event, Store<AppState> store) async {
@@ -94,7 +92,7 @@ Future<void> _onEventEnd(String event) async {
     title: intl.warning,
     message: intl.eventEnd,
   );
-  _store.dispatch(actions.ExitEvent());
+  _store.dispatch(actions.EventEnd());
 }
 
 void _onGetMessage(String event) {

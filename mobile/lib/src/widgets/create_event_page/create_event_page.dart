@@ -158,8 +158,7 @@ class CreateEventPageState extends State<CreateEventPage> {
       eventName: _eventName,
       presentationFile: _fileData,
     );
-    store.dispatch(actions.CreateEvent(_eventName, _userName));
-    store.dispatch(actions.SetUserId(response.userId));
+    store.dispatch(actions.CreateEvent(_eventName, _userName, response.userId));
     await ws_api.connectPresenter();
     store.dispatch(actions.Loading(false));
     await Navigator.pushReplacementNamed(

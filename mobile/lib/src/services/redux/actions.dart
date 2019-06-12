@@ -55,8 +55,9 @@ class CreateEvent {
 
   final String eventName;
   final String userName;
+  final int userId;
 
-  CreateEvent(this.eventName, this.userName);
+  CreateEvent(this.eventName, this.userName, this.userId);
 
 }
 
@@ -76,12 +77,14 @@ class Loading {
 
 }
 
-class SetEventInfo {
+class JoinEvent {
 
   final String eventName;
   final String presentationUrl;
+  final String userName;
+  final int userId;
 
-  SetEventInfo(this.eventName, this.presentationUrl);
+  JoinEvent(this.eventName, this.presentationUrl, this.userName, this.userId);
 
 }
 
@@ -98,5 +101,11 @@ class SaveMessages {
   final List<Message> messages;
 
   SaveMessages(this.messages);
+
+}
+
+class EventEnd {
+
+  EventEnd();
 
 }

@@ -79,21 +79,21 @@ class ChatInputFieldState extends State<ChatInputField> {
             Icons.pan_tool,
             color: Colors.lightBlueAccent,
           ),
-          onPressed: () => _onSendMessage(true),
+          onPressed: isEventActive? () => _onSendMessage(true) : null,
         ) : Container(),
         IconButton(
           icon: Icon(
             Icons.send,
             color: Colors.lightBlueAccent,
           ),
-          onPressed: () => _onSendMessage(false),
+          onPressed: isEventActive? () => _onSendMessage(false) : null,
         ),
       ],
     ),
   );
 
   void _onSendMessage(bool isQuestion) {
-    if (_value.isNotEmpty && isEventActive) {
+    if (_value.isNotEmpty) {
       onSendMessage(_value, isQuestion);
     }
     FocusScope.of(context).detach();

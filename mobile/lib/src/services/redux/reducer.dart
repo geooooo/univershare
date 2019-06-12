@@ -1,21 +1,21 @@
 import 'package:redux/redux.dart';
 
+import '../../models/user_type.dart';
 import 'app_state.dart';
 import 'actions.dart';
 
 final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetEventId>(_onSetEventId),
-  TypedReducer<AppState, SetUserName>(_onSetUserName),
-  TypedReducer<AppState, SetUserId>(_onSetUserId),
   TypedReducer<AppState, SendMessage>(_onSendMessage),
   TypedReducer<AppState, CreateEvent>(_onCreateEvent),
   TypedReducer<AppState, CheckQuestion>(_onCheckQuestion),
   TypedReducer<AppState, Loading>(_onLoading),
-  TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
+  TypedReducer<AppState, JoinEvent>(_onJoinEvent),
   TypedReducer<AppState, SetSocket>(_onSetSocket),
   TypedReducer<AppState, SaveMessages>(_onSaveMessages),
   TypedReducer<AppState, ExitEvent>(_onExitEvent),
   TypedReducer<AppState, SetContext>(_onSetContext),
+  TypedReducer<AppState, EventEnd>(_onEventEnd),
 ]);
 
 AppState _onSetEventId(AppState state, SetEventId action) {
@@ -28,26 +28,6 @@ AppState _onSetEventId(AppState state, SetEventId action) {
   return state
     ..eventId = action.eventId
     ..startPageState.isJoinButtonDisabled = !action.isValid;
-}
-
-AppState _onSetUserName(AppState state, SetUserName action) {
-  print(
-    'Action: SetUserName {\n'
-      '\tuserName: ${action.userName}\n'
-    '}\n'
-  );
-  return state
-    ..userName = action.userName;
-}
-
-AppState _onSetUserId(AppState state, SetUserId action) {
-  print(
-    'Action: SetUserId {\n'
-      '\tuserId: ${action.userId}\n'
-    '}\n'
-  );
-  return state
-    ..userId = action.userId;
 }
 
 AppState _onSendMessage(AppState state, SendMessage action) {
@@ -68,12 +48,14 @@ AppState _onCreateEvent(AppState state, CreateEvent action) {
     'Action: CreateEvent {\n'
       '\tuserName: ${action.userName}\n'
       '\teventName: ${action.eventName}\n'
+      '\tuserId: ${action.userId}\n'
     '}\n'
   );
   return state
     ..userName = action.userName
     ..eventName = action.eventName
-    ..isEventActive = true;
+    ..isEventActive = true
+    ..userType = UserType.presenter;
 }
 
 AppState _onCheckQuestion(AppState state, CheckQuestion action) {
@@ -96,17 +78,21 @@ AppState _onLoading(AppState state, Loading action) {
     ..isLoadingVisible = action.isVisible;
 }
 
-AppState _onSetEventInfo(AppState state, SetEventInfo action) {
+AppState _onJoinEvent(AppState state, JoinEvent action) {
   print(
-    'Action: SetEventInfo {\n'
+    'Action: JoinEvent {\n'
       '\teventName: ${action.eventName}\n'
       '\tpresentationUrl: ${action.presentationUrl}\n'
+      '\tuserName: ${action.userName}\n'
+      '\tuserId: ${action.userId}\n'
     '}\n'
   );
   return state
     ..eventName = action.eventName
     ..presentationUrl = action.presentationUrl
-    ..isEventActive = true;
+    ..userName = action.userName
+    ..isEventActive = true
+    ..userType = UserType.listener;
 }
 
 AppState _onSetSocket(AppState state, SetSocket action) {
@@ -145,5 +131,15 @@ AppState _onSetContext(AppState state, SetContext action) {
   );
   return state
     ..context = action.context;
+}
+
+AppState _onEventEnd(AppState state, EventEnd action) {
+  print(
+      'Action: EventEnd {}'
+  );
+  return state
+    ..socket.close()
+    ..isEventActive = false;
+
 }
 

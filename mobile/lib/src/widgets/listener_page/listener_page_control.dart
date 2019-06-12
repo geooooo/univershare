@@ -5,7 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../../services/intl.dart' as intl;
 import '../../services/route.dart' as route;
 import '../../services/ws_api.dart' as ws_api;
-import 'package:mobile/src/services/redux/app_state.dart';
+import '../../services/redux/actions.dart' as actions;
+import '../../services/redux/app_state.dart';
 import '../common/event_info.dart';
 import '../common/vertical_space.dart';
 
@@ -43,7 +44,10 @@ class ListenerPageControl extends StatelessWidget {
   );
 
   Future<void> _onPressedExitButton(BuildContext context) async {
-    ws_api.disconnectListener();
+    if (store.state.isEventActive) {
+      ws_api.disconnectListener();
+    }
+    store.dispatch(actions.ExitEvent());
     await Navigator.pushReplacementNamed(
       context,
       route.startPageRoute,

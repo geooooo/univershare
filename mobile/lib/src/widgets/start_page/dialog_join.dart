@@ -16,13 +16,11 @@ Future<Widget> showDialogJoin({BuildContext context, Store<AppState> store}) asy
   builder: (BuildContext _) => DialogJoin(
     onPressedJoin: (userName) async {
       store.dispatch(actions.Loading(true));
-      store.dispatch(actions.SetUserName(userName));
       final response = await rest_api.joinEvent(
-        userName: store.state.userName,
+        userName: userName,
         eventId: store.state.eventId,
       );
-      store.dispatch(actions.SetEventInfo(response.eventName, response.presentationUrl));
-      store.dispatch(actions.SetUserId(response.userId));
+      store.dispatch(actions.JoinEvent(response.eventName, response.presentationUrl, userName, response.userId));
       await ws_api.connectListener();
       store.dispatch(actions.Loading(false));
       await Navigator.pushNamed(

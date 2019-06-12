@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/message.dart';
+import '../../models/user_type.dart';
 
 class AppState {
 
@@ -13,9 +14,10 @@ class AppState {
   String presentationUrl = '';
   List<Message> messages = [];
   bool isLoadingVisible = false;
+  bool isEventActive = false;
   io.WebSocket socket;
   BuildContext context;
-  bool isEventActive = false;
+  UserType userType;
 
   StartPageState startPageState = StartPageState.initial();
 
