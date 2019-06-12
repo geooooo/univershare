@@ -97,7 +97,7 @@ class CreateEventPageState extends State<CreateEventPage> {
             horizontal: 50,
           ),
         ),
-        VerticalSpace(20),
+        VerticalSpace(10),
         StoreConnector<AppState, String>(
           converter: (store) => store.state.eventId,
           builder: (context, eventId) =>Container(
@@ -113,11 +113,11 @@ class CreateEventPageState extends State<CreateEventPage> {
             ),
           ),
         ),
-        VerticalSpace(20),
+        VerticalSpace(10),
         DownloadPresentation(
           onSelectFile: _onSelectFile,
         ),
-        VerticalSpace(30),
+        VerticalSpace(20),
         RaisedButton(
           child: Text(intl.create),
           onPressed: _onPressedCreateButton,

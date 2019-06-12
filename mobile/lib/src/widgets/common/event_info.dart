@@ -7,10 +7,12 @@ class EventInfo extends StatelessWidget {
 
   final String eventId;
   final String eventName;
+  final String userName;
 
   EventInfo({
     this.eventId,
     this.eventName,
+    this.userName,
   });
 
   @override
@@ -21,6 +23,14 @@ class EventInfo extends StatelessWidget {
     child: Column(
       children: <Widget>[
         TextFormField(
+          initialValue: userName,
+          decoration: InputDecoration(
+            labelText: intl.yourName,
+          ),
+          enabled: false,
+        ),
+        VerticalSpace(20),
+        TextFormField(
           initialValue: eventName,
           decoration: InputDecoration(
             labelText: intl.nameEvent,
@@ -28,7 +38,7 @@ class EventInfo extends StatelessWidget {
           enabled: false,
         ),
         VerticalSpace(20),
-       TextFormField(
+        TextFormField(
           initialValue: eventId,
           decoration: InputDecoration(
             labelText: intl.idEvent,

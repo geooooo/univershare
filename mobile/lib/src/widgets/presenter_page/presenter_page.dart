@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 
 import '../../services/redux/app_state.dart';
 import '../common/page.dart';
+import '../common/colored_tab_bar.dart';
 import '../chat/chat.dart';
 import 'presenter_page_control.dart';
 import 'presenter_page_questions.dart';
@@ -22,12 +23,15 @@ class PresenterPage extends StatelessWidget {
       resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       isScroll: false,
-      appBar: TabBar(
-        tabs: <Widget>[
-          Tab(child: Icon(Icons.settings)),
-          Tab(child: Icon(Icons.chat)),
-          Tab(child: Icon(Icons.list)),
-        ],
+      appBar: ColoredTabBar(
+        color: Colors.black12,
+        tabBar: TabBar(
+          tabs: <Widget>[
+            Tab(child: Icon(Icons.settings)),
+            Tab(child: Icon(Icons.chat)),
+            Tab(child: Icon(Icons.list)),
+          ],
+        ),
       ),
       child: TabBarView(
         children: [

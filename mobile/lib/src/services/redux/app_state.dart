@@ -1,4 +1,4 @@
-import 'dart:io' as io;
+ import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
 
@@ -15,6 +15,7 @@ class AppState {
   bool isLoadingVisible = false;
   io.WebSocket socket;
   BuildContext context;
+  bool isEventActive = false;
 
   StartPageState startPageState = StartPageState.initial();
 

@@ -126,6 +126,7 @@ presenter
 message
     id int primary key
     text string not null
+    time int not null
     user_id int
     
     foreign key(user_id) references user(id)

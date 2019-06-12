@@ -34,9 +34,13 @@ class Chat extends StatelessWidget {
           currentUserId: data['current_user_id'],
         ),
       ),
-      ChatInputField(
-        isQuestionEnabled: isQuestionEnabled,
-        onSendMessage: _onSendMessage,
+      StoreConnector<AppState, bool>(
+        converter: (store) => store.state.isEventActive,
+        builder: (context, isEventActive) => ChatInputField(
+          isEventActive: isEventActive,
+          isQuestionEnabled: isQuestionEnabled,
+          onSendMessage: _onSendMessage,
+        ),
       ),
     ],
   );

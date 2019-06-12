@@ -26,10 +26,12 @@ class PresenterPageControl extends StatelessWidget {
         converter: (store) => <String, Object>{
           'event_name': store.state.eventName,
           'event_id': store.state.eventId,
+          'user_name': store.state.userName,
         },
         builder: (context, data) => EventInfo(
           eventName: data['event_name'],
           eventId: data['event_id'],
+          userName: data['user_name'],
         ),
       ),
       VerticalSpace(30),

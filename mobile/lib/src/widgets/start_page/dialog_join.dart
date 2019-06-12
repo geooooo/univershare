@@ -74,7 +74,7 @@ class DialogJoinState extends State<DialogJoin> {
         WhitelistingTextInputFormatter(_nameChars),
       ],
       decoration: InputDecoration(
-        errorText: _errorVisible? intl.errorNameEmpty : null,
+        errorText: _errorVisible? intl.nameEmptyError : null,
       ),
       autofocus: true,
       onChanged: _onChangedName,

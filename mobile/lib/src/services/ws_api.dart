@@ -56,26 +56,30 @@ void newMessage() => _store.state.socket.add(
 ).toJson());
 
 void disconnectListener() {
-  _store.state.socket.add(api_models.WebSocketDisconnectListener(
-    eventId: _store.state.eventId,
-    userId: _store.state.userId,
-  ).toJson());
-  _store.dispatch(actions.CloseSocket());
+  if (!_store.state.isEventActive) {
+    _store.state.socket.add(api_models.WebSocketDisconnectListener(
+      eventId: _store.state.eventId,
+      userId: _store.state.userId,
+    ).toJson());
+    _store.dispatch(actions.ExitEvent());
+  }
+  init(_store);
 }
 
 void disconnectPresenter() {
   _store.state.socket.add(api_models.WebSocketDisconnectPresenter(
     eventId: _store.state.eventId,
   ).toJson());
-  _store.dispatch(actions.CloseSocket());
+  _store.dispatch(actions.ExitEvent());
+  init(_store);
 }
 
-void _socketListener(Object event, Store<AppState> store) {
+Future<void> _socketListener(Object event, Store<AppState> store) async {
   final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
 
   switch (webSocketEvent.name) {
     case 'event_end':
-      _onEventEnd(event);
+      await _onEventEnd(event);
       break;
     case 'get_message':
       _onGetMessage(event);
@@ -83,21 +87,21 @@ void _socketListener(Object event, Store<AppState> store) {
   }
 }
 
-  void _onEventEnd(String event) {
-    api_models.WebSocketEventEnd.fromJson(event);
-    _store.dispatch(actions.CloseSocket());
-    showDialogInfo(
-      context: _store.state.context,
-      title: intl.warning,
-      message: intl.eventEnd,
-    );
-  }
+Future<void> _onEventEnd(String event) async {
+  api_models.WebSocketEventEnd.fromJson(event);
+  await showDialogInfo(
+    context: _store.state.context,
+    title: intl.warning,
+    message: intl.eventEnd,
+  );
+  _store.dispatch(actions.ExitEvent());
+}
 
-  void _onGetMessage(String event) {
-    final data = api_models.WebSocketGetMessage.fromJson(event);
-    _store.dispatch(actions.SaveMessages(<Message>[Message(
-      text: data.text,
-      isQuestion: data.isQuestion,
-      userName: data.userName,
-    )]));
-  }
+void _onGetMessage(String event) {
+  final data = api_models.WebSocketGetMessage.fromJson(event);
+  _store.dispatch(actions.SaveMessages(<Message>[Message(
+    text: data.text,
+    isQuestion: data.isQuestion,
+    userName: data.userName,
+  )]));
+}

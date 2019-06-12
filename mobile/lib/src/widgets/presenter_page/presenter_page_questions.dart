@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../services/redux/app_state.dart';
+import '../../services/intl.dart' as intl;
 import '../../services/redux/actions.dart' as actions;
+import '../../services/redux/app_state.dart';
 import '../../models/message.dart';
 
 class PresenterPageQuestions extends StatefulWidget {
@@ -36,7 +37,24 @@ class PresenterPageQuestionsState extends State<PresenterPageQuestions> {
     ).toList()..addAll(store.state.messages.where(
       (message) => message.isQuestion && message.isChecked
     )),
-    builder: (context, messages) => ListView.builder(
+    builder: (context, messages) => messages.isEmpty? Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(
+          Icons.info,
+          color: Colors.white12,
+          size: 200,
+        ),
+        Text(
+          intl.nothingQuestions,
+          style: TextStyle(
+            color: Colors.white12,
+            fontSize: 20,
+          ),
+        )
+      ]
+    ): ListView.builder(
       itemCount: messages.length * 2 - 1,
       itemBuilder: (BuildContext context, int index) {
         final messageIndex = index ~/ 2;
@@ -58,7 +76,12 @@ class PresenterPageQuestionsState extends State<PresenterPageQuestions> {
               color: Colors.lightBlueAccent,
             ),
           ),
-          subtitle: Text(message.text),
+          subtitle: Text(
+            message.text,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           trailing: iconButton,
         );
       }

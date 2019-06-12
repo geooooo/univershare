@@ -48,7 +48,7 @@ class ChatMessage extends StatelessWidget {
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: isCurrentUser? Colors.blueAccent : Colors.orangeAccent,
+                    color: isCurrentUser? Colors.blueAccent : Colors.orangeAccent,
                 ),
               ),
             ),

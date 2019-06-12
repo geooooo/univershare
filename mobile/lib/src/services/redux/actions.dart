@@ -13,6 +13,12 @@ class SetEventId {
 
 }
 
+class ExitEvent {
+
+  ExitEvent();
+
+}
+
 class SetUserId {
 
   final int userId;
@@ -92,11 +98,5 @@ class SaveMessages {
   final List<Message> messages;
 
   SaveMessages(this.messages);
-
-}
-
-class CloseSocket {
-
-  CloseSocket();
 
 }

@@ -26,10 +26,12 @@ class ListenerPageControl extends StatelessWidget {
         converter: (store) => <String, Object>{
           'event_id': store.state.eventId,
           'event_name': store.state.eventName,
+          'user_name': store.state.userName,
         },
         builder: (context, data) => EventInfo(
           eventId: data['event_id'],
           eventName: data['event_name'],
+          userName: data['user_name'],
         ),
       ),
       VerticalSpace(30),

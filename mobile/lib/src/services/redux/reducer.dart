@@ -14,7 +14,7 @@ final appReducers = combineReducers<AppState>([
   TypedReducer<AppState, SetEventInfo>(_onSetEventInfo),
   TypedReducer<AppState, SetSocket>(_onSetSocket),
   TypedReducer<AppState, SaveMessages>(_onSaveMessages),
-  TypedReducer<AppState, CloseSocket>(_onCloseSocket),
+  TypedReducer<AppState, ExitEvent>(_onExitEvent),
   TypedReducer<AppState, SetContext>(_onSetContext),
 ]);
 
@@ -72,7 +72,8 @@ AppState _onCreateEvent(AppState state, CreateEvent action) {
   );
   return state
     ..userName = action.userName
-    ..eventName = action.eventName;
+    ..eventName = action.eventName
+    ..isEventActive = true;
 }
 
 AppState _onCheckQuestion(AppState state, CheckQuestion action) {
@@ -104,7 +105,8 @@ AppState _onSetEventInfo(AppState state, SetEventInfo action) {
   );
   return state
     ..eventName = action.eventName
-    ..presentationUrl = action.presentationUrl;
+    ..presentationUrl = action.presentationUrl
+    ..isEventActive = true;
 }
 
 AppState _onSetSocket(AppState state, SetSocket action) {
@@ -127,12 +129,12 @@ AppState _onSaveMessages(AppState state, SaveMessages action) {
     ..messages.addAll(action.messages);
 }
 
-AppState _onCloseSocket(AppState state, CloseSocket action) {
+AppState _onExitEvent(AppState state, ExitEvent action) {
   print(
-    'Action: CloseSocket {}'
+    'Action: ExitEvent {}'
   );
-  return state
-    ..socket.close();
+  state.socket.close();
+  return AppState.initial();
 }
 
 AppState _onSetContext(AppState state, SetContext action) {

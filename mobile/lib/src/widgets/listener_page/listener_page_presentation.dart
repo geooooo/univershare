@@ -22,7 +22,7 @@ class ListenerPagePresentation extends StatelessWidget {
         Icon(
           Icons.mobile_screen_share,
           size: 200,
-          color: Colors.grey,
+          color: Colors.white10,
         ),
         VerticalSpace(50),
         RaisedButton(
