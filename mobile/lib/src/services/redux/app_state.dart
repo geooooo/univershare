@@ -29,7 +29,7 @@ class AppState {
 
 class StartPageState {
 
-  bool isJoinButtonDisabled = false;
+  bool isJoinButtonDisabled = true;
 
   StartPageState._();
 

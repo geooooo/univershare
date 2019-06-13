@@ -25,8 +25,4 @@ const String eventEnd = 'Мероприятие закончилось!';
 const String appName = 'Univershare';
 const String writeFirstMessage = 'Напишите первое сообщение';
 const String nothingQuestions = 'Вопросов нет';
-
-
-
-
-
+const String internetConnectionError = 'Проверте соединение с интернетом!';

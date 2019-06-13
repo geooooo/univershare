@@ -129,8 +129,20 @@ class CreateEventPageState extends State<CreateEventPage> {
   Future<void> _loadEventId() async {
     store.dispatch(actions.Loading(true));
     final response = await rest_api.getNewEventId();
-    store.dispatch(actions.SetEventId(response.eventId, true));
     store.dispatch(actions.Loading(false));
+    if (response == null) {
+      await showDialogInfo(
+        context: context,
+        title: intl.error,
+        message: intl.internetConnectionError,
+      );
+      await Navigator.pop(
+        context,
+        route.startPageRoute,
+      );
+    } else {
+      store.dispatch(actions.SetEventId(response.eventId, true));
+    }
   }
 
   void _onChangedEventName(String value) => setState((){
@@ -158,6 +170,15 @@ class CreateEventPageState extends State<CreateEventPage> {
       eventName: _eventName,
       presentationFile: _fileData,
     );
+    if (response == null) {
+      store.dispatch(actions.Loading(false));
+      await showDialogInfo(
+        context: context,
+        title: intl.error,
+        message: intl.internetConnectionError,
+      );
+      return;
+    }
     store.dispatch(actions.CreateEvent(_eventName, _userName, response.userId));
     await ws_api.connectPresenter();
     store.dispatch(actions.Loading(false));

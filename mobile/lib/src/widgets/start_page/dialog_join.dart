@@ -8,6 +8,7 @@ import '../../services/redux/actions.dart' as actions;
 import '../../services/route.dart' as route;
 import '../../services/ws_api.dart' as ws_api;
 import '../../services/redux/app_state.dart';
+import '../common/dialog_info.dart';
 
 typedef void DialogJoinOnPressedJoinFunction(String name);
 
@@ -20,9 +21,24 @@ Future<Widget> showDialogJoin({BuildContext context, Store<AppState> store}) asy
         userName: userName,
         eventId: store.state.eventId,
       );
-      store.dispatch(actions.JoinEvent(response.eventName, response.presentationUrl, userName, response.userId));
-      await ws_api.connectListener();
-      store.dispatch(actions.Loading(false));
+      if (response == null) {
+        store.dispatch(actions.Loading(false));
+        await showDialogInfo(
+          context: context,
+          title: intl.error,
+          message: intl.internetConnectionError,
+        );
+        return;
+      } else {
+        store.dispatch(actions.JoinEvent(
+          response.eventName,
+          response.presentationUrl,
+          userName,
+          response.userId
+        ));
+        await ws_api.connectListener();
+        store.dispatch(actions.Loading(false));
+      }
       await Navigator.pushNamed(
         context,
         route.listenerRoute,

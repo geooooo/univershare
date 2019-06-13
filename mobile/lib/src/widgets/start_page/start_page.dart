@@ -72,7 +72,13 @@ class StartPage extends StatelessWidget {
     store.dispatch(actions.Loading(true));
     final response = await rest_api.existsEvent(store.state.eventId);
     store.dispatch(actions.Loading(false));
-    if (response.status == 0) {
+    if (response == null) {
+      await showDialogInfo(
+        context: context,
+        title: intl.error,
+        message: intl.internetConnectionError,
+      );
+    } else if (response.status == 0) {
       await showDialogJoin(
         context: context,
         store: store,
