@@ -21,7 +21,6 @@ class ListenerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     store.dispatch(actions.SetContext(context));
-
     return DefaultTabController(
       length: 3,
       child: Page(

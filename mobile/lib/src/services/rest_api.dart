@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:api_models/api_models.dart' as api_models;
 
 import 'common.dart' as common;
+import 'ws_api.dart' as ws_api;
 
 Future<api_models.ExistsEventResponse> existsEvent(String eventId) async {
   final request = api_models.ExistsEventRequest(
@@ -77,16 +78,21 @@ Future<api_models.GetEventMessagesResponse> getEventMessages(String eventId) asy
 }
 
 Future<String> _post(String url, Map<String, Object> data, {Duration timeout}) async {
-  final response = await http.post(
-    url,
-    body: conv.jsonEncode(data),
-    encoding: conv.Utf8Codec(),
-    headers: {
-      io.HttpHeaders.contentTypeHeader: io.ContentType.json.toString(),
-    },
-  ).timeout(
-    timeout,
-    onTimeout: () => null,
-  );
+  http.Response response;
+  try {
+    response = await http.post(
+      url,
+      body: conv.jsonEncode(data),
+      encoding: conv.Utf8Codec(),
+      headers: {
+        io.HttpHeaders.contentTypeHeader: io.ContentType.json.toString(),
+      },
+    ).timeout(
+      timeout,
+      onTimeout: () => null,
+    );
+  } on io.SocketException {
+    await ws_api.disconnect();
+  }
   return response?.body;
 }

@@ -25,39 +25,45 @@ class StartPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Page(
-    isScroll: true,
-    child: Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Image(
-          image: AssetImage(assets.icon),
-          height: _logoSize,
-          width: _logoSize,
-        ),
-        VerticalSpace(30),
-        EventId(
-          onChanged: _onChangedEventId,
-        ),
-        VerticalSpace(20),
-        StoreConnector<AppState, bool>(
-          converter: (store) => store.state.startPageState.isJoinButtonDisabled,
-          builder: (context, isJoinButtonDisabled) => RaisedButton(
-            child: Text(intl.join),
-            onPressed: isJoinButtonDisabled? null : () => _onJoinButtonPressed(context),
+  Widget build(BuildContext context) {
+    store.dispatch(actions.SetContext(context));
+    return Page(
+      isScroll: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image(
+            image: AssetImage(assets.icon),
+            height: _logoSize,
+            width: _logoSize,
           ),
-        ),
-        VerticalSpace(30),
-        Text(intl.or),
-        VerticalSpace(30),
-        RaisedButton(
-          child: Text(intl.createEvent),
-          onPressed: () => _onPressedCreateButton(context),
-        ),
-      ],
-    ),
-  );
+          VerticalSpace(30),
+          EventId(
+            onChanged: _onChangedEventId,
+          ),
+          VerticalSpace(20),
+          StoreConnector<AppState, bool>(
+            converter: (store) =>
+            store.state.startPageState.isJoinButtonDisabled,
+            builder: (context, isJoinButtonDisabled) =>
+                RaisedButton(
+                  child: Text(intl.join),
+                  onPressed: isJoinButtonDisabled ? null : () =>
+                      _onJoinButtonPressed(context),
+                ),
+          ),
+          VerticalSpace(30),
+          Text(intl.or),
+          VerticalSpace(30),
+          RaisedButton(
+            child: Text(intl.createEvent),
+            onPressed: () => _onPressedCreateButton(context),
+          ),
+        ],
+      ),
+    );
+  }
 
   void _onPressedCreateButton(BuildContext context) => Navigator.pushNamed(
     context,

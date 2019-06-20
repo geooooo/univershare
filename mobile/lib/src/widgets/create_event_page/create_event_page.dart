@@ -58,73 +58,77 @@ class CreateEventPageState extends State<CreateEventPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Page(
-    isScroll: true,
-    child: Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          child: TextField(
-            decoration: InputDecoration(
-              alignLabelWithHint: true,
-              labelText: intl.nameEvent,
-            ),
-            inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(_maxEventNameLength),
-              WhitelistingTextInputFormatter(_eventNameChars),
-            ],
-            onChanged: _onChangedEventName,
-          ),
-          margin: EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-        ),
-        VerticalSpace(10),
-        Container(
-          child: TextField(
-            decoration: InputDecoration(
-              alignLabelWithHint: true,
-              labelText: intl.yourName,
-            ),
-            inputFormatters: <TextInputFormatter>[
-              LengthLimitingTextInputFormatter(_maxUserNameLength),
-              WhitelistingTextInputFormatter(_userNameChars),
-            ],
-            onChanged: _onChangedUserName,
-          ),
-          margin: EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-        ),
-        VerticalSpace(10),
-        StoreConnector<AppState, String>(
-          converter: (store) => store.state.eventId,
-          builder: (context, eventId) =>Container(
-            child: TextFormField(
+  Widget build(BuildContext context) {
+    store.dispatch(actions.SetContext(context));
+    return Page(
+      isScroll: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            child: TextField(
               decoration: InputDecoration(
                 alignLabelWithHint: true,
-                labelText: eventId.isEmpty? intl.idEvent : eventId,
+                labelText: intl.nameEvent,
               ),
-              enabled: false,
+              inputFormatters: <TextInputFormatter>[
+                LengthLimitingTextInputFormatter(_maxEventNameLength),
+                WhitelistingTextInputFormatter(_eventNameChars),
+              ],
+              onChanged: _onChangedEventName,
             ),
             margin: EdgeInsets.symmetric(
               horizontal: 50,
             ),
           ),
-        ),
-        VerticalSpace(10),
-        DownloadPresentation(
-          onSelectFile: _onSelectFile,
-        ),
-        VerticalSpace(20),
-        RaisedButton(
-          child: Text(intl.create),
-          onPressed: _onPressedCreateButton,
-        ),
-      ],
-    ),
-  );
+          VerticalSpace(10),
+          Container(
+            child: TextField(
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                labelText: intl.yourName,
+              ),
+              inputFormatters: <TextInputFormatter>[
+                LengthLimitingTextInputFormatter(_maxUserNameLength),
+                WhitelistingTextInputFormatter(_userNameChars),
+              ],
+              onChanged: _onChangedUserName,
+            ),
+            margin: EdgeInsets.symmetric(
+              horizontal: 50,
+            ),
+          ),
+          VerticalSpace(10),
+          StoreConnector<AppState, String>(
+            converter: (store) => store.state.eventId,
+            builder: (context, eventId) =>
+                Container(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: eventId.isEmpty ? intl.idEvent : eventId,
+                    ),
+                    enabled: false,
+                  ),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                ),
+          ),
+          VerticalSpace(10),
+          DownloadPresentation(
+            onSelectFile: _onSelectFile,
+          ),
+          VerticalSpace(20),
+          RaisedButton(
+            child: Text(intl.create),
+            onPressed: _onPressedCreateButton,
+          ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _loadEventId() async {
     store.dispatch(actions.Loading(true));

@@ -10,8 +10,8 @@ class Common {
   final String http_host = 'http://localhost:8888';
   final String ws_host = 'ws://localhost:8888/connect';
   final Map<String, Map<int, io.WebSocket>> connections = {};
-  final Duration pingInterval = Duration(seconds: 10);
-  final Duration removeEventDelay = Duration(seconds: 10);
+  final Duration pingInterval = Duration(seconds: 5);
+  final Duration removeEventDelay = Duration(seconds: 5);
 
   String getFullUrl(String path) =>
     '${http_host}${io.Platform.pathSeparator}$path';

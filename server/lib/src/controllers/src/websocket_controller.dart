@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' as io;
 
 import 'package:aqueduct/aqueduct.dart';
@@ -10,12 +11,13 @@ class WebSocketController extends Controller {
 
   Map<String, Map<int, io.WebSocket>> get connections => _diInjector.common.connections;
 
-  WebSocketController(this._diInjector);
+  WebSocketController(this._diInjector) {
+    _scheduleCheckPresenters();
+  }
 
   @override
   Future<Response> handle(Request request) async {
-    final socket = await io.WebSocketTransformer.upgrade(request.raw)
-      ..pingInterval = _diInjector.common.pingInterval;
+    final socket = await io.WebSocketTransformer.upgrade(request.raw);
     
     _diInjector.logger.logWebSocketApiConnect();
     
@@ -25,6 +27,9 @@ class WebSocketController extends Controller {
 
   Future<void> onDataListener(io.WebSocket socket, String event) async {
     final webSocketEvent = api_models.WebSocketEvent.fromJson(event);
+
+    print([connections.length, connections?.keys]);
+    connections.forEach((_, m) => print(m.keys));
 
     _diInjector.logger.logWebSocketApi(event);
 
@@ -92,7 +97,6 @@ class WebSocketController extends Controller {
     final data = api_models.WebSocketNewMessage.fromJson(event);
 
     connections[data.eventId].forEach((userId, connection) async {
-      print([userId, connection.readyState]);
       if (connection == socket) {
         return;
       }
@@ -117,19 +121,19 @@ class WebSocketController extends Controller {
       (_) => _diInjector.db.removeEvent(eventId)
     );
 
-//  void scheduleCheckPresenters() =>
-//    Future.delayed(_diInjector.common.pingInterval).then((_) async {
-//      connections.forEach((eventId, connectionData) async {
-//        final socket = connectionData.values.first;
-//        final isClose = (socket.readyState == io.WebSocket.closed) ||
-//                        (socket.readyState == io.WebSocket.closing);
-//        if (isClose) {
-//          await onDisconnectPresenter(
-//            api_models.WebSocketDisconnectPresenter(
-//              eventId: eventId,
-//            ).toJson(), socket
-//          );
-//        }
-//      });
-//    });
+  void _scheduleCheckPresenters() => Timer.periodic(_diInjector.common.pingInterval, (_) async {
+    connections.forEach((eventId, connectionData) async {
+      final socket = connectionData.values.first;
+      final isClose = (socket.readyState == io.WebSocket.closed) ||
+                      (socket.readyState == io.WebSocket.closing);
+      if (isClose) {
+        await onDisconnectPresenter(
+          api_models.WebSocketDisconnectPresenter(
+            eventId: eventId,
+          ).toJson(), socket
+        );
+      }
+    });
+  });
+
 }

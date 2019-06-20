@@ -54,6 +54,7 @@ AppState _onCreateEvent(AppState state, CreateEvent action) {
   return state
     ..userName = action.userName
     ..eventName = action.eventName
+    ..userId = action.userId
     ..isEventActive = true
     ..userType = UserType.presenter;
 }
@@ -89,8 +90,9 @@ AppState _onJoinEvent(AppState state, JoinEvent action) {
   );
   return state
     ..eventName = action.eventName
-    ..presentationUrl = action.presentationUrl
     ..userName = action.userName
+    ..presentationUrl = action.presentationUrl
+    ..userId = action.userId
     ..isEventActive = true
     ..userType = UserType.listener;
 }
@@ -119,7 +121,7 @@ AppState _onExitEvent(AppState state, ExitEvent action) {
   print(
     'Action: ExitEvent {}'
   );
-  state.socket.close();
+  state.socket?.close();
   return AppState.initial();
 }
 

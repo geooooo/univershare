@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io' as io;
 
+import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:api_models/api_models.dart' as api_models;
 
@@ -7,17 +9,33 @@ import 'common.dart' as common;
 import '../services/intl.dart' as intl;
 import '../services/rest_api.dart' as rest_api;
 import '../services/redux/actions.dart' as actions;
+import '../services/route.dart' as route;
 import '../services/redux/app_state.dart';
 import '../models/message.dart';
 import '../widgets/common/dialog_info.dart';
 
 Store<AppState> _store;
+StreamController<Null> _reconnectStreamController = StreamController<Null>();
+Stream<Null> reconnectStream = _reconnectStreamController.stream;
 
 Future<void> init(Store<AppState> store) async {
   _store = store;
-  final socket = await io.WebSocket.connect(common.ws_host);
-  store.dispatch(actions.SetSocket(socket));
-  socket.listen((Object data) => _socketListener(data, store));
+  bool isConnect = false;
+  do {
+    try {
+      final socket = await io.WebSocket.connect(common.ws_host);
+      isConnect = true;
+      store.dispatch(actions.SetSocket(socket));
+      socket.listen((Object data) => _socketListener(data, store));
+    } on io.SocketException {
+      await showDialogInfo(
+        context: _store.state.context,
+        title: intl.error,
+        message: intl.internetConnectionError,
+      );
+      _reconnectStreamController.add(null);
+    }
+  } while(!isConnect);
 }
 
 Future<void> _getEventMessages() async {
@@ -80,7 +98,7 @@ Future<void> _socketListener(Object event, Store<AppState> store) async {
       await _onEventEnd(event);
       break;
     case 'get_message':
-      _onGetMessage(event);
+      await _onGetMessage(event);
       break;
   }
 }
@@ -95,11 +113,28 @@ Future<void> _onEventEnd(String event) async {
   _store.dispatch(actions.EventEnd());
 }
 
-void _onGetMessage(String event) {
+Future<void> _onGetMessage(String event) async {
   final data = api_models.WebSocketGetMessage.fromJson(event);
+  if (data == null) {
+    await disconnect();
+    return;
+  }
   _store.dispatch(actions.SaveMessages(<Message>[Message(
     text: data.text,
     isQuestion: data.isQuestion,
     userName: data.userName,
   )]));
+}
+
+Future<void> disconnect() async {
+  await showDialogInfo(
+    context: _store.state.context,
+    title: intl.error,
+    message: intl.internetConnectionError,
+  );
+  await Navigator.popUntil(
+    _store.state.context,
+    (Route currentRoute) => currentRoute.settings.name == route.startPageRoute
+  );
+  _store.dispatch(actions.ExitEvent());
 }

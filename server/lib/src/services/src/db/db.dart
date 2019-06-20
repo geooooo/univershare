@@ -113,31 +113,32 @@ class Db {
     final querySelectEvent = Query<EventTable>(managedContext)
       ..where((EventTable event) => event.id_code).equalTo(eventIdCode);
     final delEvent = await querySelectEvent.fetchOne();
-    await querySelectEvent.delete();
 
     final querySelectPresentation = Query<PresentationTable>(managedContext)
       ..where((PresentationTable presentation) => presentation.id).equalTo(delEvent.presentation.id);
-    await querySelectPresentation.delete();
 
     final querySelectPresenter = Query<PresenterTable>(managedContext)
       ..where((PresenterTable presenter) => presenter.id).equalTo(delEvent.presenter.id);
     final delPresenter = await querySelectPresenter.fetchOne();
-    await querySelectPresenter.delete();
 
     final querySelectListener = Query<ListenerTable>(managedContext)
       ..where((ListenerTable listener) => listener.event.id).equalTo(delEvent.id);
     final delListener = await querySelectListener.fetch();
-    await querySelectListener.delete();
 
     final userIds = delListener.map((listener) => listener.user.id).toList()
       ..add(delPresenter.user.id);
     final querySelectUser = Query<UserTable>(managedContext)
       ..where((UserTable user) => user.id).oneOf(userIds);
-    await querySelectUser.delete();
 
     final querySelectMessage = Query<MessageTable>(managedContext)
       ..where((MessageTable message) => message.user.id).oneOf(userIds);
+
+    await querySelectPresentation.delete();
     await querySelectMessage.delete();
+    await querySelectPresenter.delete();
+    await querySelectListener.delete();
+    await querySelectUser.delete();
+    await querySelectEvent.delete();
   }
 
   Future<Map<String, Object>> getEventMessages(String eventIdCode) async {
